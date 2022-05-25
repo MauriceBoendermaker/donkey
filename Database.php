@@ -337,7 +337,7 @@ class Database {
     }
 }
 
-class Boekingen
+class Boeking
 {
     private $id;
     private $startDatum;
