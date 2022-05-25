@@ -1,69 +1,4 @@
 <?php
-// boekingen
-// ID INT
-// StartDatum DATE
-// PINCode INT
-// FKtochtenID INT (foreign key)
-// FKklantenID INT (foreign key)
-// FKstatussenID INT (foreign key)
-
-// herbergen
-// ID INT
-// Naam VARCHAR(50)
-// Adres VARCHAR(50)
-// Email VARCHAR(100)
-// Telefoon VARCHAR(20)
-// Coordinaten VARCHAR(20)
-// Gewijzigd TIMESTAMP
-
-// klanten
-// ID INT
-// Naam VARCHAR(50)
-// Email VARCHAR(100)
-// Telefoon VARCHAR(20)
-// Wachtwoord VARCHAR(100)
-// Gewijzigd TIMESTAMP
-
-// overnachtingen
-// ID INT
-// FKboekingenID INT (foreign key)
-// FKherbergenID INT (foreign key)
-// FKstatussenID INT (foreign key)
-
-// pauzeplaatsen
-// ID INT
-// FKboekingenID INT (foreign key)
-// FKrestaurantsID INT (foreign key)
-// FKstatussenID INT (foreign key)
-
-// restaurants
-// ID INT
-// Naam VARCHAR(50)
-// Adres VARCHAR(50)
-// Email VARCHAR(50)
-// Telefoon VARCHAR(20)
-// Coordinaten VARCHAR(20)
-// Gewijzigd TIMESTAMP
-
-// statussen
-// ID INT
-// StatusCode TINYINT(4)
-// Status VARCHAR(40)
-// Verwijderbaar BIT
-// PINtoekennen BIT
-
-// tochten
-// ID INT
-// Omschrijving VARCHAR(40)
-// Route VARCHAR(50)
-// AantalDagen INT
-
-// trackers
-// ID INT
-// PINCode INT
-// Lat DOUBLE
-// Lon DOUBLE
-// Time BIGINT(20)
 
 namespace database;
 
@@ -94,12 +29,19 @@ class Database {
         $this->db->close();
     }
     
+    // boekingen
+    // ID INT
+    // StartDatum DATE
+    // PINCode INT
+    // FKtochtenID INT (foreign key)
+    // FKklantenID INT (foreign key)
+    // FKstatussenID INT (foreign key)
     public function getBoekingen() {
         $this->connect();
         $result = $this->db->query("SELECT * FROM boekingen");
         $boekingen = array();
         while ($row = $result->fetch_assoc()) {
-            $boekingen[] = new Boekingen($row["ID"], $row["StartDatum"], $row["PINCode"], $row["FKtochtenID"], $row["FKklantenID"], $row["FKstatussenID"]);
+            $boekingen[] = new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $row["FKtochtenID"], $row["FKklantenID"], $row["FKstatussenID"]);
         }
         $this->close();
         return $boekingen;
@@ -110,7 +52,7 @@ class Database {
         $result = $this->db->query("SELECT * FROM boekingen WHERE ID = $id");
         $boekingen = array();
         while ($row = $result->fetch_assoc()) {
-            $boekingen[] = new Boekingen($row["ID"], $row["StartDatum"], $row["PINCode"], $row["FKtochtenID"], $row["FKklantenID"], $row["FKstatussenID"]);
+            $boekingen[] = new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $row["FKtochtenID"], $row["FKklantenID"], $row["FKstatussenID"]);
         }
         $this->close();
         return $boekingen;
@@ -121,7 +63,7 @@ class Database {
         $result = $this->db->query("SELECT * FROM boekingen WHERE FKklantenID = $id");
         $boekingen = array();
         while ($row = $result->fetch_assoc()) {
-            $boekingen[] = new Boekingen($row["ID"], $row["StartDatum"], $row["PINCode"], $row["FKtochtenID"], $row["FKklantenID"], $row["FKstatussenID"]);
+            $boekingen[] = new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $row["FKtochtenID"], $row["FKklantenID"], $row["FKstatussenID"]);
         }
         $this->close();
         return $boekingen;
@@ -132,18 +74,36 @@ class Database {
         $result = $this->db->query("SELECT * FROM boekingen WHERE FKstatussenID = $id");
         $boekingen = array();
         while ($row = $result->fetch_assoc()) {
-            $boekingen[] = new Boekingen($row["ID"], $row["StartDatum"], $row["PINCode"], $row["FKtochtenID"], $row["FKklantenID"], $row["FKstatussenID"]);
+            $boekingen[] = new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $row["FKtochtenID"], $row["FKklantenID"], $row["FKstatussenID"]);
         }
         $this->close();
         return $boekingen;
     }
 
+    public function setBoekingen($id, $startDatum, $pinCode, $fkTochtenID, $fkKlantenID, $fkStatussenID) {
+        $this->connect();
+        if (is_null($id)) {
+            $result = $this->db->query("INSERT INTO boekingen (StartDatum, PINCode, FKtochtenID, FKklantenID, FKstatussenID) VALUES ('$startDatum', '$pinCode', '$fkTochtenID', '$fkKlantenID', '$fkStatussenID')");
+        } else {
+            $result = $this->db->query("UPDATE boekingen SET StartDatum = '$startDatum', PINCode = '$pinCode', FKtochtenID = '$fkTochtenID', FKklantenID = '$fkKlantenID', FKstatussenID = '$fkStatussenID' WHERE ID = $id");
+        }
+        $this->close();
+    }
+
+    // herbergen
+    // ID INT
+    // Naam VARCHAR(50)
+    // Adres VARCHAR(50)
+    // Email VARCHAR(100)
+    // Telefoon VARCHAR(20)
+    // Coordinaten VARCHAR(20)
+    // Gewijzigd TIMESTAMP
     public function getHerbergen() {
         $this->connect();
         $result = $this->db->query("SELECT * FROM herbergen");
         $herbergen = array();
         while ($row = $result->fetch_assoc()) {
-            $herbergen[] = new Herbergen($row["ID"], $row["Omschrijving"], $row["Route"], $row["AantalDagen"]);
+            $herbergen[] = new Herberg($row["ID"], $row["Omschrijving"], $row["Route"], $row["AantalDagen"]);
         }
         $this->close();
         return $herbergen;
@@ -154,18 +114,25 @@ class Database {
         $result = $this->db->query("SELECT * FROM herbergen WHERE ID = $id");
         $herbergen = array();
         while ($row = $result->fetch_assoc()) {
-            $herbergen[] = new Herbergen($row["ID"], $row["Omschrijving"], $row["Route"], $row["AantalDagen"]);
+            $herbergen[] = new Herberg($row["ID"], $row["Omschrijving"], $row["Route"], $row["AantalDagen"]);
         }
         $this->close();
         return $herbergen;
     }
 
+    // klanten
+    // ID INT
+    // Naam VARCHAR(50)
+    // Email VARCHAR(100)
+    // Telefoon VARCHAR(20)
+    // Wachtwoord VARCHAR(100)
+    // Gewijzigd TIMESTAMP
     public function getKlanten() {
         $this->connect();
         $result = $this->db->query("SELECT * FROM klanten");
         $klanten = array();
         while ($row = $result->fetch_assoc()) {
-            $klanten[] = new Klanten($row["ID"], $row["Voornaam"], $row["Achternaam"], $row["Email"], $row["Telefoonnummer"]);
+            $klanten[] = new Klant($row["ID"], $row["Voornaam"], $row["Achternaam"], $row["Email"], $row["Telefoonnummer"]);
         }
         $this->close();
         return $klanten;
@@ -176,18 +143,107 @@ class Database {
         $result = $this->db->query("SELECT * FROM klanten WHERE ID = $id");
         $klanten = array();
         while ($row = $result->fetch_assoc()) {
-            $klanten[] = new Klanten($row["ID"], $row["Voornaam"], $row["Achternaam"], $row["Email"], $row["Telefoonnummer"]);
+            $klanten[] = new Klant($row["ID"], $row["Voornaam"], $row["Achternaam"], $row["Email"], $row["Telefoonnummer"]);
         }
         $this->close();
         return $klanten;
     }
 
+    // overnachtingen
+    // ID INT
+    // FKboekingenID INT (foreign key)
+    // FKherbergenID INT (foreign key)
+    // FKstatussenID INT (foreign key)
+    public function getOvernachtingen() {
+        $this->connect();
+        $result = $this->db->query("SELECT * FROM overnachtingen");
+        $overnachtingen = array();
+        while ($row = $result->fetch_assoc()) {
+            $overnachtingen[] = new Overnachting($row["ID"], $row["FKboekingenID"], $row["FKherbergenID"], $row["FKstatussenID"]);
+        }
+        $this->close();
+        return $overnachtingen;
+    }
+    
+    public function getOvernachtingByID($id) {
+        $this->connect();
+        $result = $this->db->query("SELECT * FROM overnachtingen WHERE ID = $id");
+        $overnachtingen = array();
+        while ($row = $result->fetch_assoc()) {
+            $overnachtingen[] = new Overnachting($row["ID"], $row["FKboekingenID"], $row["FKherbergenID"], $row["FKstatussenID"]);
+        }
+        $this->close();
+        return $overnachtingen;
+    }
+
+    public function setOvernachting($id, $fkBoekingenID, $fkHerbergenID, $fkStatussenID) {
+        $this->connect();
+        if (is_null($id)) {
+            $result = $this->db->query("INSERT INTO overnachtingen (FKboekingenID, FKherbergenID, FKstatussenID) VALUES ('$fkBoekingenID', '$fkHerbergenID', '$fkStatussenID')");
+        } else {
+            $result = $this->db->query("UPDATE overnachtingen SET FKboekingenID = '$fkBoekingenID', FKherbergenID = '$fkHerbergenID', FKstatussenID = '$fkStatussenID' WHERE ID = $id");
+        }
+        $this->close();
+    }
+
+    // pauzeplaatsen
+    // ID INT
+    // FKboekingenID INT (foreign key)
+    // FKrestaurantsID INT (foreign key)
+    // FKstatussenID INT (foreign key)
+
+    // restaurants
+    // ID INT
+    // Naam VARCHAR(50)
+    // Adres VARCHAR(50)
+    // Email VARCHAR(50)
+    // Telefoon VARCHAR(20)
+    // Coordinaten VARCHAR(20)
+    // Gewijzigd TIMESTAMP
+    public function getRestaurants() {
+        $this->connect();
+        $result = $this->db->query("SELECT * FROM restaurants");
+        $restaurants = array();
+        while ($row = $result->fetch_assoc()) {
+            $restaurants[] = new Restaurant($row["ID"], $row["Naam"], $row["Adres"], $row["Email"], $row["Telefoonnummer"]);
+        }
+        $this->close();
+        return $restaurants;
+    }
+
+    public function getRestaurantsByID($id) {
+        $this->connect();
+        $result = $this->db->query("SELECT * FROM restaurants WHERE ID = $id");
+        $restaurants = array();
+        while ($row = $result->fetch_assoc()) {
+            $restaurants[] = new Restaurant($row["ID"], $row["Naam"], $row["Adres"], $row["Email"], $row["Telefoonnummer"]);
+        }
+        $this->close();
+        return $restaurants;
+    }
+
+    public function setRestaurant($id, $naam, $adres, $email, $telefoonnummer) {
+        $this->connect();
+        if (is_null($id)) {
+            $result = $this->db->query("INSERT INTO restaurants (Naam, Adres, Email, Telefoonnummer) VALUES ('$naam', '$adres', '$email', '$telefoonnummer')");
+        } else {
+            $result = $this->db->query("UPDATE restaurants SET Naam = '$naam', Adres = '$adres', Email = '$email', Telefoonnummer = '$telefoonnummer' WHERE ID = $id");
+        }
+        $this->close();
+    }
+
+    // statussen
+    // ID INT
+    // StatusCode TINYINT(4)
+    // Status VARCHAR(40)
+    // Verwijderbaar BIT
+    // PINtoekennen BIT
     public function getStatussen() {
         $this->connect();
         $result = $this->db->query("SELECT * FROM statussen");
         $statussen = array();
         while ($row = $result->fetch_assoc()) {
-            $statussen[] = new Statussen($row["ID"], $row["StatusCode"], $row["Verwijderbaar"], $row["PINToekennen"]);
+            $statussen[] = new Status($row["ID"], $row["StatusCode"], $row["Verwijderbaar"], $row["PINToekennen"]);
         }
         $this->close();
         return $statussen;
@@ -198,43 +254,86 @@ class Database {
         $result = $this->db->query("SELECT * FROM statussen WHERE ID = $id");
         $statussen = array();
         while ($row = $result->fetch_assoc()) {
-            $statussen[] = new Statussen($row["ID"], $row["StatusCode"], $row["Verwijderbaar"], $row["PINToekennen"]);
+            $statussen[] = new Status($row["ID"], $row["StatusCode"], $row["Verwijderbaar"], $row["PINToekennen"]);
         }
         $this->close();
         return $statussen;
     }
 
+    
+    // tochten
+    // ID INT
+    // Omschrijving VARCHAR(40)
+    // Route VARCHAR(50)
+    // AantalDagen INT
     public function getTochten() {
         $this->connect();
         $result = $this->db->query("SELECT * FROM tochten");
         $tochten = array();
         while ($row = $result->fetch_assoc()) {
-            $tochten[] = new Tochten($row["ID"], $row["Omschrijving"], $row["AantalPersonen"], $row["Prijs"]);
+            $tochten[] = new Tocht($row["ID"], $row["Omschrijving"], $row["AantalPersonen"], $row["Prijs"]);
         }
         $this->close();
         return $tochten;
     }
 
-    public function getTochtenByID($id) {
+    public function getTochtByID($id) {
         $this->connect();
         $result = $this->db->query("SELECT * FROM tochten WHERE ID = $id");
         $tochten = array();
         while ($row = $result->fetch_assoc()) {
-            $tochten[] = new Tochten($row["ID"], $row["Omschrijving"], $row["AantalPersonen"], $row["Prijs"]);
+            $tochten[] = new Tocht($row["ID"], $row["Omschrijving"], $row["AantalPersonen"], $row["Prijs"]);
         }
         $this->close();
         return $tochten;
     }
 
+    public function setTocht($id, $omschrijving, $aantalPersonen, $prijs) {
+        $this->connect();
+        if (is_null($id)) {
+            $result = $this->db->query("INSERT INTO tochten (Omschrijving, AantalPersonen, Prijs) VALUES ('$omschrijving', $aantalPersonen, $prijs)");
+        } else {
+            $result = $this->db->query("UPDATE tochten SET Omschrijving = '$omschrijving', AantalPersonen = $aantalPersonen, Prijs = $prijs WHERE ID = $id");
+        }
+        $this->close();
+    }
+
+    // trackers
+    // ID INT
+    // PINCode INT
+    // Lat DOUBLE
+    // Lon DOUBLE
+    // Time BIGINT(20)
     public function getTrackers() {
         $this->connect();
         $result = $this->db->query("SELECT * FROM trackers");
         $trackers = array();
         while ($row = $result->fetch_assoc()) {
-            $trackers[] = new Trackers($row["ID"], $row["PINCode"], $row["Lat"], $row["Lon"], $row["Time"]);
+            $trackers[] = new Tracker($row["ID"], $row["PINCode"], $row["Lat"], $row["Lon"], $row["Time"]);
         }
         $this->close();
         return $trackers;
+    }
+
+    public function getTrackerByID($id) {
+        $this->connect();
+        $result = $this->db->query("SELECT * FROM trackers WHERE ID = $id");
+        $trackers = array();
+        while ($row = $result->fetch_assoc()) {
+            $trackers[] = new Tracker($row["ID"], $row["PINCode"], $row["Lat"], $row["Lon"], $row["Time"]);
+        }
+        $this->close();
+        return $trackers;
+    }
+
+    public function setTracker($id, $pin, $lat, $lon, $time) {
+        $this->connect();
+        if (is_null($id)) {
+            $result = $this->db->query("INSERT INTO trackers (PINCode, Lat, Lon, Time) VALUES ($pin, $lat, $lon, $time)");
+        } else {
+            $result = $this->db->query("UPDATE trackers SET PINCode = $pin, Lat = $lat, Lon = $lon, Time = $time WHERE ID = $id");
+        }
+        $this->close();
     }
 }
 
