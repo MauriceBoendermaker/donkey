@@ -192,6 +192,38 @@ class Database {
     // FKrestaurantsID INT (foreign key)
     // FKstatussenID INT (foreign key)
 
+	public function getPauzeplaatsen() {
+		$this->connect();
+		$result = $this->db->query("SELECT * FROM pauzeplaatsen");
+		$pauzeplaatsen = array();
+		while ($row = $result->fetch_assoc()) {
+			$pauzeplaatsen[] = new Pauzeplaats($row["ID"], $row["FKboekingenID"], $row["FKrestaurantsID"], $row["FKstatussenID"]);
+		}
+		$this->close();
+		return $pauzeplaatsen;
+	}
+
+	public function getPauzeplaatsByID($id) {
+		$this->connect();
+		$result = $this->db->query("SELECT * FROM pauzeplaatsen WHERE ID = $id");
+		$pauzeplaatsen = array();
+		while ($row = $result->fetch_assoc()) {
+			$pauzeplaatsen[] = new Pauzeplaats($row["ID"], $row["FKboekingenID"], $row["FKrestaurantsID"], $row["FKstatussenID"]);
+		}
+		$this->close();
+		return $pauzeplaatsen;
+	}
+
+	public function setPauzeplaats($id, $fkBoekingenID, $fkRestaurantsID, $fkStatussenID) {
+		$this->connect();
+		if (is_null($id)) {
+			$result = $this->db->query("INSERT INTO pauzeplaatsen (FKboekingenID, FKrestaurantsID, FKstatussenID) VALUES ('$fkBoekingenID', '$fkRestaurantsID', '$fkStatussenID')");
+		} else {
+			$result = $this->db->query("UPDATE pauzeplaatsen SET FKboekingenID = '$fkBoekingenID', FKrestaurantsID = '$fkRestaurantsID', FKstatussenID = '$fkStatussenID' WHERE ID = $id");
+		}
+		$this->close();
+	}
+
     // restaurants
     // ID INT
     // Naam VARCHAR(50)
@@ -259,7 +291,6 @@ class Database {
         $this->close();
         return $statussen;
     }
-
     
     // tochten
     // ID INT
@@ -334,88 +365,5 @@ class Database {
             $result = $this->db->query("UPDATE trackers SET PINCode = $pin, Lat = $lat, Lon = $lon, Time = $time WHERE ID = $id");
         }
         $this->close();
-    }
-}
-
-class Boeking
-{
-    private $id;
-    private $startDatum;
-    private $pincode;
-    private $fkTochtenID;
-    private $fkKlantenID;
-    private $fkStatussenID;
-
-    public function __construct($id, $startDatum, $pincode, $fkTochtenID, $fkKlantenID, $fkStatussenID)
-    {
-        $this->id = $id;
-        $this->startDatum = $startDatum;
-        $this->pincode = $pincode;
-        $this->fkTochtenID = $fkTochtenID;
-        $this->fkKlantenID = $fkKlantenID;
-        $this->fkStatussenID = $fkStatussenID;
-    }
-
-    // -= Get functions =-
-
-    public function getID()
-    {
-        return $this->id;
-    }
-
-    public function getStartDatum()
-    {
-        return $this->startDatum;
-    }
-
-    public function getPincode()
-    {
-        return $this->pincode;
-    }
-
-    public function getFkTochtenID()
-    {
-        return $this->fkTochtenID;
-    }
-
-    public function getFkKlantenID()
-    {
-        return $this->fkKlantenID;
-    }
-
-    public function getFkStatussenID()
-    {
-        return $this->fkStatussenID;
-    }
-
-    // -= Set functions =-
-    public function setID($id)
-    {
-        $this->id = $id;
-    }
-
-    public function setStartDatum($startDatum)
-    {
-        $this->startDatum = $startDatum;
-    }
-
-    public function setPincode($pincode)
-    {
-        $this->pincode = $pincode;
-    }
-
-    public function setFkTochtenID($fkTochtenID)
-    {
-        $this->fkTochtenID = $fkTochtenID;
-    }
-
-    public function setFkKlantenID($fkKlantenID)
-    {
-        $this->fkKlantenID = $fkKlantenID;
-    }
-
-    public function setFkStatussenID($fkStatussenID)
-    {
-        $this->fkStatussenID = $fkStatussenID;
     }
 }
