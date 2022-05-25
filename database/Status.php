@@ -47,7 +47,7 @@ class Status
 		return $this->verwijderbaar;
 	}
 
-	public function getPintoekeennen()
+	public function getPintoekennen()
 	{
 		return $this->pintoekeennen;
 	}
@@ -72,7 +72,7 @@ class Status
 		$this->verwijderbaar = $verwijderbaar;
 	}
 
-	public function setPintoekeennen($pintoekeennen)
+	public function setPintoekennen($pintoekeennen)
 	{
 		$this->pintoekeennen = $pintoekeennen;
 	}

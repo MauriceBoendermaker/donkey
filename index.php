@@ -44,7 +44,7 @@ require_once 'database/Database.php';
 
 <head>
     <title>Donkey Travel</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -115,15 +115,27 @@ require_once 'database/Database.php';
         <div class="crud-container">
             <h2>Donkey Travel Administrative Tools</h2>
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="">Welcome</a></li>
-                <li><a href="read_reservation">Reservations</a></li>
-                <li><a href="read_customer">Customers</a></li>
-                <li><a href="read_hostel">Hostels</a></li>
-                <li><a href="read_country">Countries</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="">Welcome</a></li>
+                <li class="nav-item"><a class="nav-link" href=" read_reservation">Boekingen</a></li>
+                <li class="nav-item"><a class="nav-link" href="read_reservation">Beheer</a></li>
                 <!-- red logout tab aligned to the right -->
-                <li style="float:right"><a href="logout">Logout</a></li>
+                <li class="nav-item float-end"><a class="nav-link" href="logout.php">Logout</a></li>
             </ul>
             <div class="crud-form">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Active</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
                 <!-- welcome screen saying name of user -->
                 <?php
                 if (isset($_SESSION['user'])) {
@@ -137,27 +149,35 @@ require_once 'database/Database.php';
                     This is the administrative tools for Donkey Travel.
                     You can add, update, delete, and view information about reservations, customers, hostels, and countries.
                 </div>
-                <!-- debug print database bookings -->
-                <?php
-                $db = new database\Database();
-                $bookings = $db->getBookings();
-                echo "<h3>Database Bookings</h3>";
-                echo "<table>";
-                echo "<tr><th>Booking ID</th><th>Guests</th><th>Customer First Name</th><th>Cusomer Last Name</th></th><th>Hostel</th><th>Hostel Location</th></th><th>Capacity</th><th>Reserved Spots</th></tr>";
 
-                foreach ($bookings as $booking) {
+                <!-- debug print database Statussen -->
+                <?php
+                $db = new database\Database("localhost", "root", "", "donkey", null);
+                $statussen = $db->getStatussen();
+
+                // statussen
+                // ID INT
+                // StatusCode TINYINT(4)
+                // Status VARCHAR(40)
+                // Verwijderbaar BIT
+                // PINtoekennen BIT
+                echo "<h3>Database Statussen</h3>";
+                echo "<table>";
+                echo "<tr>";
+                echo "<th>StatusCode</th>";
+                echo "<th>Status</th>";
+                echo "<th>Verwijderbaar</th>";
+                echo "<th>PINtoekennen</th>";
+                echo "<th>Delete</th>";
+                echo "</tr>";
+                foreach ($statussen as $status) {
                     echo "<tr>";
-                    echo "<td>" . $booking->getID() . "</td>";
-                    echo "<td>" . $booking->getGuests() . "</td>";
-                    echo "<td>" . $booking->getCustomer()->getFirstname() . "</td>";
-                    echo "<td>" . $booking->getCustomer()->getLastname() . "</td>";
-                    echo "<td>" . $booking->getHostels()[0]->getName() . "</td>";
-                    echo "<td>" . $booking->getHostels()[0]->getLocation() . "</td>";
-                    echo "<td>" . $booking->getHostels()[0]->getCapacity() . "</td>";
-                    echo "<td>" . $booking->getHostels()[0]->getReservedSpots() . "</td>";
+                    echo "<td>" . $status->getStatusCode() . "</td>";
+                    echo "<td>" . $status->getStatus() . "</td>";
+                    echo "<td>" . ($status->getVerwijderbaar() ? "true" : "false") . "</td>";
+                    echo "<td>" . ($status->getPintoekennen() ? "true" : "false") . "</td>";
                     echo "</tr>";
                 }
-                echo "</table>";
                 ?>
             </div>
             <!-- footer -->

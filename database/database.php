@@ -2,6 +2,17 @@
 
 namespace database;
 
+require_once 'boeking.php';
+require_once 'herberg.php';
+require_once 'klant.php';
+require_once 'overnachting.php';
+require_once 'pauzeplaats.php';
+require_once 'restaurant.php';
+require_once 'status.php';
+require_once 'tocht.php';
+require_once 'tracker.php';
+
+
 class Database {
     private $db;
     private $host;
@@ -275,7 +286,7 @@ class Database {
         $result = $this->db->query("SELECT * FROM statussen");
         $statussen = array();
         while ($row = $result->fetch_assoc()) {
-            $statussen[] = new Status($row["ID"], $row["StatusCode"], $row["Verwijderbaar"], $row["PINToekennen"]);
+            $statussen[] = new Status($row["ID"], $row["StatusCode"], $row["Status"], boolval($row["Verwijderbaar"]), boolval($row["PINtoekennen"]));
         }
         $this->close();
         return $statussen;
@@ -286,7 +297,7 @@ class Database {
         $result = $this->db->query("SELECT * FROM statussen WHERE ID = $id");
         $statussen = array();
         while ($row = $result->fetch_assoc()) {
-            $statussen[] = new Status($row["ID"], $row["StatusCode"], $row["Verwijderbaar"], $row["PINToekennen"]);
+            $statussen[] = new Status($row["ID"], $row["StatusCode"], $row["Status"], boolval($row["Verwijderbaar"]), boolval($row["PINtoekennen"]));
         }
         $this->close();
         return $statussen;
