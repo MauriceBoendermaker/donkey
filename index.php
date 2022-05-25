@@ -1,114 +1,7 @@
 <?php
-//crud+s database using object oriented php
-//database has the following data:
-// - bookings
-//      - id (int)
-//      - customer (int)
-//      - guests (int)
-//      - route (int) (foreign key)
-//      - start_date (date)
-//      - end_date (date)
-// - customer
-//      - id (int)
-//      - firstname (varchar)
-//      - lastname (varchar)
-//      - email (varchar)
-//      - phone (varchar)
-// - routes
-//      - id (int)
-//      - start (varchar)
-//      - end (varchar)
-//      - duration (time)
-//      - country (int) (foreign key)
-// - countries
-//      - id (int)
-//      - name (varchar)
-// - hostels
-//      - id (int)
-//      - name (varchar)
-//      - location (varchar)
-//      - capacity (int)
-//      - reserved_spots (int)
-// - bookings_hostels
-//      - id (int)
-//      - booking (int) (foreign key)
-//      - hostel (int) (foreign key)
-
-//using the database/Database.php class
-require_once 'database/Database.php';
+include "include/head.php";
 
 ?>
-<!-- crud+s main page styled by bootstrap -->
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Donkey Travel</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        html body {
-            background-color: #eee;
-            width: 100%;
-        }
-
-        .crud-container {
-            margin: 50px auto;
-        }
-
-        .crud-container .crud-form {
-            margin-bottom: 15px;
-            background: #f7f7f7;
-            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-            padding: 10px 30px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .crud-container h2 {
-            margin: 0 0 15px;
-        }
-
-        .form-control,
-        .btn {
-            min-height: 38px;
-            border-radius: 2px;
-        }
-
-        .btn {
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        td,
-        th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-
-        tr:hover {
-            background-color: #dddddd;
-        }
-
-        .crud-container .nav-tabs>li.active>a,
-        .crud-container .nav-tabs>li.active>a:focus,
-        .crud-container .nav-tabs>li.active>a:hover {
-            background-color: #f7f7f7;
-        }
-    </style>
-</head>
 
 <body>
     <div class="container">
@@ -119,7 +12,7 @@ require_once 'database/Database.php';
                 <li class="nav-item"><a class="nav-link" href=" read_reservation">Boekingen</a></li>
                 <li class="nav-item"><a class="nav-link" href="read_reservation">Beheer</a></li>
                 <!-- red logout tab aligned to the right -->
-                <li class="nav-item float-end"><a class="nav-link" href="logout.php">Logout</a></li>
+                <li class="nav-item float-end"><a class="nav-link text-danger" href="logout.php">Logout</a></li>
             </ul>
             <div class="crud-form">
                 <ul class="nav nav-pills">
@@ -178,6 +71,7 @@ require_once 'database/Database.php';
                     echo "<td>" . ($status->getPintoekennen() ? "true" : "false") . "</td>";
                     echo "</tr>";
                 }
+                echo "</table>";
                 ?>
             </div>
             <!-- footer -->
@@ -187,5 +81,4 @@ require_once 'database/Database.php';
         </div>
     </div>
 </body>
-
 </html>
