@@ -1,6 +1,6 @@
 <?php
 //using the database/Database.php class
-require_once 'database/Database.php';
+include_once 'database/Database.php';
 
 ?>
 <!-- crud+s main page styled by bootstrap -->
@@ -15,4 +15,5 @@ require_once 'database/Database.php';
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<link rel="stylesheet" href="css/style.css">
+
 </head>
