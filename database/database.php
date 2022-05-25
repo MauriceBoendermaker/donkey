@@ -313,7 +313,7 @@ class Database {
         $result = $this->db->query("SELECT * FROM tochten");
         $tochten = array();
         while ($row = $result->fetch_assoc()) {
-            $tochten[] = new Tocht($row["ID"], $row["Omschrijving"], $row["AantalPersonen"], $row["Prijs"]);
+            $tochten[] = new Tocht($row["ID"], $row["Omschrijving"], $row["Route"], $row["AantalDagen"]);
         }
         $this->close();
         return $tochten;
