@@ -4,12 +4,11 @@
 $db = new database\Database("localhost", "root", "", "donkey", null);
 $tochten = $db->getTochten();
 
-// statussen
+// tochten
 // ID INT
-// StatusCode TINYINT(4)
-// Status VARCHAR(40)
-// Verwijderbaar BIT
-// PINtoekennen BIT
+// Omschrijving VARCHAR(40)
+// Route VARCHAR(50)
+// AantalDagen INT
 echo "<h3>Database Tochten</h3>";
 echo "<table>";
 echo "<tr>";

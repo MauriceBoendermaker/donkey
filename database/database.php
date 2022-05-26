@@ -248,7 +248,7 @@ class Database {
         $result = $this->db->query("SELECT * FROM restaurants");
         $restaurants = array();
         while ($row = $result->fetch_assoc()) {
-            $restaurants[] = new Restaurant($row["ID"], $row["Naam"], $row["Adres"], $row["Email"], $row["Telefoonnummer"]);
+            $restaurants[] = new Restaurant($row["ID"], $row["Naam"], $row["Adres"], $row["Email"], $row["Telefoon"], $row["Coordinaten"], $row["Gewijzigd"]);
         }
         $this->close();
         return $restaurants;
@@ -259,18 +259,18 @@ class Database {
         $result = $this->db->query("SELECT * FROM restaurants WHERE ID = $id");
         $restaurants = array();
         while ($row = $result->fetch_assoc()) {
-            $restaurants[] = new Restaurant($row["ID"], $row["Naam"], $row["Adres"], $row["Email"], $row["Telefoonnummer"]);
+            $restaurants[] = new Restaurant($row["ID"], $row["Naam"], $row["Adres"], $row["Email"], $row["Telefoon"], $row["Coordinaten"], $row["Gewijzigd"]);
         }
         $this->close();
         return $restaurants;
     }
 
-    public function setRestaurant($id, $naam, $adres, $email, $telefoonnummer) {
+    public function setRestaurant($id, $naam, $adres, $email, $telefoon, $coordinaten, $gewijzigd) {
         $this->connect();
         if (is_null($id)) {
-            $result = $this->db->query("INSERT INTO restaurants (Naam, Adres, Email, Telefoonnummer) VALUES ('$naam', '$adres', '$email', '$telefoonnummer')");
+            $result = $this->db->query("INSERT INTO restaurants (Naam, Adres, Email, Telefoon, Coordinaten, Gewijzigd) VALUES ('$naam', '$adres', '$email', '$telefoon', '$coordinaten', '$gewijzigd')");
         } else {
-            $result = $this->db->query("UPDATE restaurants SET Naam = '$naam', Adres = '$adres', Email = '$email', Telefoonnummer = '$telefoonnummer' WHERE ID = $id");
+            $result = $this->db->query("UPDATE restaurants SET Naam = '$naam', Adres = '$adres', Email = '$email', Telefoon = '$telefoon', Coordinaten = '$coordinaten', Gewijzigd = '$gewijzigd' WHERE ID = $id");
         }
         $this->close();
     }
