@@ -131,6 +131,16 @@ class Database {
         return $herbergen;
     }
 
+    public function setHerberg($id, $omschrijving, $route, $aantalDagen) {
+        $this->connect();
+        if (is_null($id)) {
+            $result = $this->db->query("INSERT INTO herbergen (Omschrijving, Route, AantalDagen) VALUES ('$omschrijving', '$route', '$aantalDagen')");
+        } else {
+            $result = $this->db->query("UPDATE herbergen SET Omschrijving = '$omschrijving', Route = '$route', AantalDagen = '$aantalDagen' WHERE ID = $id");
+        }
+        $this->close();
+    }
+
     // klanten
     // ID INT
     // Naam VARCHAR(50)
@@ -143,7 +153,7 @@ class Database {
         $result = $this->db->query("SELECT * FROM klanten");
         $klanten = array();
         while ($row = $result->fetch_assoc()) {
-            $klanten[] = new Klant($row["ID"], $row["Voornaam"], $row["Achternaam"], $row["Email"], $row["Telefoonnummer"]);
+            $klanten[] = new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $row["Gewijzigd"]);
         }
         $this->close();
         return $klanten;
@@ -154,10 +164,20 @@ class Database {
         $result = $this->db->query("SELECT * FROM klanten WHERE ID = $id");
         $klanten = array();
         while ($row = $result->fetch_assoc()) {
-            $klanten[] = new Klant($row["ID"], $row["Voornaam"], $row["Achternaam"], $row["Email"], $row["Telefoonnummer"]);
+            $klanten[] = new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $row["Gewijzigd"]);
         }
         $this->close();
         return $klanten;
+    }
+
+    public function setKlant($id, $naam, $email, $telefoon, $wachtwoord) {
+        $this->connect();
+        if (is_null($id)) {
+            $result = $this->db->query("INSERT INTO klanten (Naam, Email, Telefoon, Wachtwoord) VALUES ('$naam', '$email', '$telefoon', '$wachtwoord')");
+        } else {
+            $result = $this->db->query("UPDATE klanten SET Naam = '$naam', Email = '$email', Telefoon = '$telefoon', Wachtwoord = '$wachtwoord' WHERE ID = $id");
+        }
+        $this->close();
     }
 
     // overnachtingen
@@ -301,6 +321,16 @@ class Database {
         }
         $this->close();
         return $statussen;
+    }
+
+    public function setStatus($id, $statusCode, $status, $verwijderbaar, $pintoekennen) {
+        $this->connect();
+        if (is_null($id)) {
+            $result = $this->db->query("INSERT INTO statussen (StatusCode, Status, Verwijderbaar, PINtoekennen) VALUES ('$statusCode', '$status', '$verwijderbaar', '$pintoekennen')");
+        } else {
+            $result = $this->db->query("UPDATE statussen SET StatusCode = '$statusCode', Status = '$status', Verwijderbaar = '$verwijderbaar', PINtoekennen = '$pintoekennen' WHERE ID = $id");
+        }
+        $this->close();
     }
     
     // tochten
