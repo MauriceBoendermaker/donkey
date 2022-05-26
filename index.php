@@ -1,7 +1,7 @@
 <?php include "include/head.php"; ?>
 
 <body>
-<?php include "include/nav_beheer.php"; ?>
+<?php include "include/nav_welcome.php"; ?>
                 <!-- welcome screen saying name of user -->
                     <?php
                     if (isset($_SESSION['user'])) {
