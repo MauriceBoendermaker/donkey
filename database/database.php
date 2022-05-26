@@ -114,7 +114,7 @@ class Database {
         $result = $this->db->query("SELECT * FROM herbergen");
         $herbergen = array();
         while ($row = $result->fetch_assoc()) {
-            $herbergen[] = new Herberg($row["ID"], $row["Omschrijving"], $row["Route"], $row["AantalDagen"]);
+            $herbergen[] = new Herberg($row["ID"], $row["Naam"], $row["Adres"], $row["Email"], $row["Telefoon"], $row["Coordinaten"], $row["Gewijzigd"]);
         }
         $this->close();
         return $herbergen;
@@ -125,7 +125,7 @@ class Database {
         $result = $this->db->query("SELECT * FROM herbergen WHERE ID = $id");
         $herbergen = array();
         while ($row = $result->fetch_assoc()) {
-            $herbergen[] = new Herberg($row["ID"], $row["Omschrijving"], $row["Route"], $row["AantalDagen"]);
+            $herbergen[] = new Herberg($row["ID"], $row["Naam"], $row["Adres"], $row["Email"], $row["Telefoon"], $row["Coordinaten"], $row["Gewijzigd"]);
         }
         $this->close();
         return $herbergen;

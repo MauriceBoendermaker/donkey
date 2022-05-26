@@ -22,15 +22,15 @@ class Herberg
 	private $coordinaten;
 	private $gewijzigd;
 
-	public function __construct()
+	public function __construct($id, $naam, $adres, $email, $telefoon, $coordinaten, $gewijzigd)
 	{
-		$this->id = 0;
-		$this->naam = '';
-		$this->adres = '';
-		$this->email = '';
-		$this->telefoon = '';
-		$this->coordinaten = '';
-		$this->gewijzigd = '';
+		$this->id = $id;
+		$this->naam = $naam;
+		$this->adres = $adres;
+		$this->email = $email;
+		$this->telefoon = $telefoon;
+		$this->coordinaten = $coordinaten;
+		$this->gewijzigd = $gewijzigd;
 	}
 
 	public function getId()
