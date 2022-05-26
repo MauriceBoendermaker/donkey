@@ -14,7 +14,6 @@ $gasten = $db->getKlanten();
 echo "<h3>Gasten</h3>";
 echo "<table>";
 echo "<tr>";
-echo "<th>ID</th>";
 echo "<th>Naam</th>";
 echo "<th>Email</th>";
 echo "<th>Telefoon</th>";
@@ -23,12 +22,11 @@ echo "<th>Gewijzigd</th>";
 echo "</tr>";
 foreach ($gasten as $gast) {
     echo "<tr>";
-    echo "<td>" . $gast['ID'] . "</td>";
-    echo "<td>" . $gast['Naam'] . "</td>";
-    echo "<td>" . $gast['Email'] . "</td>";
-    echo "<td>" . $gast['Telefoon'] . "</td>";
-    echo "<td>" . $gast['Wachtwoord'] . "</td>";
-    echo "<td>" . $gast['Gewijzigd'] . "</td>";
+    echo "<td>" . $gast->getNaam() . "</td>";
+    echo "<td>" . $gast->getEmail() . "</td>";
+    echo "<td>" . $gast->getTelefoon() . "</td>";
+    echo "<td>" . $gast->getWachtwoord() . "</td>";
+    echo "<td>" . $gast->getGewijzigd() . "</td>";
     echo "</tr>";
 }
 echo "</table>";
