@@ -8,4 +8,4 @@
 			<li class="nav-item"><a class="nav-link" href="gasten.php">Beheer</a></li>
 			<li class="nav-item ms-auto"><a class="nav-link text-danger" href="logout.php">Logout</a></li>
 		</ul>
-		<div class="crud-form row mx-0 ps-0">
+		<div class="crud-form row mx-0">
