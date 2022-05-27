@@ -9,18 +9,18 @@ class Boeking
 	private $id;
 	private $startDatum;
 	private $pincode;
-	private $fkTochtenID;
-	private $fkKlantenID;
-	private $fkStatussenID;
+	private $tocht;
+	private $klant;
+	private $status;
 
-	public function __construct($id, $startDatum, $pincode, $fkTochtenID, $fkKlantenID, $fkStatussenID)
+	public function __construct($id, $startDatum, $pincode, $tocht, $klant, $status)
 	{
 		$this->id = $id;
 		$this->startDatum = $startDatum;
 		$this->pincode = $pincode;
-		$this->fkTochtenID = $fkTochtenID;
-		$this->fkKlantenID = $fkKlantenID;
-		$this->fkStatussenID = $fkStatussenID;
+		$this->tocht = $tocht;
+		$this->klant = $klant;
+		$this->status = $status;
 	}
 
 	// -= Get functions =-
@@ -40,19 +40,19 @@ class Boeking
 		return $this->pincode;
 	}
 
-	public function getFkTochtenID()
+	public function getTocht()
 	{
-		return $this->fkTochtenID;
+		return $this->tocht;
 	}
 
-	public function getFkKlantenID()
+	public function getKlant()
 	{
-		return $this->fkKlantenID;
+		return $this->klant;
 	}
 
-	public function getFkStatussenID()
+	public function getStatus()
 	{
-		return $this->fkStatussenID;
+		return $this->status;
 	}
 
 	// -= Set functions =-
@@ -71,18 +71,18 @@ class Boeking
 		$this->pincode = $pincode;
 	}
 
-	public function setFkTochtenID($fkTochtenID)
+	public function setTocht($tocht)
 	{
-		$this->fkTochtenID = $fkTochtenID;
+		$this->tocht = $tocht;
 	}
 
-	public function setFkKlantenID($fkKlantenID)
+	public function setKlant($klant)
 	{
-		$this->fkKlantenID = $fkKlantenID;
+		$this->klant = $klant;
 	}
 
-	public function setFkStatussenID($fkStatussenID)
+	public function setStatus($status)
 	{
-		$this->fkStatussenID = $fkStatussenID;
+		$this->status = $status;
 	}
 }

@@ -27,12 +27,12 @@ foreach ($boekingen as $boeking) {
 	echo "<tr>";
 	echo "<td>" . $boeking->getStartdatum() . "</td>";
 //	echo "<td>" . $boeking->getEinddatum() . "</td>";
-	echo "<td>" . $boeking->getFKstatussenID() . "</td>";
+	echo "<td>" . $boeking->getStatus()->getStatus() . "</td>";
 	echo "<td>" . $boeking->getPINCode() . "</td>";
-	echo "<td>" . $boeking->getFKklantenID() . "</td>";
-	echo "<td>" . $boeking->getFKtochtenID() . "</td>";
-	echo "<td>" . $boeking->getFKklantenID() . "</td>";
-	echo "<td>" . $boeking->getFKklantenID() . "</td>";
+	echo "<td>" . $boeking->getKlant()->getNaam() . "</td>";
+	echo "<td>" . $boeking->getTocht()->getOmschrijving() . "</td>";
+	echo "<td>" . $boeking->getKlant()->getEmail() . "</td>";
+	echo "<td>" . $boeking->getKlant()->getTelefoon() . "</td>";
 	echo "</tr>";
 }
 echo "</table>";
