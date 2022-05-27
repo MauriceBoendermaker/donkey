@@ -22,12 +22,32 @@ echo "<th>Telefoon</th>";
 echo "<th>Coördinaten</th>";
 echo "</tr>";
 foreach ($restaurants as $restaurant) {
+
+	$coordinates = $restaurant->getCoordinaten();
+
+	$coordinatesWithout = preg_replace("/[^0-9. ]/", "", $coordinates);
+
+	$trimOutput = $coordinatesWithout;
+	$arr = explode(' ',trim($trimOutput));
+	if ($coordinatesWithout != "") {
+		$coord1 = $arr[0];
+	} else {
+		$coord1 = "";
+	}
+	if ($coordinatesWithout != "") {
+		$coord2 = $arr[1];
+	} else {
+		$coord2 = "";
+	}
+
+	$output = "https://graphhopper.com/maps/?point=" . $coord1 . " " . $coord2 . "&point=" . $coord1 . " " . $coord2 . "&locale=en-US&elevation=false&profile=car&use_miles=false&layer=OpenStreetMap.de";
+
 	echo "<tr>";
 	echo "<td>" . $restaurant->getNaam() . "</td>";
 	echo "<td>" . $restaurant->getAdres() . "</td>";
 	echo "<td>" . $restaurant->getEmail() . "</td>";
 	echo "<td>" . $restaurant->getTelefoon() . "</td>";
-	echo "<td>" . $restaurant->getCoordinaten() . "</td>";
+	echo "<td><a target='_blank' href='" . $output . "'>" . $restaurant->getCoordinaten() ."</td>";
 	echo "</tr>";
 }
 echo "</table>";
