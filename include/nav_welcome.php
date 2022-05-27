@@ -4,7 +4,7 @@
 		<h2>Donkey Travel Administrative Tools</h2>
 		<ul class="nav nav-tabs">
 			<li class="nav-item"><a class="nav-link active" aria-current="page" href="index.php">Welcome</a></li>
-			<li class="nav-item"><a class="nav-link" href="boekingen">Boekingen</a></li>
+			<li class="nav-item"><a class="nav-link" href="boekingen.php">Boekingen</a></li>
 			<li class="nav-item"><a class="nav-link" href="gasten.php">Beheer</a></li>
 			<li class="nav-item ms-auto"><a class="nav-link text-danger" href="logout.php">Logout</a></li>
 		</ul>
