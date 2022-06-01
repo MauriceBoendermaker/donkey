@@ -72,8 +72,11 @@ class Database
     {
         $this->connect();
         $result = $this->db->query("SELECT * FROM boekingen WHERE ID = $id");
-        $boekingen = array();
-        $row = $result->fetch_assoc;
+        // check if result is empty
+        if ($result->num_rows == 0) {
+            return null;
+        }
+        $row = $result->fetch_assoc();
         return new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $this->getTochtByID($row["FKtochtenID"]), $this->getKlantByID($row["FKklantenID"]), $this->getStatusByID($row["FKstatussenID"]));
     }
 
