@@ -22,12 +22,32 @@ echo "<th>Telefoon</th>";
 echo "<th>Coördinaten</th>";
 echo "</tr>";
 foreach ($herbergen as $herberg) {
+
+	$coordinates = $herberg->getCoordinaten();
+
+	$coordinatesWithout = preg_replace("/[^0-9. ]/", "", $coordinates);
+
+	$trimOutput = $coordinatesWithout;
+	$arr = explode(' ',trim($trimOutput));
+	if ($coordinatesWithout != "") {
+		$coord1 = $arr[0];
+	} else {
+		$coord1 = "";
+	}
+	if ($coordinatesWithout != "") {
+		$coord2 = $arr[1];
+	} else {
+		$coord2 = "";
+	}
+
+	$output = "https://graphhopper.com/maps/?point=" . $coord1 . " " . $coord2 . "&point=" . $coord1 . " " . $coord2 . "&locale=en-US&elevation=false&profile=car&use_miles=false&layer=OpenStreetMap.de";
+
 	echo "<tr>";
 	echo "<td>" . $herberg->getNaam() . "</td>";
 	echo "<td>" . $herberg->getAdres() . "</td>";
 	echo "<td>" . $herberg->getEmail() . "</td>";
 	echo "<td>" . $herberg->getTelefoon() . "</td>";
-	echo "<td>" . $herberg->getCoordinaten() . "</td>";
+	echo "<td><a target='_blank' href='" . $output . "'>" . $herberg->getCoordinaten() ."</td>";
 	echo "</tr>";
 }
 echo "</table>";

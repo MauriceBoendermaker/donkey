@@ -19,6 +19,22 @@ if (isset($_GET['id']))
 if (isset($_GET['view']))
 	$view = $_GET['view'];
 
+
+if (isset($_POST['cancel'])) {
+	home();
+}
+
+if (isset($_POST['delete']) && isset($_POST['id'])) {
+	$db->deleteBoeking($_POST['id']);
+    home();
+}
+
+function home()
+{
+	header('Location: boekingen.php');
+	exit();
+}
+
 switch ($view) {
 	case 'edit':
 		$boeking = $db->getBoekingByID($id);
@@ -62,7 +78,7 @@ switch ($view) {
 								<?php echo $klant->getID(); ?>"
 							<?php if ($klant->getID() == $boeking->getKlant()->getID()) echo "selected"; ?>
 						>
-							<?php echo $klant->getNaam() . " - " . $klant->getEmail() . " - " . $klant->getTelefoon();; ?>
+							<?php echo $klant->getNaam() . " - " . $klant->getEmail() . " - " . $klant->getTelefoon(); ?>
 						</option>
 					<?php } ?>
 				</select>
@@ -90,7 +106,8 @@ switch ($view) {
 		$boeking = $db->getBoekingByID($id);
 		?>
 		<h3>Boeking verwijderen</h3>
-		<form>
+		<form action="" method="post">
+			<input type="hidden" id="ID" name="id" value="<?php echo $id; ?>">
 			<div class="form-group">
 				<label for="startdatum">Startdatum:</label>
 				<input value="<?php echo $boeking->getStartdatum(); ?>" type="date" class="form-control" id="startdatum" disabled required>
@@ -112,8 +129,8 @@ switch ($view) {
 				<input value="<?php echo $boeking->getTocht()->getOmschrijving(); ?>" type="text" class="form-control" id="tocht" disabled>
 			</div>
 			<br/>
-			<button type="submit" class="btn btn-primary">Verwijderen</button>
-			<button type="submit" class="btn btn-primary">Annuleren</button>
+			<button name="delete" type="submit" class="btn btn-primary">Verwijderen</button>
+			<button name="cancel" type="submit" class="btn btn-primary">Annuleren</button>
 		</form>
 	<?php
 		break;

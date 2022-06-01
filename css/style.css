@@ -39,7 +39,7 @@ tr:nth-child(even) {
   background-color: #dddddd; }
 
 tr:hover {
-  background-color: #dddddd; }
+  background-color: #bfbfbf; }
 
 .crud-container .nav-tabs > li.active > a,
 .crud-container .nav-tabs > li.active > a:focus,
