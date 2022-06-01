@@ -21,8 +21,69 @@ if (isset($_GET['view']))
 
 switch ($view) {
 	case 'edit':
+		$boeking = $db->getBoekingByID($id);
 		?>
 		<h3>Boeking wijzigen</h3>
+		<form>
+			<div class="form-group">
+				<label for="startdatum">Startdatum</label>
+				<input value="<?php echo $boeking->getStartdatum(); ?>" type="date" class="form-control" id="startdatum" required>
+			</div>
+			<div class="form-group">
+				<label for="status">Status:</label>
+				<select class="form-select" aria-label="Select status">
+					<?php foreach ($db->getStatussen() as $status) { ?>
+						<option value="
+							<?php echo $status->getID(); ?>"
+							<?php if ($status->getID() == $boeking->getStatus()->getID()) echo "selected"; ?>
+						>
+							<?php echo $status->getStatus(); ?>
+						</option>
+					<?php } ?>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="pincode">PIN code:</label>
+				<?php
+					if ($boeking->getPincode() == null) {
+						echo "<input type='text' class='form-control' id='pincode' value='Geen PIN code uitgegeven.' disabled>";
+					} else {
+						echo "<input type='text' class='form-control' id='pincode' value='" . $boeking->getPincode() . "' disabled>";
+					}
+				?>
+			</div>
+			<div class="form-group">
+				<label for="klant">Klant:</label>
+				<select class="form-select" aria-label="Select klant">
+					<?php foreach ($db->getKlanten() as $klant) {
+						if ($klant->getNaam() == "admin") continue;
+						?>
+						<option value="
+								<?php echo $klant->getID(); ?>"
+							<?php if ($klant->getID() == $boeking->getKlant()->getID()) echo "selected"; ?>
+						>
+							<?php echo $klant->getNaam() . " - " . $klant->getEmail() . " - " . $klant->getTelefoon();; ?>
+						</option>
+					<?php } ?>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="tocht">Tocht:</label>
+				<select class="form-select" aria-label="Select tocht">
+					<?php foreach ($db->getTochten() as $tocht) { ?>
+						<option value="
+								<?php echo $tocht->getID(); ?>"
+							<?php if ($tocht->getID() == $boeking->getTocht()->getID()) echo "selected"; ?>
+						>
+							<?php echo $tocht->getOmschrijving() . " (" . $tocht->getAantalDagen() . " dagen)"; ?>
+						</option>
+					<?php } ?>
+				</select>
+			</div>
+			<br/>
+			<button type="submit" class="btn btn-primary">Bewaren</button>
+			<button type="submit" class="btn btn-primary">Annuleren</button>
+		</form>
 	<?php
 		break;
 	case 'delete':
@@ -31,24 +92,24 @@ switch ($view) {
 		<h3>Boeking verwijderen</h3>
 		<form>
 			<div class="form-group">
-				<label for="startdatum">Startdatum</label>
-				<input value="<?php echo $boeking->getStartdatum(); ?>" type="date" class="form-control" id="startdatum" disabled>
+				<label for="startdatum">Startdatum:</label>
+				<input value="<?php echo $boeking->getStartdatum(); ?>" type="date" class="form-control" id="startdatum" disabled required>
 			</div>
 			<div class="form-group">
-				<label for="status">Status</label>
-				<input type="text" class="form-control" id="status" disabled>
+				<label for="status">Status:</label>
+				<input value="<?php echo $boeking->getStatus()->getStatus(); ?>" type="text" class="form-control" id="status" disabled>
 			</div>
 			<div class="form-group">
-				<label for="klant">Klant</label>
-				<input type="text" class="form-control" id="klant" disabled>
+				<label for="klant">Klant:</label>
+				<input value="<?php echo $boeking->getKlant()->getNaam(); ?>" type="text" class="form-control" id="klant" disabled>
 			</div>
 			<div class="form-group">
-				<label for="emailTelefoon">Email/Telefoon</label>
-				<input type="text" class="form-control" id="emailTelefoon" disabled>
+				<label for="emailTelefoon">Email/Telefoon:</label>
+				<input value="<?php echo $boeking->getKlant()->getEmail() . " - " . $boeking->getKlant()->getTelefoon(); ?>" type="text" class="form-control" id="emailTelefoon" disabled>
 			</div>
 			<div class="form-group">
-				<label for="tocht">Tocht</label>
-				<input type="text" class="form-control" id="tocht" disabled>
+				<label for="tocht">Tocht:</label>
+				<input value="<?php echo $boeking->getTocht()->getOmschrijving(); ?>" type="text" class="form-control" id="tocht" disabled>
 			</div>
 			<br/>
 			<button type="submit" class="btn btn-primary">Verwijderen</button>
@@ -62,6 +123,7 @@ switch ($view) {
 <table>
 <tr>
 	<th>Startdatum</th>
+	<th>Einddatum</th>
 	<th>Status</th>
 	<th>Pincode</th>
 	<th>Klantnaam</th>
@@ -74,6 +136,7 @@ switch ($view) {
 foreach ($boekingen as $boeking) {
 	echo "<tr>";
 	echo "<td>" . $boeking->getStartdatum() . "</td>";
+	echo "<td>" . date('Y-m-d', strtotime($boeking->getStartdatum() . ' + ' . $boeking->getTocht()->getAantalDagen() . ' days')) . "</td>";
 	echo "<td>" . $boeking->getStatus()->getStatus() . "</td>";
 	echo "<td>" . $boeking->getPINCode() . "</td>";
 	echo "<td>" . $boeking->getKlant()->getNaam() . "</td>";
@@ -81,8 +144,8 @@ foreach ($boekingen as $boeking) {
 	echo "<td>" . $boeking->getKlant()->getEmail() . "</td>";
 	echo "<td>" . $boeking->getKlant()->getTelefoon() . "</td>";
 	echo "<td class='px-0 d-flex justify-content-center'>
-			<a class='mx-1' href='pauzeplaatsen_beheer.php'><button><i class='fa-solid fa-pause'></i></button></a>
-			<a class='mx-1' href='overnachtingsplaatsen_beheer.php'><button><i class='fa-solid fa-bed'></i></button></a>
+			<a class='mx-1' href='pauzeplaatsen_beheer.php?id={$boeking->getID()}'><button><i class='fa-solid fa-pause'></i></button></a>
+			<a class='mx-1' href='overnachtingsplaatsen_beheer.php?id={$boeking->getID()}'><button><i class='fa-solid fa-bed'></i></button></a>
 			<a class='mx-1' href='?id={$boeking->getID()}&view=edit'><button><i class='fa-solid fa-pen-to-square'></i></button></a>
 			<a class='mx-1' href='?id={$boeking->getID()}&view=delete'><button><i class='fa-solid fa-trash-can'></i></button></a>
 		</td>";
