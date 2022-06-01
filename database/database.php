@@ -112,6 +112,12 @@ class Database
         }
     }
 
+    public function deleteBoeking($id)
+    {
+        $this->connect();
+        $result = $this->db->query("DELETE FROM boekingen WHERE ID = $id");
+    }
+
     // herbergen
     // ID INT
     // Naam VARCHAR(50)
@@ -147,6 +153,12 @@ class Database
         } else {
             $result = $this->db->query("UPDATE herbergen SET Omschrijving = '$omschrijving', Route = '$route', AantalDagen = '$aantalDagen' WHERE ID = $id");
         }
+    }
+
+    public function deleteHerberg($id)
+    {
+        $this->connect();
+        $result = $this->db->query("DELETE FROM herbergen WHERE ID = $id");
     }
 
     // klanten
@@ -185,6 +197,12 @@ class Database
         }
     }
 
+    public function deleteKlant($id)
+    {
+        $this->connect();
+        $result = $this->db->query("DELETE FROM klanten WHERE ID = $id");
+    }
+
     // overnachtingen
     // ID INT
     // FKboekingenID INT (foreign key)
@@ -217,6 +235,12 @@ class Database
         } else {
             $result = $this->db->query("UPDATE overnachtingen SET FKboekingenID = '$fkBoekingenID', FKherbergenID = '$fkHerbergenID', FKstatussenID = '$fkStatussenID' WHERE ID = $id");
         }
+    }
+
+    public function deleteOvernachting($id)
+    {
+        $this->connect();
+        $result = $this->db->query("DELETE FROM overnachtingen WHERE ID = $id");
     }
 
     // pauzeplaatsen
@@ -252,6 +276,12 @@ class Database
         } else {
             $result = $this->db->query("UPDATE pauzeplaatsen SET FKboekingenID = '$fkBoekingenID', FKrestaurantsID = '$fkRestaurantsID', FKstatussenID = '$fkStatussenID' WHERE ID = $id");
         }
+    }
+
+    public function deletePauzeplaats($id)
+    {
+        $this->connect();
+        $result = $this->db->query("DELETE FROM pauzeplaatsen WHERE ID = $id");
     }
 
     // restaurants
@@ -291,6 +321,12 @@ class Database
         }
     }
 
+    public function deleteRestaurant($id)
+    {
+        $this->connect();
+        $result = $this->db->query("DELETE FROM restaurants WHERE ID = $id");
+    }
+
     // statussen
     // ID INT
     // StatusCode TINYINT(4)
@@ -324,6 +360,12 @@ class Database
         } else {
             $result = $this->db->query("UPDATE statussen SET StatusCode = '$statusCode', Status = '$status', Verwijderbaar = '$verwijderbaar', PINtoekennen = '$pintoekennen' WHERE ID = $id");
         }
+    }
+
+    public function deleteStatus($id)
+    {
+        $this->connect();
+        $result = $this->db->query("DELETE FROM statussen WHERE ID = $id");
     }
 
     // tochten
@@ -360,6 +402,12 @@ class Database
         }
     }
 
+    public function deleteTocht($id)
+    {
+        $this->connect();
+        $result = $this->db->query("DELETE FROM tochten WHERE ID = $id");
+    }
+
     // trackers
     // ID INT
     // PINCode INT
@@ -393,5 +441,11 @@ class Database
         } else {
             $result = $this->db->query("UPDATE trackers SET PINCode = $pin, Lat = $lat, Lon = $lon, Time = $time WHERE ID = $id");
         }
+    }
+
+    public function deleteTracker($id)
+    {
+        $this->connect();
+        $result = $this->db->query("DELETE FROM trackers WHERE ID = $id");
     }
 }
