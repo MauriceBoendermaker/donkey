@@ -129,7 +129,7 @@ switch ($view) {
 				<input value="<?php echo $boeking->getTocht()->getOmschrijving(); ?>" type="text" class="form-control" id="tocht" disabled>
 			</div>
 			<br/>
-			<button name="delete" type="submit" class="btn btn-primary">Verwijderen</button>
+			<button name="delete" type="submit" class="btn btn-danger">Verwijderen</button>
 			<button name="cancel" type="submit" class="btn btn-primary">Annuleren</button>
 		</form>
 	<?php

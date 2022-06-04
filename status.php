@@ -85,17 +85,19 @@ switch ($view) {
 			</div>
 			<div class="form-group">
 				<label for="verwijderbaar">Verwijderbaar:</label>
-				<input type='checkbox' class='' id='verwijderbaar' <?php if ($status->getVerwijderbaar() == 1) {
-					echo "checked";
-				} ?> disabled>
+                <input type='text' class='form-control' id='verwijderbaar' value='<?php if ($status->getVerwijderbaar() == 1) {
+                    echo "Ja";
+                } else if ($status->getVerwijderbaar() == 0) {
+                    echo "Nee";
+                } ?>' disabled>
 			</div>
 			<div class="form-group">
 				<label for="pinToekennen">PIN toekennen:</label>
-				<input type='checkbox' class='' id='verwijderbaar' <?php if ($status->getPintoekennen() == 1) {
-					echo "checked";
+				<input type='text' class='form-control' id='verwijderbaar' value='<?php if ($status->getPintoekennen() == 1) {
+					echo "Ja";
 				} else if ($status->getPintoekennen() == 0) {
-					echo "";
-				} ?> disabled>
+					echo "Nee";
+				} ?>' disabled>
 			</div>
 			<br/>
 			<button type="submit" name="save" class="btn btn-danger">Verwijderen</button>
