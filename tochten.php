@@ -9,21 +9,100 @@ $tochten = $db->getTochten();
 // Omschrijving VARCHAR(40)
 // Route VARCHAR(50)
 // AantalDagen INT
-echo "<h3>Database Tochten</h3>";
-echo "<table>";
-echo "<tr>";
-echo "<th>Omschrijving</th>";
-echo "<th>Route naam</th>";
-echo "<th>Aantal dagen</th>";
-echo "<th>Delete</th>";
-echo "</tr>";
-foreach ($tochten as $tocht) {
-	echo "<tr>";
-	echo "<td>" . $tocht->getOmschrijving() . "</td>";
-	echo "<td>" . $tocht->getRoute() . "</td>";
-	echo "<td>" . $tocht->getAantalDagen() . "</td>";
-	echo "</tr>";
+
+$id = -1;
+$view = null;
+if (isset($_GET['id']))
+	$id = $_GET['id'];
+if (isset($_GET['view']))
+	$view = $_GET['view'];
+
+
+if (isset($_POST['cancel'])) {
+	home();
 }
-echo "</table>";
+
+if (isset($_POST['delete']) && isset($_POST['id'])) {
+	$db->deleteTocht($_POST['id']);
+	home();
+}
+
+function home()
+{
+	header('Location: tochten.php');
+	exit();
+}
+
+switch ($view) {
+	case 'edit':
+		$tocht = $db->getTochtByID($id);
+		?>
+		<h3>Tocht gegevens wijzigen</h3>
+		<form action="" method="post">
+			<div class="form-group">
+				<label for="omschrijving">Omschrijving:</label>
+				<input type='text' class='form-control' id='omschrijving' value='<?php echo $tocht->getOmschrijving(); ?>'>
+			</div>
+			<div class="form-group">
+				<label for="routeNaam">Route naam:</label>
+				<input type='text' class='form-control' id='routeNaam' value='<?php echo $tocht->getRoute(); ?>'>
+			</div>
+			<div class="form-group">
+				<label for="aantalDagen">Aantal dagen:</label>
+				<input type='number' class='form-control' id='aantalDagen' value='<?php echo $tocht->getAantaldagen(); ?>'>
+			</div>
+			<br/>
+			<button type="submit" name="save" class="btn btn-success">Bewaren</button>
+			<button type="submit" name="cancel" class="btn btn-primary">Annuleren</button>
+		</form>
+		<?php
+		break;
+	case 'delete':
+		$tocht = $db->getTochtByID($id);
+		?>
+		<h3>Tocht verwijderen</h3>
+		<form action="" method="post">
+			<div class="form-group">
+				<label for="omschrijving">Omschrijving:</label>
+				<input type='text' class='form-control' id='omschrijving' value='<?php echo $tocht->getOmschrijving(); ?>' disabled>
+			</div>
+			<div class="form-group">
+				<label for="routeNaam">Route naam:</label>
+				<input type='text' class='form-control' id='routeNaam' value='<?php echo $tocht->getRoute(); ?>' disabled>
+			</div>
+			<div class="form-group">
+				<label for="aantalDagen">Aantal dagen:</label>
+				<input type='number' class='form-control' id='aantalDagen' value='<?php echo $tocht->getAantaldagen(); ?>' disabled>
+			</div>
+			<br/>
+			<button type="submit" name="save" class="btn btn-danger">Verwijderen</button>
+			<button type="submit" name="cancel" class="btn btn-primary">Annuleren</button>
+		</form>
+		<?php
+		break;
+	default:
+?>
+<h3>Database Tochten</h3>
+<table>
+	<tr>
+		<th>Omschrijving</th>
+		<th>Route naam</th>
+		<th>Aantal dagen</th>
+		<th class="d-flex justify-content-center"><a class='mx-1' href='?view=add'><button><i class="fa-solid fa-plus"></i></button></a></th>
+	</tr>
+<?php
+	foreach ($tochten as $tocht) {
+		echo "<tr>";
+		echo "<td>" . $tocht->getOmschrijving() . "</td>";
+		echo "<td>" . $tocht->getRoute() . "</td>";
+		echo "<td>" . $tocht->getAantalDagen() . "</td>";
+		echo "<td class='px-0 d-flex justify-content-center'>
+				<a class='mx-1' href='?id={$tocht->getID()}&view=edit'><button><i class='fa-solid fa-pen-to-square'></i></button></a>
+				<a class='mx-1' href='?id={$tocht->getID()}&view=delete'><button><i class='fa-solid fa-trash-can'></i></button></a>
+			</td>";
+		echo "</tr>";
+	}
+	echo "</table>";
+}
 ?>
 <?php include "include/footer.php"; ?>

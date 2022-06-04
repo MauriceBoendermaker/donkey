@@ -138,38 +138,37 @@ switch ($view) {
 ?>
 <h3>Database Boekingen</h3>
 <table>
-<tr>
-	<th>Startdatum</th>
-	<th>Einddatum</th>
-	<th>Status</th>
-	<th>Pincode</th>
-	<th>Klantnaam</th>
-	<th>Tocht</th>
-	<th>Email</th>
-	<th>Telefoon</th>
-	<th class="d-flex justify-content-center"><button onClick='window.location.reload();'><i class='fa-solid fa-arrow-rotate-right'></i></button></th>
-</tr>
+	<tr>
+		<th>Startdatum</th>
+		<th>Einddatum</th>
+		<th>Status</th>
+		<th>Pincode</th>
+		<th>Klantnaam</th>
+		<th>Tocht</th>
+		<th>Email</th>
+		<th>Telefoon</th>
+		<th class="d-flex justify-content-center"><button onClick='window.location.reload();'><i class='fa-solid fa-arrow-rotate-right'></i></button></th>
+	</tr>
 	<?php
-foreach ($boekingen as $boeking) {
-	echo "<tr>";
-	echo "<td>" . $boeking->getStartdatum() . "</td>";
-	echo "<td>" . date('Y-m-d', strtotime($boeking->getStartdatum() . ' + ' . $boeking->getTocht()->getAantalDagen() . ' days')) . "</td>";
-	echo "<td>" . $boeking->getStatus()->getStatus() . "</td>";
-	echo "<td>" . $boeking->getPINCode() . "</td>";
-	echo "<td>" . $boeking->getKlant()->getNaam() . "</td>";
-	echo "<td>" . $boeking->getTocht()->getOmschrijving() . "</td>";
-	echo "<td>" . $boeking->getKlant()->getEmail() . "</td>";
-	echo "<td>" . $boeking->getKlant()->getTelefoon() . "</td>";
-	echo "<td class='px-0 d-flex justify-content-center'>
-			<a class='mx-1' href='pauzeplaatsen_beheer.php?id={$boeking->getID()}'><button><i class='fa-solid fa-pause'></i></button></a>
-			<a class='mx-1' href='overnachtingsplaatsen_beheer.php?id={$boeking->getID()}'><button><i class='fa-solid fa-bed'></i></button></a>
-			<a class='mx-1' href='?id={$boeking->getID()}&view=edit'><button><i class='fa-solid fa-pen-to-square'></i></button></a>
-			<a class='mx-1' href='?id={$boeking->getID()}&view=delete'><button><i class='fa-solid fa-trash-can'></i></button></a>
-		</td>";
-	echo "</tr>";
-}
-echo "</table>";
-
+	foreach ($boekingen as $boeking) {
+		echo "<tr>";
+		echo "<td>" . $boeking->getStartdatum() . "</td>";
+		echo "<td>" . date('Y-m-d', strtotime($boeking->getStartdatum() . ' + ' . $boeking->getTocht()->getAantalDagen() . ' days')) . "</td>";
+		echo "<td>" . $boeking->getStatus()->getStatus() . "</td>";
+		echo "<td>" . $boeking->getPINCode() . "</td>";
+		echo "<td>" . $boeking->getKlant()->getNaam() . "</td>";
+		echo "<td>" . $boeking->getTocht()->getOmschrijving() . "</td>";
+		echo "<td>" . $boeking->getKlant()->getEmail() . "</td>";
+		echo "<td>" . $boeking->getKlant()->getTelefoon() . "</td>";
+		echo "<td class='px-0 d-flex justify-content-center'>
+				<a class='mx-1' href='pauzeplaatsen_beheer.php?id={$boeking->getID()}'><button><i class='fa-solid fa-pause'></i></button></a>
+				<a class='mx-1' href='overnachtingsplaatsen_beheer.php?id={$boeking->getID()}'><button><i class='fa-solid fa-bed'></i></button></a>
+				<a class='mx-1' href='?id={$boeking->getID()}&view=edit'><button><i class='fa-solid fa-pen-to-square'></i></button></a>
+				<a class='mx-1' href='?id={$boeking->getID()}&view=delete'><button><i class='fa-solid fa-trash-can'></i></button></a>
+			</td>";
+		echo "</tr>";
+	}
+	echo "</table>";
 }
 ?>
 <?php include "include/footer.php"; ?>
