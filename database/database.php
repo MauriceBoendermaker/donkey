@@ -161,6 +161,13 @@ class Database
         $result = $this->db->query("DELETE FROM herbergen WHERE ID = $id");
     }
 
+	public function addHerberg($naam, $adres, $email, $telefoon, $coordinaten)
+	{
+		$this->connect();
+		$result = $this->db->query("INSERT INTO herbergen (Naam, Adres, Email, Telefoon, Coordinaten) VALUES ('$naam', '$adres', '$email', '$telefoon', '$coordinaten')");
+	}
+
+
     // klanten
     // ID INT
     // Naam VARCHAR(50)
