@@ -27,6 +27,11 @@ if (isset($_POST['delete']) && isset($_POST['id'])) {
 	home();
 }
 
+if (isset($_POST['add'])) {
+    $db->addTocht($_POST['omschrijving'], $_POST['routeNaam'], $_POST['aantalDagen']);
+    home();
+}
+
 function home()
 {
 	header('Location: tochten.php');
@@ -80,6 +85,28 @@ switch ($view) {
 		</form>
 		<?php
 		break;
+    case 'add':
+        ?>
+        <h3>Tocht toevoegen</h3>
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="omschrijving">Omschrijving:</label>
+                <input type='text' class='form-control' id='omschrijving' name='omschrijving'>
+            </div>
+            <div class="form-group">
+                <label for="routeNaam">Route naam:</label>
+                <input type='text' class='form-control' id='routeNaam' name='routeNaam'>
+            </div>
+            <div class="form-group">
+                <label for="aantalDagen">Aantal dagen:</label>
+                <input type='number' class='form-control' id='aantalDagen' name='aantalDagen'>
+            </div>
+            <br/>
+            <button type="submit" name="add" class="btn btn-success">Toevoegen</button>
+            <button type="submit" name="cancel" class="btn btn-primary">Annuleren</button>
+        </form>
+        <?php
+        break;
 	default:
 ?>
 <h3>Database Tochten</h3>

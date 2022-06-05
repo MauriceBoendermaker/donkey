@@ -30,6 +30,11 @@ if (isset($_POST['delete']) && isset($_POST['id'])) {
 	home();
 }
 
+if (isset($_POST['add'])) {
+    $db->addRestaurant($_POST['naam'], $_POST['adres'], $_POST['email'], $_POST['telefoon'], $_POST['coordinaten']);
+    home();
+}
+
 function home()
 {
 	header('Location: restaurants.php');
@@ -67,9 +72,9 @@ switch ($view) {
 			<button type="submit" name="cancel" class="btn btn-primary">Annuleren</button>
 		</form>
 		<?php
-		break;
-	case 'delete':
-		$restaurant = $db->getRestaurantByID($id);
+            break;
+        case 'delete':
+            $restaurant = $db->getRestaurantByID($id);
 		?>
 		<h3>Restaurant verwijderen</h3>
 		<form action="" method="post">
@@ -97,9 +102,39 @@ switch ($view) {
 			<button type="submit" name="delete" class="btn btn-danger">Verwijderen</button>
 			<button type="submit" name="cancel" class="btn btn-primary">Annuleren</button>
 		</form>
-		<?php
-		break;
-	default:
+        <?php
+            break;
+        case 'add':
+        ?>
+        <h3>Restaurant toevoegen</h3>
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="naam">Naam:</label>
+                <input type='text' class='form-control' id='naam' name='naam'>
+            </div>
+            <div class="form-group">
+                <label for="adres">Adres:</label>
+                <input type='text' class='form-control' id='adres' name='adres'>
+            </div>
+            <div class="form-group">
+                <label for="email">Emailadres:</label>
+                <input type='email' class='form-control' id='email' name='email'>
+            </div>
+            <div class="form-group">
+                <label for="telefoon">Mobiele telefoonnummer:</label>
+                <input type='text' class='form-control' id='telefoon' name='telefoon'>
+            </div>
+            <div class="form-group">
+                <label for="coordinaten">Coördinaten:</label>
+                <input type='text' class='form-control' id='coordinaten' name='coordinaten'>
+            </div>
+            <br/>
+            <button type="submit" name="add" class="btn btn-success">Toevoegen</button>
+            <button type="submit" name="cancel" class="btn btn-primary">Annuleren</button>
+        </form>
+        <?php
+            break;
+        default:
 ?>
 <h3>Database Restaurants</h3>
 <table>

@@ -28,6 +28,11 @@ if (isset($_POST['delete']) && isset($_POST['id'])) {
 	home();
 }
 
+if (isset($_POST['add'])) {
+    $db->addStatus($_POST['statusCode'], $_POST['status'], $_POST['verwijderbaar'], $_POST['PINtoekennen']);
+    home();
+}
+
 function home()
 {
 	header('Location: status.php');
@@ -41,8 +46,8 @@ switch ($view) {
 		<h3>Tocht gegevens wijzigen</h3>
 		<form action="" method="post">
 			<div class="form-group">
-				<label for="statuscode">Code:</label>
-				<input type='number' class='form-control' id='statuscode' value='<?php echo $status->getStatusCode(); ?>'>
+				<label for="statusCode">Code:</label>
+				<input type='number' class='form-control' id='statusCode' value='<?php echo $status->getStatusCode(); ?>'>
 			</div>
 			<div class="form-group">
 				<label for="status">Status:</label>
@@ -58,7 +63,7 @@ switch ($view) {
 			</div>
 			<div class="form-group">
 				<label for="pinToekennen">PIN toekennen:</label>
-				<input type='checkbox' class='' id='verwijderbaar' <?php if ($status->getPintoekennen() == 1) {
+				<input type='checkbox' class='' id='pinToekennen' <?php if ($status->getPintoekennen() == 1) {
 					echo "checked";
 				} else if ($status->getPintoekennen() == 0) {
 					echo "";
@@ -76,8 +81,8 @@ switch ($view) {
 		<h3>Tocht verwijderen</h3>
 		<form action="" method="post">
 			<div class="form-group">
-				<label for="statuscode">Code:</label>
-				<input type='number' class='form-control' id='statuscode' value='<?php echo $status->getStatusCode(); ?>' disabled>
+				<label for="statusCode">Code:</label>
+				<input type='number' class='form-control' id='statusCode' value='<?php echo $status->getStatusCode(); ?>' disabled>
 			</div>
 			<div class="form-group">
 				<label for="status">Status:</label>
@@ -104,8 +109,38 @@ switch ($view) {
 			<button type="submit" name="cancel" class="btn btn-primary">Annuleren</button>
 		</form>
 		<?php
-		break;
-	default:
+        break;
+    case 'add':
+        ?>
+        <h3>Status toevoegen</h3>
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="statusCode">Code:</label>
+                <input type='text' class='form-control' id='statusCode' name='statusCode'>
+            </div>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <input type='text' class='form-control' id='status' name='status'>
+            </div>
+            <div class="form-group">
+                <label for="aantalDagen">Aantal dagen:</label>
+                <input type='number' class='form-control' id='aantalDagen' name='aantalDagen'>
+            </div>
+            <div class="form-group">
+                <label for="verwijderbaar">Verwijderbaar:</label>
+                <input type='checkbox' class='' id='verwijderbaar' name='verwijderbaar'>
+            </div>
+            <div class="form-group">
+                <label for="PINtoekennen">Pin toekennen:</label>
+                <input type='checkbox' class='' id='PINtoekennen' name='PINtoekennen'>
+            </div>
+            <br/>
+            <button type="submit" name="add" class="btn btn-success">Toevoegen</button>
+            <button type="submit" name="cancel" class="btn btn-primary">Annuleren</button>
+        </form>
+        <?php
+        break;
+    default:
 		?>
 <h3>Database Statussen</h3>
 <table>

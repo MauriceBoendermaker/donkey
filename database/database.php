@@ -167,7 +167,6 @@ class Database
 		$result = $this->db->query("INSERT INTO herbergen (Naam, Adres, Email, Telefoon, Coordinaten) VALUES ('$naam', '$adres', '$email', '$telefoon', '$coordinaten')");
 	}
 
-
     // klanten
     // ID INT
     // Naam VARCHAR(50)
@@ -334,6 +333,12 @@ class Database
         $result = $this->db->query("DELETE FROM restaurants WHERE ID = $id");
     }
 
+    public function addRestaurant($naam, $adres, $email, $telefoon, $coordinaten)
+    {
+        $this->connect();
+        $result = $this->db->query("INSERT INTO restaurants (Naam, Adres, Email, Telefoon, Coordinaten) VALUES ('$naam', '$adres', '$email', '$telefoon', '$coordinaten')");
+    }
+
     // statussen
     // ID INT
     // StatusCode TINYINT(4)
@@ -363,9 +368,9 @@ class Database
     {
         $this->connect();
         if (is_null($id)) {
-            $result = $this->db->query("INSERT INTO statussen (StatusCode, Status, Verwijderbaar, PINtoekennen) VALUES ('$statusCode', '$status', '$verwijderbaar', '$pintoekennen')");
+            $result = $this->db->query("INSERT INTO statussen (statusCode, Status, Verwijderbaar, PINtoekennen) VALUES ('$statusCode', '$status', '$verwijderbaar', '$pintoekennen')");
         } else {
-            $result = $this->db->query("UPDATE statussen SET StatusCode = '$statusCode', Status = '$status', Verwijderbaar = '$verwijderbaar', PINtoekennen = '$pintoekennen' WHERE ID = $id");
+            $result = $this->db->query("UPDATE statussen SET statusCode = '$statusCode', Status = '$status', Verwijderbaar = '$verwijderbaar', PINtoekennen = '$pintoekennen' WHERE ID = $id");
         }
     }
 
@@ -373,6 +378,12 @@ class Database
     {
         $this->connect();
         $result = $this->db->query("DELETE FROM statussen WHERE ID = $id");
+    }
+
+    public function addStatus($statusCode, $status, $verwijderbaar, $PINtoekennen)
+    {
+        $this->connect();
+        $result = $this->db->query("INSERT INTO statussen (StatusCode, Status, Verwijderbaar, PINtoekennen) VALUES ('$statusCode', '$status', '$verwijderbaar', '$PINtoekennen')");
     }
 
     // tochten
@@ -413,6 +424,12 @@ class Database
     {
         $this->connect();
         $result = $this->db->query("DELETE FROM tochten WHERE ID = $id");
+    }
+
+    public function addTocht($omschrijving, $route, $aantalDagen)
+    {
+        $this->connect();
+        $result = $this->db->query("INSERT INTO tochten (omschrijving, route, aantalDagen) VALUES ('$omschrijving', '$route', '$aantalDagen')");
     }
 
     // trackers
