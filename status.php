@@ -80,6 +80,7 @@ switch ($view) {
 		?>
 		<h3>Tocht verwijderen</h3>
 		<form action="" method="post">
+			<input type="hidden" name="id" value="<?php echo $id; ?>">
 			<div class="form-group">
 				<label for="statusCode">Code:</label>
 				<input type='number' class='form-control' id='statusCode' value='<?php echo $status->getStatusCode(); ?>' disabled>
@@ -105,7 +106,7 @@ switch ($view) {
 				} ?>' disabled>
 			</div>
 			<br/>
-			<button type="submit" name="save" class="btn btn-danger">Verwijderen</button>
+			<button type="submit" name="delete" class="btn btn-danger">Verwijderen</button>
 			<button type="submit" name="cancel" class="btn btn-primary">Annuleren</button>
 		</form>
 		<?php

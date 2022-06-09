@@ -78,6 +78,7 @@ switch ($view) {
 		?>
 		<h3>Herberg verwijderen</h3>
 		<form action="" method="post">
+			<input type="hidden" name="id" value="<?php echo $id; ?>">
 			<div class="form-group">
 				<label for="naam">Naam:</label>
 				<input type='text' class='form-control' id='naam' value='<?php echo $herberg->getNaam(); ?>' disabled>

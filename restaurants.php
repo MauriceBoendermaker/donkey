@@ -1,5 +1,5 @@
 <?php include "include/nav_beheer.php"; ?>
-	<!-- debug print database Restaurants -->
+<!-- debug print database Restaurants -->
 <?php
 $db = new database\Database("localhost", "root", "", "donkey", null);
 $restaurants = $db->getRestaurants();
@@ -31,8 +31,8 @@ if (isset($_POST['delete']) && isset($_POST['id'])) {
 }
 
 if (isset($_POST['add'])) {
-    $db->addRestaurant($_POST['naam'], $_POST['adres'], $_POST['email'], $_POST['telefoon'], $_POST['coordinaten']);
-    home();
+	$db->addRestaurant($_POST['naam'], $_POST['adres'], $_POST['email'], $_POST['telefoon'], $_POST['coordinaten']);
+	home();
 }
 
 function home()
@@ -44,7 +44,7 @@ function home()
 switch ($view) {
 	case 'edit':
 		$restaurant = $db->getRestaurantByID($id);
-		?>
+?>
 		<h3>Restaurant gegevens wijzigen</h3>
 		<form action="" method="post">
 			<div class="form-group">
@@ -67,17 +67,18 @@ switch ($view) {
 				<label for="coordinaten">Coördinaten:</label>
 				<input type='text' class='form-control' id='coordinaten' value='<?php echo $restaurant->getCoordinaten(); ?>'>
 			</div>
-			<br/>
-			<button type="submit" name="save" class="btn btn-success">Bewaren</button>
+			<br />
+			<button type="submit" name="delete" class="btn btn-success">Bewaren</button>
 			<button type="submit" name="cancel" class="btn btn-primary">Annuleren</button>
 		</form>
-		<?php
-            break;
-        case 'delete':
-            $restaurant = $db->getRestaurantByID($id);
-		?>
+	<?php
+		break;
+	case 'delete':
+		$restaurant = $db->getRestaurantByID($id);
+	?>
 		<h3>Restaurant verwijderen</h3>
 		<form action="" method="post">
+			<input type="hidden" name="id" value="<?php echo $id; ?>">
 			<div class="form-group">
 				<label for="naam">Naam:</label>
 				<input type='text' class='form-control' id='naam' value='<?php echo $restaurant->getNaam(); ?>' disabled>
@@ -98,89 +99,89 @@ switch ($view) {
 				<label for="coordinaten">Coördinaten:</label>
 				<input type='text' class='form-control' id='coordinaten' value='<?php echo $restaurant->getCoordinaten(); ?>' disabled>
 			</div>
-			<br/>
+			<br />
 			<button type="submit" name="delete" class="btn btn-danger">Verwijderen</button>
 			<button type="submit" name="cancel" class="btn btn-primary">Annuleren</button>
 		</form>
-        <?php
-            break;
-        case 'add':
-        ?>
-        <h3>Restaurant toevoegen</h3>
-        <form action="" method="post">
-            <div class="form-group">
-                <label for="naam">Naam:</label>
-                <input type='text' class='form-control' id='naam' name='naam'>
-            </div>
-            <div class="form-group">
-                <label for="adres">Adres:</label>
-                <input type='text' class='form-control' id='adres' name='adres'>
-            </div>
-            <div class="form-group">
-                <label for="email">Emailadres:</label>
-                <input type='email' class='form-control' id='email' name='email'>
-            </div>
-            <div class="form-group">
-                <label for="telefoon">Mobiele telefoonnummer:</label>
-                <input type='text' class='form-control' id='telefoon' name='telefoon'>
-            </div>
-            <div class="form-group">
-                <label for="coordinaten">Coördinaten:</label>
-                <input type='text' class='form-control' id='coordinaten' name='coordinaten'>
-            </div>
-            <br/>
-            <button type="submit" name="add" class="btn btn-success">Toevoegen</button>
-            <button type="submit" name="cancel" class="btn btn-primary">Annuleren</button>
-        </form>
-        <?php
-            break;
-        default:
-?>
-<h3>Database Restaurants</h3>
-<table>
-	<tr>
-		<th>Naam</th>
-		<th>Adres</th>
-		<th>Email</th>
-		<th>Telefoon</th>
-		<th>Coördinaten</th>
-		<th class="d-flex justify-content-center"><a class='mx-1' href='?view=add'><button><i class="fa-solid fa-plus"></i></button></a></th>
-	</tr>
-<?php
-	foreach ($restaurants as $restaurant) {
+	<?php
+		break;
+	case 'add':
+	?>
+		<h3>Restaurant toevoegen</h3>
+		<form action="" method="post">
+			<div class="form-group">
+				<label for="naam">Naam:</label>
+				<input type='text' class='form-control' id='naam' name='naam'>
+			</div>
+			<div class="form-group">
+				<label for="adres">Adres:</label>
+				<input type='text' class='form-control' id='adres' name='adres'>
+			</div>
+			<div class="form-group">
+				<label for="email">Emailadres:</label>
+				<input type='email' class='form-control' id='email' name='email'>
+			</div>
+			<div class="form-group">
+				<label for="telefoon">Mobiele telefoonnummer:</label>
+				<input type='text' class='form-control' id='telefoon' name='telefoon'>
+			</div>
+			<div class="form-group">
+				<label for="coordinaten">Coördinaten:</label>
+				<input type='text' class='form-control' id='coordinaten' name='coordinaten'>
+			</div>
+			<br />
+			<button type="submit" name="add" class="btn btn-success">Toevoegen</button>
+			<button type="submit" name="cancel" class="btn btn-primary">Annuleren</button>
+		</form>
+	<?php
+		break;
+	default:
+	?>
+		<h3>Database Restaurants</h3>
+		<table>
+			<tr>
+				<th>Naam</th>
+				<th>Adres</th>
+				<th>Email</th>
+				<th>Telefoon</th>
+				<th>Coördinaten</th>
+				<th class="d-flex justify-content-center"><a class='mx-1' href='?view=add'><button><i class="fa-solid fa-plus"></i></button></a></th>
+			</tr>
+	<?php
+		foreach ($restaurants as $restaurant) {
 
-		$coordinates = $restaurant->getCoordinaten();
+			$coordinates = $restaurant->getCoordinaten();
 
-		$coordinatesWithout = preg_replace("/[^0-9. ]/", "", $coordinates);
+			$coordinatesWithout = preg_replace("/[^0-9. ]/", "", $coordinates);
 
-		$trimOutput = $coordinatesWithout;
-		$arr = explode(' ',trim($trimOutput));
-		if ($coordinatesWithout != "") {
-			$coord1 = $arr[0];
-		} else {
-			$coord1 = "";
-		}
-		if ($coordinatesWithout != "") {
-			$coord2 = $arr[1];
-		} else {
-			$coord2 = "";
-		}
+			$trimOutput = $coordinatesWithout;
+			$arr = explode(' ', trim($trimOutput));
+			if ($coordinatesWithout != "") {
+				$coord1 = $arr[0];
+			} else {
+				$coord1 = "";
+			}
+			if ($coordinatesWithout != "") {
+				$coord2 = $arr[1];
+			} else {
+				$coord2 = "";
+			}
 
-		$output = "https://graphhopper.com/maps/?point=" . $coord1 . " " . $coord2 . "&point=" . $coord1 . " " . $coord2 . "&locale=en-US&elevation=false&profile=car&use_miles=false&layer=OpenStreetMap.de";
+			$output = "https://graphhopper.com/maps/?point=" . $coord1 . " " . $coord2 . "&point=" . $coord1 . " " . $coord2 . "&locale=en-US&elevation=false&profile=car&use_miles=false&layer=OpenStreetMap.de";
 
-		echo "<tr>";
-		echo "<td>" . $restaurant->getNaam() . "</td>";
-		echo "<td>" . $restaurant->getAdres() . "</td>";
-		echo "<td>" . $restaurant->getEmail() . "</td>";
-		echo "<td>" . $restaurant->getTelefoon() . "</td>";
-		echo "<td><a target='_blank' href='" . $output . "'>" . $restaurant->getCoordinaten() ."</td>";
-		echo "<td class='px-0 d-flex justify-content-center'>
+			echo "<tr>";
+			echo "<td>" . $restaurant->getNaam() . "</td>";
+			echo "<td>" . $restaurant->getAdres() . "</td>";
+			echo "<td>" . $restaurant->getEmail() . "</td>";
+			echo "<td>" . $restaurant->getTelefoon() . "</td>";
+			echo "<td><a target='_blank' href='" . $output . "'>" . $restaurant->getCoordinaten() . "</td>";
+			echo "<td class='px-0 d-flex justify-content-center'>
 				<a class='mx-1' href='?id={$restaurant->getID()}&view=edit'><button><i class='fa-solid fa-pen-to-square'></i></button></a>
 				<a class='mx-1' href='?id={$restaurant->getID()}&view=delete'><button><i class='fa-solid fa-trash-can'></i></button></a>
 			</td>";
-		echo "</tr>";
-	}
-	echo "</table>";
+			echo "</tr>";
+		}
+		echo "</table>";
 }
-?>
-<?php include "include/footer.php"; ?>
+	?>
+	<?php include "include/footer.php"; ?>
