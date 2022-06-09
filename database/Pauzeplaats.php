@@ -12,16 +12,16 @@ namespace database;
 class Pauzeplaats
 {
 	private $id;
-	private $fkboekingenid;
-	private $fkrestaurantsid;
-	private $fkstatussenid;
+	private $boeking;
+	private $restaurant;
+	private $status;
 
-	public function __construct($id, $fkboekingenid, $fkrestaurantsid, $fkstatussenid)
+	public function __construct($id, $boeking, $restaurant, $status)
 	{
 		$this->id = $id;
-		$this->fkboekingenid = $fkboekingenid;
-		$this->fkrestaurantsid = $fkrestaurantsid;
-		$this->fkstatussenid = $fkstatussenid;
+		$this->boeking = $boeking;
+		$this->restaurant = $restaurant;
+		$this->status = $status;
 	}
 
 	public function getId()
@@ -29,38 +29,38 @@ class Pauzeplaats
 		return $this->id;
 	}
 
-	public function getFkboekingenid()
-	{
-		return $this->fkboekingenid;
-	}
-
-	public function getFkrestaurantsid()
-	{
-		return $this->fkrestaurantsid;
-	}
-
-	public function getFkstatussenid()
-	{
-		return $this->fkstatussenid;
-	}
-
 	public function setId($id)
 	{
 		$this->id = $id;
 	}
 
-	public function setFkboekingenid($fkboekingenid)
+	public function getBoeking()
 	{
-		$this->fkboekingenid = $fkboekingenid;
+		return $this->boeking;
 	}
 
-	public function setFkrestaurantsid($fkrestaurantsid)
+	public function getRestaurant()
 	{
-		$this->fkrestaurantsid = $fkrestaurantsid;
+		return $this->restaurant;
 	}
 
-	public function setFkstatussenid($fkstatussenid)
+	public function getStatus()
 	{
-		$this->fkstatussenid = $fkstatussenid;
+		return $this->status;
+	}
+
+	public function setBoeking($boeking)
+	{
+		$this->boeking = $boeking;
+	}
+
+	public function setRestaurant($restaurant)
+	{
+		$this->restaurant = $restaurant;
+	}
+
+	public function setStatus($status)
+	{
+		$this->status = $status;
 	}
 }

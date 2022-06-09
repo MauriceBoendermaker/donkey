@@ -102,7 +102,7 @@ class Database
         return $boekingen;
     }
 
-    public function setBoekingen($id, $startDatum, $pinCode, $fkTochtenID, $fkKlantenID, $fkStatussenID)
+    public function setBoeking($id, $startDatum, $pinCode, $fkTochtenID, $fkKlantenID, $fkStatussenID)
     {
         $this->connect();
         if (is_null($id)) {
@@ -110,6 +110,11 @@ class Database
         } else {
             $result = $this->db->query("UPDATE boekingen SET StartDatum = '$startDatum', PINCode = '$pinCode', FKtochtenID = '$fkTochtenID', FKklantenID = '$fkKlantenID', FKstatussenID = '$fkStatussenID' WHERE ID = $id");
         }
+    }
+
+    public function applyBoeking($boeking, $new = false)
+    {
+        $this->setBoeking($new ? null : $boeking->getID(), $boeking->getStartDatum(), $boeking->getPINCode(), $boeking->getTocht()->getID(), $boeking->getKlant()->getID(), $boeking->getStatus()->getID());
     }
 
     public function deleteBoeking($id)
@@ -145,14 +150,22 @@ class Database
         return new Herberg($row["ID"], $row["Naam"], $row["Adres"], $row["Email"], $row["Telefoon"], $row["Coordinaten"], $row["Gewijzigd"]);
     }
 
-    public function setHerberg($id, $omschrijving, $route, $aantalDagen)
+    public function setHerberg($id, $naam, $adres, $email, $telefoon, $coordinaten, $gewijzigd = null)
     {
         $this->connect();
+        if (is_null($gewijzigd) || empty($gewijzigd))
+            $gewijzigd = date("Y-m-d H:i:s");
+
         if (is_null($id)) {
-            $result = $this->db->query("INSERT INTO herbergen (Omschrijving, Route, AantalDagen) VALUES ('$omschrijving', '$route', '$aantalDagen')");
+            $result = $this->db->query("INSERT INTO herbergen (Naam, Adres, Email, Telefoon, Coordinaten, Gewijzigd) VALUES ('$naam', '$adres', '$email', '$telefoon', '$coordinaten', '$gewijzigd')");
         } else {
-            $result = $this->db->query("UPDATE herbergen SET Omschrijving = '$omschrijving', Route = '$route', AantalDagen = '$aantalDagen' WHERE ID = $id");
+            $result = $this->db->query("UPDATE herbergen SET Naam = '$naam', Adres = '$adres', Email = '$email', Telefoon = '$telefoon', Coordinaten = '$coordinaten', Gewijzigd = '$gewijzigd' WHERE ID = $id");
         }
+    }
+
+    public function applyHerberg($herberg, $new = false)
+    {
+        $this->setHerberg($new ? null : $herberg->getID(), $herberg->getNaam(), $herberg->getAdres(), $herberg->getEmail(), $herberg->getTelefoon(), $herberg->getCoordinaten());
     }
 
     public function deleteHerberg($id)
@@ -160,12 +173,6 @@ class Database
         $this->connect();
         $result = $this->db->query("DELETE FROM herbergen WHERE ID = $id");
     }
-
-	public function addHerberg($naam, $adres, $email, $telefoon, $coordinaten)
-	{
-		$this->connect();
-		$result = $this->db->query("INSERT INTO herbergen (Naam, Adres, Email, Telefoon, Coordinaten) VALUES ('$naam', '$adres', '$email', '$telefoon', '$coordinaten')");
-	}
 
     // klanten
     // ID INT
@@ -193,14 +200,22 @@ class Database
         return new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $row["Gewijzigd"]);
     }
 
-    public function setKlant($id, $naam, $email, $telefoon, $wachtwoord)
+    public function setKlant($id, $naam, $email, $telefoon, $wachtwoord, $gewijzigd = null)
     {
         $this->connect();
+        if (is_null($gewijzigd) || empty($gewijzigd))
+            $gewijzigd = date("Y-m-d H:i:s");
+
         if (is_null($id)) {
-            $result = $this->db->query("INSERT INTO klanten (Naam, Email, Telefoon, Wachtwoord) VALUES ('$naam', '$email', '$telefoon', '$wachtwoord')");
+            $result = $this->db->query("INSERT INTO klanten (Naam, Email, Telefoon, Wachtwoord, Gewijzigd) VALUES ('$naam', '$email', '$telefoon', '$wachtwoord', '$gewijzigd')");
         } else {
-            $result = $this->db->query("UPDATE klanten SET Naam = '$naam', Email = '$email', Telefoon = '$telefoon', Wachtwoord = '$wachtwoord' WHERE ID = $id");
+            $result = $this->db->query("UPDATE klanten SET Naam = '$naam', Email = '$email', Telefoon = '$telefoon', Wachtwoord = '$wachtwoord', Gewijzigd = '$gewijzigd' WHERE ID = $id");
         }
+    }
+
+    public function applyKlant($klant, $new = false)
+    {
+        $this->setKlant($new ? null : $klant->getID(), $klant->getNaam(), $klant->getEmail(), $klant->getTelefoon(), $klant->getWachtwoord());
     }
 
     public function deleteKlant($id)
@@ -243,6 +258,11 @@ class Database
         }
     }
 
+    public function applyOvernachting($overnachting, $new = false)
+    {
+        $this->setOvernachting($new ? null : $overnachting->getID(), $overnachting->getFKboekingenID(), $overnachting->getFKherbergenID(), $overnachting->getFKstatussenID());
+    }
+
     public function deleteOvernachting($id)
     {
         $this->connect();
@@ -261,7 +281,7 @@ class Database
         $result = $this->db->query("SELECT * FROM pauzeplaatsen");
         $pauzeplaatsen = array();
         while ($row = $result->fetch_assoc()) {
-            $pauzeplaatsen[] = new Pauzeplaats($row["ID"], $row["FKboekingenID"], $row["FKrestaurantsID"], $row["FKstatussenID"]);
+            $pauzeplaatsen[] = new Pauzeplaats($row["ID"], $this->getBoekingByID($row["FKboekingenID"]), $this->getRestaurantByID($row["FKrestaurantsID"]), $this->getStatusByID($row["FKstatussenID"]));
         }
         return $pauzeplaatsen;
     }
@@ -271,7 +291,18 @@ class Database
         $this->connect();
         $result = $this->db->query("SELECT * FROM pauzeplaatsen WHERE ID = $id");
         $row = $result->fetch_assoc();
-        return new Pauzeplaats($row["ID"], $row["FKboekingenID"], $row["FKrestaurantsID"], $row["FKstatussenID"]);
+        return new Pauzeplaats($row["ID"], $this->getBoekingByID($row["FKboekingenID"]), $this->getRestaurantByID($row["FKrestaurantsID"]), $this->getStatusByID($row["FKstatussenID"]));
+    }
+
+    public function getPauzeplaatsByBoekingID($id)
+    {
+        $this->connect();
+        $result = $this->db->query("SELECT * FROM pauzeplaatsen WHERE FKboekingenID = $id");
+        $pauzeplaatsen = array();
+        while ($row = $result->fetch_assoc()) {
+            $pauzeplaatsen[] = new Pauzeplaats($row["ID"], $this->getBoekingByID($row["FKboekingenID"]), $this->getRestaurantByID($row["FKrestaurantsID"]), $this->getStatusByID($row["FKstatussenID"]));
+        }
+        return $pauzeplaatsen;
     }
 
     public function setPauzeplaats($id, $fkBoekingenID, $fkRestaurantsID, $fkStatussenID)
@@ -282,6 +313,11 @@ class Database
         } else {
             $result = $this->db->query("UPDATE pauzeplaatsen SET FKboekingenID = '$fkBoekingenID', FKrestaurantsID = '$fkRestaurantsID', FKstatussenID = '$fkStatussenID' WHERE ID = $id");
         }
+    }
+
+    public function applyPauzeplaats($pauzeplaats, $new = false)
+    {
+        $this->setPauzeplaats($new ? null : $pauzeplaats->getID(), $pauzeplaats->getFKboekingenID(), $pauzeplaats->getFKrestaurantsID(), $pauzeplaats->getFKstatussenID());
     }
 
     public function deletePauzeplaats($id)
@@ -317,9 +353,10 @@ class Database
         return new Restaurant($row["ID"], $row["Naam"], $row["Adres"], $row["Email"], $row["Telefoon"], $row["Coordinaten"], $row["Gewijzigd"]);
     }
 
-    public function setRestaurant($id, $naam, $adres, $email, $telefoon, $coordinaten, $gewijzigd)
+    public function setRestaurant($id, $naam, $adres, $email, $telefoon, $coordinaten, $gewijzigd = null)
     {
         $this->connect();
+        if (is_null($gewijzigd) || empty($gewijzigd)) $gewijzigd = date("Y-m-d H:i:s");
         if (is_null($id)) {
             $result = $this->db->query("INSERT INTO restaurants (Naam, Adres, Email, Telefoon, Coordinaten, Gewijzigd) VALUES ('$naam', '$adres', '$email', '$telefoon', '$coordinaten', '$gewijzigd')");
         } else {
@@ -327,16 +364,15 @@ class Database
         }
     }
 
+    public function applyRestaurant($restaurant, $new = false)
+    {
+        $this->setRestaurant($new ? null : $restaurant->getID(), $restaurant->getNaam(), $restaurant->getAdres(), $restaurant->getEmail(), $restaurant->getTelefoon(), $restaurant->getCoordinaten());
+    }
+
     public function deleteRestaurant($id)
     {
         $this->connect();
         $result = $this->db->query("DELETE FROM restaurants WHERE ID = $id");
-    }
-
-    public function addRestaurant($naam, $adres, $email, $telefoon, $coordinaten)
-    {
-        $this->connect();
-        $result = $this->db->query("INSERT INTO restaurants (Naam, Adres, Email, Telefoon, Coordinaten) VALUES ('$naam', '$adres', '$email', '$telefoon', '$coordinaten')");
     }
 
     // statussen
@@ -374,16 +410,15 @@ class Database
         }
     }
 
+    public function applyStatus($status, $new = false)
+    {
+        $this->setStatus($new ? null : $status->getID(), $status->getStatusCode(), $status->getStatus(), $status->getVerwijderbaar(), $status->getPINtoekennen());
+    }
+
     public function deleteStatus($id)
     {
         $this->connect();
         $result = $this->db->query("DELETE FROM statussen WHERE ID = $id");
-    }
-
-    public function addStatus($statusCode, $status, $verwijderbaar, $PINtoekennen)
-    {
-        $this->connect();
-        $result = $this->db->query("INSERT INTO statussen (StatusCode, Status, Verwijderbaar, PINtoekennen) VALUES ('$statusCode', '$status', '$verwijderbaar', '$PINtoekennen')");
     }
 
     // tochten
@@ -410,26 +445,25 @@ class Database
         return new Tocht($row["ID"], $row["Omschrijving"], $row["Route"], $row["AantalDagen"]);
     }
 
-    public function setTocht($id, $omschrijving, $aantalPersonen, $prijs)
+    public function setTocht($id, $omschrijving, $route, $aantaldagen)
     {
         $this->connect();
         if (is_null($id)) {
-            $result = $this->db->query("INSERT INTO tochten (Omschrijving, AantalPersonen, Prijs) VALUES ('$omschrijving', '$aantalPersonen', '$prijs')");
+            $result = $this->db->query("INSERT INTO tochten (Omschrijving, Route, AantalDagen) VALUES ('$omschrijving', '$route', '$aantaldagen')");
         } else {
-            $result = $this->db->query("UPDATE tochten SET Omschrijving = '$omschrijving', AantalPersonen = '$aantalPersonen', Prijs = '$prijs' WHERE ID = $id");
+            $result = $this->db->query("UPDATE tochten SET Omschrijving = '$omschrijving', Route = '$route', AantalDagen = '$aantaldagen' WHERE ID = $id");
         }
+    }
+
+    public function applyTocht($tocht, $new = false)
+    {
+        $this->setTocht($new ? null : $tocht->getID(), $tocht->getOmschrijving(), $tocht->getRoute(), $tocht->getAantalDagen());
     }
 
     public function deleteTocht($id)
     {
         $this->connect();
         $result = $this->db->query("DELETE FROM tochten WHERE ID = $id");
-    }
-
-    public function addTocht($omschrijving, $route, $aantalDagen)
-    {
-        $this->connect();
-        $result = $this->db->query("INSERT INTO tochten (omschrijving, route, aantalDagen) VALUES ('$omschrijving', '$route', '$aantalDagen')");
     }
 
     // trackers
@@ -465,6 +499,11 @@ class Database
         } else {
             $result = $this->db->query("UPDATE trackers SET PINCode = $pin, Lat = $lat, Lon = $lon, Time = $time WHERE ID = $id");
         }
+    }
+
+    public function applyTracker($tracker, $new = false)
+    {
+        $this->setTracker($new ? null : $tracker->getID(), $tracker->getPINCode(), $tracker->getLat(), $tracker->getLon(), $tracker->getTime());
     }
 
     public function deleteTracker($id)

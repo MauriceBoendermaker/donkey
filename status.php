@@ -29,7 +29,7 @@ if (isset($_POST['delete']) && isset($_POST['id'])) {
 }
 
 if (isset($_POST['add'])) {
-    $db->addStatus($_POST['statusCode'], $_POST['status'], $_POST['verwijderbaar'], $_POST['PINtoekennen']);
+    $db->setStatus(null, $_POST['statusCode'], $_POST['status'], $_POST['verwijderbaar'], $_POST['PINtoekennen']);
     home();
 }
 

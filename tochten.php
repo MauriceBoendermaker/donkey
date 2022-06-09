@@ -28,7 +28,7 @@ if (isset($_POST['delete']) && isset($_POST['id'])) {
 }
 
 if (isset($_POST['add'])) {
-	$db->addTocht($_POST['omschrijving'], $_POST['routeNaam'], $_POST['aantalDagen']);
+	$db->setTocht(null, $_POST['omschrijving'], $_POST['routeNaam'], $_POST['aantalDagen']);
 	home();
 }
 
