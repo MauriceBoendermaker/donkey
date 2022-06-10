@@ -32,6 +32,11 @@ if (isset($_POST['add'])) {
 	home();
 }
 
+if (isset($_POST['save'])) {
+	$db->setTocht($_POST['id'], $_POST['omschrijving'], $_POST['routeNaam'], $_POST['aantalDagen']);
+	home();
+}
+
 function home()
 {
 	header('Location: tochten.php');
@@ -44,17 +49,18 @@ switch ($view) {
 ?>
 		<h3>Tocht gegevens wijzigen</h3>
 		<form action="" method="post">
+			<input type="hidden" name="id" value="<?php echo $tocht->getID(); ?>">
 			<div class="form-group">
 				<label for="omschrijving">Omschrijving:</label>
-				<input type='text' class='form-control' id='omschrijving' value='<?php echo $tocht->getOmschrijving(); ?>'>
+				<input type='text' class='form-control' id='omschrijving' name='omschrijving' value='<?php echo $tocht->getOmschrijving(); ?>'>
 			</div>
 			<div class="form-group">
 				<label for="routeNaam">Route naam:</label>
-				<input type='text' class='form-control' id='routeNaam' value='<?php echo $tocht->getRoute(); ?>'>
+				<input type='text' class='form-control' id='routeNaam' name='routeNaam' value='<?php echo $tocht->getRoute(); ?>'>
 			</div>
 			<div class="form-group">
 				<label for="aantalDagen">Aantal dagen:</label>
-				<input type='number' class='form-control' id='aantalDagen' value='<?php echo $tocht->getAantaldagen(); ?>'>
+				<input type='number' class='form-control' id='aantalDagen' name='aantalDagen' value='<?php echo $tocht->getAantaldagen(); ?>'>
 			</div>
 			<br />
 			<button type="submit" name="save" class="btn btn-success">Bewaren</button>
@@ -88,19 +94,19 @@ switch ($view) {
 		break;
 	case 'add':
 	?>
-		<h3>Tocht toevoegen</h3>
+		<h3>Nieuwe tocht</h3>
 		<form action="" method="post">
 			<div class="form-group">
 				<label for="omschrijving">Omschrijving:</label>
-				<input type='text' class='form-control' id='omschrijving' name='omschrijving'>
+				<input type='text' class='form-control' id='omschrijving' name='omschrijving' placeholder='Omschrijving'>
 			</div>
 			<div class="form-group">
 				<label for="routeNaam">Route naam:</label>
-				<input type='text' class='form-control' id='routeNaam' name='routeNaam'>
+				<input type='text' class='form-control' id='routeNaam' name='routeNaam' placeholder='Route naam'>
 			</div>
 			<div class="form-group">
 				<label for="aantalDagen">Aantal dagen:</label>
-				<input type='number' class='form-control' id='aantalDagen' name='aantalDagen'>
+				<input type='number' class='form-control' id='aantalDagen' name='aantalDagen' placeholder='Aantal dagen'>
 			</div>
 			<br />
 			<button type="submit" name="add" class="btn btn-success">Toevoegen</button>
@@ -110,7 +116,7 @@ switch ($view) {
 		break;
 	default:
 	?>
-		<h3>Database Tochten</h3>
+		<h3>Tochten</h3>
 		<table>
 			<tr>
 				<th>Omschrijving</th>

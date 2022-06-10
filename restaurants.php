@@ -35,6 +35,11 @@ if (isset($_POST['add'])) {
 	home();
 }
 
+if (isset($_POST['save'])) {
+	$db->setRestaurant($_POST['id'], $_POST['naam'], $_POST['adres'], $_POST['email'], $_POST['telefoon'], $_POST['coordinaten']);
+	home();
+}
+
 function home()
 {
 	header('Location: restaurants.php');
@@ -47,28 +52,29 @@ switch ($view) {
 ?>
 		<h3>Restaurant gegevens wijzigen</h3>
 		<form action="" method="post">
+			<input type="hidden" name="id" value="<?php echo $restaurant->getID(); ?>">
 			<div class="form-group">
 				<label for="naam">Naam:</label>
-				<input type='text' class='form-control' id='naam' value='<?php echo $restaurant->getNaam(); ?>'>
+				<input type='text' class='form-control' id='naam' name='naam' value='<?php echo $restaurant->getNaam(); ?>'>
 			</div>
 			<div class="form-group">
 				<label for="adres">Adres:</label>
-				<input type='text' class='form-control' id='adres' value='<?php echo $restaurant->getAdres(); ?>'>
+				<input type='text' class='form-control' id='adres' name='adres' value='<?php echo $restaurant->getAdres(); ?>'>
 			</div>
 			<div class="form-group">
 				<label for="email">Emailadres:</label>
-				<input type='email' class='form-control' id='email' value='<?php echo $restaurant->getEmail(); ?>'>
+				<input type='email' class='form-control' id='email' name='email' value='<?php echo $restaurant->getEmail(); ?>'>
 			</div>
 			<div class="form-group">
 				<label for="telefoon">Mobiele telefoonnummer:</label>
-				<input type='text' class='form-control' id='telefoon' value='<?php echo $restaurant->getTelefoon(); ?>'>
+				<input type='text' class='form-control' id='telefoon' name='telefoon' value='<?php echo $restaurant->getTelefoon(); ?>'>
 			</div>
 			<div class="form-group">
 				<label for="coordinaten">Coördinaten:</label>
-				<input type='text' class='form-control' id='coordinaten' value='<?php echo $restaurant->getCoordinaten(); ?>'>
+				<input type='text' class='form-control' id='coordinaten' name='coordinaten' value='<?php echo $restaurant->getCoordinaten(); ?>'>
 			</div>
 			<br />
-			<button type="submit" name="delete" class="btn btn-success">Bewaren</button>
+			<button type="submit" name="save" class="btn btn-success">Bewaren</button>
 			<button type="submit" name="cancel" class="btn btn-primary">Annuleren</button>
 		</form>
 	<?php
@@ -107,27 +113,27 @@ switch ($view) {
 		break;
 	case 'add':
 	?>
-		<h3>Restaurant toevoegen</h3>
+		<h3>Nieuw restaurant</h3>
 		<form action="" method="post">
 			<div class="form-group">
 				<label for="naam">Naam:</label>
-				<input type='text' class='form-control' id='naam' name='naam'>
+				<input type='text' class='form-control' id='naam' name='naam' placeholder='Naam'>
 			</div>
 			<div class="form-group">
 				<label for="adres">Adres:</label>
-				<input type='text' class='form-control' id='adres' name='adres'>
+				<input type='text' class='form-control' id='adres' name='adres' placeholder='Adres'>
 			</div>
 			<div class="form-group">
 				<label for="email">Emailadres:</label>
-				<input type='email' class='form-control' id='email' name='email'>
+				<input type='email' class='form-control' id='email' name='email' placeholder='Emailadres'>
 			</div>
 			<div class="form-group">
 				<label for="telefoon">Mobiele telefoonnummer:</label>
-				<input type='text' class='form-control' id='telefoon' name='telefoon'>
+				<input type='text' class='form-control' id='telefoon' name='telefoon' placeholder='Telefoonnummer'>
 			</div>
 			<div class="form-group">
 				<label for="coordinaten">Coördinaten:</label>
-				<input type='text' class='form-control' id='coordinaten' name='coordinaten'>
+				<input type='text' class='form-control' id='coordinaten' name='coordinaten' placeholder='Coordinaten N??.????? E??.?????'>
 			</div>
 			<br />
 			<button type="submit" name="add" class="btn btn-success">Toevoegen</button>
@@ -137,7 +143,7 @@ switch ($view) {
 		break;
 	default:
 	?>
-		<h3>Database Restaurants</h3>
+		<h3>Restaurants</h3>
 		<table>
 			<tr>
 				<th>Naam</th>
