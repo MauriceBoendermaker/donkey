@@ -33,6 +33,11 @@ if (isset($_POST['add'])) {
     home();
 }
 
+if (isset($_POST['save'])) {
+	$db->setStatus($_POST['id'], $_POST['statusCode'], $_POST['status'], $_POST['verwijderbaar'], $_POST['PINtoekennen']);
+	home();
+}
+
 function home()
 {
 	header('Location: status.php');
@@ -43,19 +48,20 @@ switch ($view) {
 	case 'edit':
 		$status = $db->getStatusByID($id);
 		?>
-		<h3>Tocht gegevens wijzigen</h3>
+		<h3>Status gegevens wijzigen</h3>
 		<form action="" method="post">
+			<input type="hidden" name="id" value="<?php echo $status->getID(); ?>">
 			<div class="form-group">
-				<label for="statusCode">Code:</label>
-				<input type='number' class='form-control' id='statusCode' value='<?php echo $status->getStatusCode(); ?>'>
+				<label for="statusCode">Statuscode:</label>
+				<input type='number' class='form-control' id='statusCode' name='statusCode' value='<?php echo $status->getStatusCode(); ?>'>
 			</div>
 			<div class="form-group">
 				<label for="status">Status:</label>
-				<input type='text' class='form-control' id='status' value='<?php echo $status->getStatus(); ?>'>
+				<input type='text' class='form-control' id='status' name='status' value='<?php echo $status->getStatus(); ?>'>
 			</div>
 			<div class="form-group">
 				<label for="verwijderbaar">Verwijderbaar:</label>
-				<input type='checkbox' class='' id='verwijderbaar' <?php if ($status->getVerwijderbaar() == 1) {
+				<input type='checkbox' class='' id='verwijderbaar' name='verwijderbaar' <?php if ($status->getVerwijderbaar() == 1) {
 					echo "checked";
 				} else if ($status->getVerwijderbaar() == 0) {
 					echo "";
@@ -63,7 +69,7 @@ switch ($view) {
 			</div>
 			<div class="form-group">
 				<label for="pinToekennen">PIN toekennen:</label>
-				<input type='checkbox' class='' id='pinToekennen' <?php if ($status->getPintoekennen() == 1) {
+				<input type='checkbox' class='' id='pinToekennen' name='pinToekennen' <?php if ($status->getPintoekennen() == 1) {
 					echo "checked";
 				} else if ($status->getPintoekennen() == 0) {
 					echo "";
@@ -78,11 +84,11 @@ switch ($view) {
 	case 'delete':
 		$status = $db->getStatusByID($id);
 		?>
-		<h3>Tocht verwijderen</h3>
+		<h3>Status gegevens verwijderen</h3>
 		<form action="" method="post">
 			<input type="hidden" name="id" value="<?php echo $id; ?>">
 			<div class="form-group">
-				<label for="statusCode">Code:</label>
+				<label for="statusCode">Statuscode:</label>
 				<input type='number' class='form-control' id='statusCode' value='<?php echo $status->getStatusCode(); ?>' disabled>
 			</div>
 			<div class="form-group">
@@ -113,19 +119,15 @@ switch ($view) {
         break;
     case 'add':
         ?>
-        <h3>Status toevoegen</h3>
+        <h3>Nieuwe status</h3>
         <form action="" method="post">
             <div class="form-group">
-                <label for="statusCode">Code:</label>
-                <input type='text' class='form-control' id='statusCode' name='statusCode'>
+                <label for="statusCode">Statuscode:</label>
+                <input type='number' class='form-control' id='statusCode' name='statusCode' placeholder='Statuscode'>
             </div>
             <div class="form-group">
                 <label for="status">Status:</label>
-                <input type='text' class='form-control' id='status' name='status'>
-            </div>
-            <div class="form-group">
-                <label for="aantalDagen">Aantal dagen:</label>
-                <input type='number' class='form-control' id='aantalDagen' name='aantalDagen'>
+                <input type='text' class='form-control' id='status' name='status' placeholder='Status omschrijving'>
             </div>
             <div class="form-group">
                 <label for="verwijderbaar">Verwijderbaar:</label>
@@ -143,7 +145,7 @@ switch ($view) {
         break;
     default:
 		?>
-<h3>Database Statussen</h3>
+<h3>Statussen</h3>
 <table>
 	<tr>
 		<th>Code</th>

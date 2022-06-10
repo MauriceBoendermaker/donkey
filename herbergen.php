@@ -52,7 +52,7 @@ switch ($view) {
 ?>
 		<h3>Herberg gegevens wijzigen</h3>
 		<form action="" method="post">
-			<input type="hidden" name="id" id="id" value="<?php echo $herberg->getID(); ?>">
+			<input type="hidden" name="id" value="<?php echo $herberg->getID(); ?>">
 			<div class="form-group">
 				<label for="naam">Naam:</label>
 				<input type='text' class='form-control' id='naam' name='naam' value='<?php echo $herberg->getNaam(); ?>'>
@@ -113,27 +113,27 @@ switch ($view) {
 		break;
 	case 'add':
 	?>
-		<h3>Herberg toevoegen</h3>
+		<h3>Nieuwe herberg</h3>
 		<form action="" method="post">
 			<div class="form-group">
 				<label for="naam">Naam:</label>
-				<input type='text' class='form-control' id='naam' name='naam'>
+				<input type='text' class='form-control' id='naam' name='naam' placeholder='Naam'>
 			</div>
 			<div class="form-group">
 				<label for="adres">Adres:</label>
-				<input type='text' class='form-control' id='adres' name='adres'>
+				<input type='text' class='form-control' id='adres' name='adres' placeholder='Adres'>
 			</div>
 			<div class="form-group">
 				<label for="email">Emailadres:</label>
-				<input type='email' class='form-control' id='email' name='email'>
+				<input type='email' class='form-control' id='email' name='email' placeholder='Emailadres'>
 			</div>
 			<div class="form-group">
 				<label for="telefoon">Mobiele telefoonnummer:</label>
-				<input type='text' class='form-control' id='telefoon' name='telefoon'>
+				<input type='text' class='form-control' id='telefoon' name='telefoon' placeholder='Telefoonnummer'>
 			</div>
 			<div class="form-group">
 				<label for="coordinaten">Coördinaten:</label>
-				<input type='text' class='form-control' id='coordinaten' name='coordinaten'>
+				<input type='text' class='form-control' id='coordinaten' name='coordinaten' placeholder='Coordinaten N??.????? E??.?????'>
 			</div>
 			<br />
 			<button type="submit" name="add" class="btn btn-success">Toevoegen</button>
@@ -143,7 +143,7 @@ switch ($view) {
 		break;
 	default:
 	?>
-		<h3>Database Herbergen</h3>
+		<h3>Herbergen</h3>
 		<table>
 			<tr>
 				<th>Naam</th>
