@@ -29,7 +29,7 @@
                 endIconUrl: 'https://raw.githubusercontent.com/mpetazzoni/leaflet-gpx/main/pin-icon-end.png',
                 shadowUrl: 'https://raw.githubusercontent.com/mpetazzoni/leaflet-gpx/main/pin-shadow.png',
                 wptIconUrls: {
-                    '': 'https://raw.githubusercontent.com/mpetazzoni/leaflet-gpx/main/pin-icon-wpt.png'
+                    '': 'ezel met huifkar.png'
                 }
             }
         }).on('loaded', function(e) {
