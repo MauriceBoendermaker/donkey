@@ -14,7 +14,7 @@ function endsWith($string, $endString)
 }
 
 // check if user is on login page
-if (!endsWith($_SERVER['PHP_SELF'], 'login.php')) {
+if (!endsWith($_SERVER['PHP_SELF'], 'login.php') && !endsWith($_SERVER['PHP_SELF'], 'register.php')) {
 	// check if the user is logged in
 	if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false) {
 		// redirect to index.php
