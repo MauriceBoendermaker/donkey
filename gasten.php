@@ -17,16 +17,12 @@ echo "<tr>";
 echo "<th>Naam</th>";
 echo "<th>Email</th>";
 echo "<th>Telefoon</th>";
-echo "<th>Wachtwoord</th>";
-echo "<th>Gewijzigd</th>";
 echo "</tr>";
 foreach ($gasten as $gast) {
     echo "<tr>";
     echo "<td>" . $gast->getNaam() . "</td>";
     echo "<td>" . $gast->getEmail() . "</td>";
     echo "<td>" . $gast->getTelefoon() . "</td>";
-    echo "<td>" . $gast->getWachtwoord() . "</td>";
-    echo "<td>" . $gast->getGewijzigd() . "</td>";
     echo "</tr>";
 }
 echo "</table>";

@@ -180,14 +180,16 @@ class Database
     // Email VARCHAR(100)
     // Telefoon VARCHAR(20)
     // Wachtwoord VARCHAR(100)
+	// FKgebruikersrechtenID INT (foreign key)
     // Gewijzigd TIMESTAMP
+
     public function getKlanten()
     {
         $this->connect();
         $result = $this->db->query("SELECT * FROM klanten");
         $klanten = array();
         while ($row = $result->fetch_assoc()) {
-            $klanten[] = new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $row["Gewijzigd"]);
+            $klanten[] = new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $row["FKgebruikersrechtenID"], $row["Gewijzigd"]);
         }
         return $klanten;
     }
@@ -197,26 +199,37 @@ class Database
         $this->connect();
         $result = $this->db->query("SELECT * FROM klanten WHERE ID = $id");
         $row = $result->fetch_assoc();
-        return new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $row["Gewijzigd"]);
+        return new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $row["FKgebruikersrechtenID"], $row["Gewijzigd"]);
     }
 
-    public function setKlant($id, $naam, $email, $telefoon, $wachtwoord, $gewijzigd = null)
-    {
-        $this->connect();
-        if (is_null($gewijzigd) || empty($gewijzigd))
-            $gewijzigd = date("Y-m-d H:i:s");
+    public function getKlantbyEmail($email)
+	{
+		$this->connect();
+		$result = $this->db->query("SELECT * FROM klanten WHERE Email = '$email'");
+		$row = $result->fetch_assoc();
+		if ($result->num_rows == 0) {
+			return null;
+		}
+		return new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $row["FKgebruikersrechtenID"], $row["Gewijzigd"]);
+	}
 
-        if (is_null($id)) {
-            $result = $this->db->query("INSERT INTO klanten (Naam, Email, Telefoon, Wachtwoord, Gewijzigd) VALUES ('$naam', '$email', '$telefoon', '$wachtwoord', '$gewijzigd')");
-        } else {
-            $result = $this->db->query("UPDATE klanten SET Naam = '$naam', Email = '$email', Telefoon = '$telefoon', Wachtwoord = '$wachtwoord', Gewijzigd = '$gewijzigd' WHERE ID = $id");
-        }
-    }
+    public function setKlant($id, $naam, $email, $telefoon, $wachtwoord, $fkGebruikersrechtenID, $gewijzigd = null)
+	{
+		$this->connect();
+		if (is_null($gewijzigd) || empty($gewijzigd))
+			$gewijzigd = date("Y-m-d H:i:s");
+
+		if (is_null($id)) {
+			$result = $this->db->query("INSERT INTO klanten (Naam, Email, Telefoon, Wachtwoord, FKgebruikersrechtenID, Gewijzigd) VALUES ('$naam', '$email', '$telefoon', '$wachtwoord', $fkGebruikersrechtenID, '$gewijzigd')");
+		} else {
+			$result = $this->db->query("UPDATE klanten SET Naam = '$naam', Email = '$email', Telefoon = '$telefoon', Wachtwoord = '$wachtwoord', FKgebruikersrechtenID = $fkGebruikersrechtenID, Gewijzigd = '$gewijzigd' WHERE ID = $id");
+		}
+	}
 
     public function applyKlant($klant, $new = false)
-    {
-        $this->setKlant($new ? null : $klant->getID(), $klant->getNaam(), $klant->getEmail(), $klant->getTelefoon(), $klant->getWachtwoord());
-    }
+	{
+		$this->setKlant($new ? null : $klant->getID(), $klant->getNaam(), $klant->getEmail(), $klant->getTelefoon(), $klant->getWachtwoord(), $klant->getFKgebruikersrechtenID());
+	}
 
     public function deleteKlant($id)
     {
