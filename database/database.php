@@ -318,6 +318,17 @@ class Database
         return $pauzeplaatsen;
     }
 
+    public function getPauzeplaatsenByRestaurantID($id, $boekingID)
+    {
+        $this->connect();
+        $result = $this->db->query("SELECT * FROM pauzeplaatsen WHERE FKrestaurantsID = $id AND FKboekingenID = $boekingID");
+        $pauzeplaatsen = array();
+        while ($row = $result->fetch_assoc()) {
+            $pauzeplaatsen[] = new Pauzeplaats($row["ID"], $this->getBoekingByID($row["FKboekingenID"]), $this->getRestaurantByID($row["FKrestaurantsID"]), $this->getStatusByID($row["FKstatussenID"]));
+        }
+        return $pauzeplaatsen;
+    }
+
     public function setPauzeplaats($id, $fkBoekingenID, $fkRestaurantsID, $fkStatussenID)
     {
         $this->connect();
