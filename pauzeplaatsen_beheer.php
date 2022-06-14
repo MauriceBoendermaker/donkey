@@ -25,7 +25,7 @@ $boekingen = $db->getBoekingByID($id);
 $pauzeplaatsen = $db->getPauzeplaatsByBoekingID($id);
 $restaurants = $db->getRestaurants();
 
-if (isset($_POST['save'])) {
+if (isset($_POST['save']) && isset($_POST['restaurants'])) {
     // Post data:
     // - restaurants[]
 
