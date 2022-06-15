@@ -220,9 +220,17 @@ class Database
 			$gewijzigd = date("Y-m-d H:i:s");
 
 		if (is_null($id)) {
-			$result = $this->db->query("INSERT INTO klanten (Naam, Email, Telefoon, Wachtwoord, FKgebruikersrechtenID, Gewijzigd) VALUES ('$naam', '$email', '$telefoon', '$wachtwoord', $fkGebruikersrechtenID, '$gewijzigd')");
+			if (is_null($fkGebruikersrechtenID)) {
+				$result = $this->db->query("INSERT INTO klanten (Naam, Email, Telefoon, Wachtwoord, Gewijzigd) VALUES ('$naam', '$email', '$telefoon', '$wachtwoord', '$gewijzigd')");
+			} else {
+				$result = $this->db->query("INSERT INTO klanten (Naam, Email, Telefoon, Wachtwoord, FKgebruikersrechtenID, Gewijzigd) VALUES ('$naam', '$email', '$telefoon', '$wachtwoord', $fkGebruikersrechtenID, '$gewijzigd')");
+			}
 		} else {
-			$result = $this->db->query("UPDATE klanten SET Naam = '$naam', Email = '$email', Telefoon = '$telefoon', Wachtwoord = '$wachtwoord', FKgebruikersrechtenID = $fkGebruikersrechtenID, Gewijzigd = '$gewijzigd' WHERE ID = $id");
+			if (is_null($fkGebruikersrechtenID)) {
+				$result = $this->db->query("UPDATE klanten SET Naam = '$naam', Email = '$email', Telefoon = '$telefoon', Wachtwoord = '$wachtwoord', Gewijzigd = '$gewijzigd' WHERE ID = $id");
+			} else {
+				$result = $this->db->query("UPDATE klanten SET Naam = '$naam', Email = '$email', Telefoon = '$telefoon', Wachtwoord = '$wachtwoord', FKgebruikersrechtenID = $fkGebruikersrechtenID, Gewijzigd = '$gewijzigd' WHERE ID = $id");
+			}
 		}
 	}
 
