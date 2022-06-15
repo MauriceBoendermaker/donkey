@@ -8,7 +8,7 @@ namespace database;
 // Email VARCHAR(100)
 // Telefoon VARCHAR(20)
 // Wachtwoord VARCHAR(100)
-// FKgebruikersrechtenID INT (foreign key)
+// gebruikersrechten INT (foreign key)
 // Gewijzigd TIMESTAMP
 
 class Klant
@@ -18,17 +18,17 @@ class Klant
 	private $email;
 	private $telefoon;
 	private $wachtwoord;
-	private $FKgebruikersrechtenID;
+	private $gebruikersrechten;
 	private $gewijzigd;
 
-	public function __construct($id, $naam, $email, $telefoon, $wachtwoord, $FKgebruikersrechtenID, $gewijzigd)
+	public function __construct($id, $naam, $email, $telefoon, $wachtwoord, $gebruikersrechten, $gewijzigd)
 	{
 		$this->id = $id;
 		$this->naam = $naam;
 		$this->email = $email;
 		$this->telefoon = $telefoon;
 		$this->wachtwoord = $wachtwoord;
-		$this->FKgebruikersrechtenID = $FKgebruikersrechtenID;
+		$this->gebruikersrechten = $gebruikersrechten;
 		$this->gewijzigd = $gewijzigd;
 	}
 
@@ -57,9 +57,9 @@ class Klant
 		return $this->wachtwoord;
 	}
 
-	public function getFKgebruikersrechtenID()
+	public function getGebruikersrechten()
 	{
-		return $this->FKgebruikersrechtenID;
+		return $this->gebruikersrechten;
 	}
 
 	public function getGewijzigd()
@@ -92,9 +92,9 @@ class Klant
 		$this->wachtwoord = $wachtwoord;
 	}
 
-	public function setFKgebruikersrechtenID($FKgebruikersrechtenID)
+	public function setGebruikersrechten($gebruikersrechten)
 	{
-		$this->FKgebruikersrechtenID = $FKgebruikersrechtenID;
+		$this->gebruikersrechten = $gebruikersrechten;
 	}
 
 	public function setGewijzigd($gewijzigd)

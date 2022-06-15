@@ -33,6 +33,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 			$_SESSION['naam'] = $klant->getNaam();
 			$_SESSION['email'] = $klant->getEmail();
 			$_SESSION['telefoon'] = $klant->getTelefoon();
+			$_SESSION['rechten'] = $klant->getGebruikersrechten()->getPermissions();
 
 			// redirect to index.php
 			header('Location: index.php');

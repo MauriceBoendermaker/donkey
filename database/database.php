@@ -11,6 +11,7 @@ require_once 'restaurant.php';
 require_once 'status.php';
 require_once 'tocht.php';
 require_once 'tracker.php';
+require_once 'gebruikersrechten.php';
 
 
 class Database
@@ -189,7 +190,7 @@ class Database
         $result = $this->db->query("SELECT * FROM klanten");
         $klanten = array();
         while ($row = $result->fetch_assoc()) {
-            $klanten[] = new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $row["FKgebruikersrechtenID"], $row["Gewijzigd"]);
+            $klanten[] = new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $this->getGebruikersrechtByID($row["FKgebruikersrechtenID"]), $row["Gewijzigd"]);
         }
         return $klanten;
     }
@@ -199,7 +200,7 @@ class Database
         $this->connect();
         $result = $this->db->query("SELECT * FROM klanten WHERE ID = $id");
         $row = $result->fetch_assoc();
-        return new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $row["FKgebruikersrechtenID"], $row["Gewijzigd"]);
+        return new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $this->getGebruikersrechtByID($row["FKgebruikersrechtenID"]), $row["Gewijzigd"]);
     }
 
     public function getKlantbyEmail($email)
@@ -210,7 +211,7 @@ class Database
 		if ($result->num_rows == 0) {
 			return null;
 		}
-		return new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $row["FKgebruikersrechtenID"], $row["Gewijzigd"]);
+        return new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $this->getGebruikersrechtByID($row["FKgebruikersrechtenID"]), $row["Gewijzigd"]);
 	}
 
     public function setKlant($id, $naam, $email, $telefoon, $wachtwoord, $fkGebruikersrechtenID, $gewijzigd = null)
@@ -236,13 +237,36 @@ class Database
 
     public function applyKlant($klant, $new = false)
 	{
-		$this->setKlant($new ? null : $klant->getID(), $klant->getNaam(), $klant->getEmail(), $klant->getTelefoon(), $klant->getWachtwoord(), $klant->getFKgebruikersrechtenID());
+        $this->setKlant($new ? null : $klant->getID(), $klant->getNaam(), $klant->getEmail(), $klant->getTelefoon(), $klant->getWachtwoord(), $klant->getGebruikersrechten()->getID());
 	}
 
     public function deleteKlant($id)
     {
         $this->connect();
         $result = $this->db->query("DELETE FROM klanten WHERE ID = $id");
+    }
+
+    // gebruikersrechten
+    // ID INT
+    // Recht VARCHAR(45)
+    // Rechten INT (bitmask) ( 1 = read | 2 = write | 4 = update | 8 = delete | 2147483647 = admin )
+    public function getGebruikersrechten()
+    {
+        $this->connect();
+        $result = $this->db->query("SELECT * FROM gebruikersrechten");
+        $gebruikersrechten = array();
+        while ($row = $result->fetch_assoc()) {
+            $gebruikersrechten[] = new Gebruikersrechten($row["ID"], $row["Recht"], $row["Rechten"]);
+        }
+        return $gebruikersrechten;
+    }
+
+    public function getGebruikersrechtByID($id)
+    {
+        $this->connect();
+        $result = $this->db->query("SELECT * FROM gebruikersrechten WHERE ID = $id");
+        $row = $result->fetch_assoc();
+        return new Gebruikersrechten($row["ID"], $row["Recht"], $row["Rechten"]);
     }
 
     // overnachtingen
