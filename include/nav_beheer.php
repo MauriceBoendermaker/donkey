@@ -13,9 +13,6 @@
 					<a class="nav-link active" href="gasten.php">Beheer</a>
 				</li>
 				<li class="nav-item ms-auto">
-					<a id="nav-klant-account" class="nav-link" href="klant/account.php">Account</a>
-				</li>
-				<li class="nav-item">
 					<a class="nav-link text-danger" href="logout.php">Logout</a>
 				</li>
 			</ul>
