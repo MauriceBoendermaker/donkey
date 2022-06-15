@@ -72,7 +72,7 @@ if (isset($_POST['save']) && isset($_POST['restaurants'])) {
                     <?php
                     $ids = array();
                     foreach ($pauzeplaatsen as $pauzeplaats) {
-                        array_push($ids, $pauzeplaats->getID());
+                        array_push($ids, $pauzeplaats->getRestaurant()->getID());
                     ?>
                         <tr>
                             <input type="hidden" name="restaurants[]" value="<?php echo $pauzeplaats->getRestaurant()->getID(); ?>">
@@ -107,14 +107,14 @@ if (isset($_POST['save']) && isset($_POST['restaurants'])) {
                 </thead>
                 <tbody id="table2" class="connectedSortable min-height">
                     <?php
-                    foreach ($restaurants as $restaurants) {
-                        if (in_array($restaurants->getID(), $ids)) continue;
+                    foreach ($restaurants as $restaurant) {
+                        if (in_array($restaurant->getID(), $ids)) continue;
                     ?>
                         <tr>
-                            <input type="hidden" name="restaurants[]" value="<?php echo $restaurants->getID(); ?>" disabled>
+                            <input type="hidden" name="restaurants[]" value="<?php echo $restaurant->getID(); ?>" disabled>
                             <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                            <td><?php echo $restaurants->getNaam(); ?></td>
-                            <td><?php echo $restaurants->getAdres(); ?></td>
+                            <td><?php echo $restaurant->getNaam(); ?></td>
+                            <td><?php echo $restaurant->getAdres(); ?></td>
                             <td style="display: none;"></td>
                             <td>
                                 <button type="button" class="float-start addbutton" onclick=""><i class="fa-solid fa-plus"></i></button>
