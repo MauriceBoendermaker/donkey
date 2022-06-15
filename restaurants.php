@@ -53,23 +53,23 @@ switch ($view) {
 		<h3>Restaurant gegevens wijzigen</h3>
 		<form action="" method="post">
 			<input type="hidden" name="id" value="<?php echo $restaurant->getID(); ?>">
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="naam">Naam:</label>
 				<input type='text' class='form-control' id='naam' name='naam' value='<?php echo $restaurant->getNaam(); ?>'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="adres">Adres:</label>
 				<input type='text' class='form-control' id='adres' name='adres' value='<?php echo $restaurant->getAdres(); ?>'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="email">Emailadres:</label>
 				<input type='email' class='form-control' id='email' name='email' value='<?php echo $restaurant->getEmail(); ?>'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="telefoon">Mobiele telefoonnummer:</label>
 				<input type='text' class='form-control' id='telefoon' name='telefoon' value='<?php echo $restaurant->getTelefoon(); ?>'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="coordinaten">Coördinaten:</label>
 				<input type='text' class='form-control' id='coordinaten' name='coordinaten' value='<?php echo $restaurant->getCoordinaten(); ?>'>
 			</div>
@@ -85,23 +85,23 @@ switch ($view) {
 		<h3>Restaurant verwijderen</h3>
 		<form action="" method="post">
 			<input type="hidden" name="id" value="<?php echo $id; ?>">
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="naam">Naam:</label>
 				<input type='text' class='form-control' id='naam' value='<?php echo $restaurant->getNaam(); ?>' disabled>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="adres">Adres:</label>
 				<input type='text' class='form-control' id='adres' value='<?php echo $restaurant->getAdres(); ?>' disabled>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="email">Emailadres:</label>
 				<input type='email' class='form-control' id='email' value='<?php echo $restaurant->getEmail(); ?>' disabled>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="telefoon">Mobiele telefoonnummer:</label>
 				<input type='text' class='form-control' id='telefoon' value='<?php echo $restaurant->getTelefoon(); ?>' disabled>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="coordinaten">Coördinaten:</label>
 				<input type='text' class='form-control' id='coordinaten' value='<?php echo $restaurant->getCoordinaten(); ?>' disabled>
 			</div>
@@ -115,23 +115,23 @@ switch ($view) {
 	?>
 		<h3>Nieuw restaurant</h3>
 		<form action="" method="post">
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="naam">Naam:</label>
 				<input type='text' class='form-control' id='naam' name='naam' placeholder='Naam'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="adres">Adres:</label>
 				<input type='text' class='form-control' id='adres' name='adres' placeholder='Adres'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="email">Emailadres:</label>
 				<input type='email' class='form-control' id='email' name='email' placeholder='Emailadres'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="telefoon">Mobiele telefoonnummer:</label>
 				<input type='text' class='form-control' id='telefoon' name='telefoon' placeholder='Telefoonnummer'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="coordinaten">Coördinaten:</label>
 				<input type='text' class='form-control' id='coordinaten' name='coordinaten' placeholder='Coordinaten N??.????? E??.?????'>
 			</div>

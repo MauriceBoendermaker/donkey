@@ -51,15 +51,15 @@ switch ($view) {
 		<h3>Status gegevens wijzigen</h3>
 		<form action="" method="post">
 			<input type="hidden" name="id" value="<?php echo $status->getID(); ?>">
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="statusCode">Statuscode:</label>
 				<input type='number' class='form-control' id='statusCode' name='statusCode' value='<?php echo $status->getStatusCode(); ?>'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="status">Status:</label>
 				<input type='text' class='form-control' id='status' name='status' value='<?php echo $status->getStatus(); ?>'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="verwijderbaar">Verwijderbaar:</label>
 				<input type='checkbox' class='' id='verwijderbaar' name='verwijderbaar' <?php if ($status->getVerwijderbaar() == 1) {
 					echo "checked";
@@ -67,7 +67,7 @@ switch ($view) {
 					echo "";
 				} ?>>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="pinToekennen">PIN toekennen:</label>
 				<input type='checkbox' class='' id='pinToekennen' name='pinToekennen' <?php if ($status->getPintoekennen() == 1) {
 					echo "checked";
@@ -87,15 +87,15 @@ switch ($view) {
 		<h3>Status gegevens verwijderen</h3>
 		<form action="" method="post">
 			<input type="hidden" name="id" value="<?php echo $id; ?>">
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="statusCode">Statuscode:</label>
 				<input type='number' class='form-control' id='statusCode' value='<?php echo $status->getStatusCode(); ?>' disabled>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="status">Status:</label>
 				<input type='text' class='form-control' id='status' value='<?php echo $status->getStatus(); ?>' disabled>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="verwijderbaar">Verwijderbaar:</label>
                 <input type='text' class='form-control' id='verwijderbaar' value='<?php if ($status->getVerwijderbaar() == 1) {
                     echo "Ja";
@@ -103,7 +103,7 @@ switch ($view) {
                     echo "Nee";
                 } ?>' disabled>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="pinToekennen">PIN toekennen:</label>
 				<input type='text' class='form-control' id='verwijderbaar' value='<?php if ($status->getPintoekennen() == 1) {
 					echo "Ja";
@@ -121,19 +121,19 @@ switch ($view) {
         ?>
         <h3>Nieuwe status</h3>
         <form action="" method="post">
-            <div class="form-group">
+            <div class="form-group mt-2">
                 <label for="statusCode">Statuscode:</label>
                 <input type='number' class='form-control' id='statusCode' name='statusCode' placeholder='Statuscode'>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-2">
                 <label for="status">Status:</label>
                 <input type='text' class='form-control' id='status' name='status' placeholder='Status omschrijving'>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-2">
                 <label for="verwijderbaar">Verwijderbaar:</label>
                 <input type='checkbox' class='' id='verwijderbaar' name='verwijderbaar'>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-2">
                 <label for="PINtoekennen">Pin toekennen:</label>
                 <input type='checkbox' class='' id='PINtoekennen' name='PINtoekennen'>
             </div>

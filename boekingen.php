@@ -47,11 +47,11 @@ switch ($view) {
 		<h3>Boeking wijzigen</h3>
 		<form>
 			<input type="hidden" name="id" value="<?php echo $boeking->getID(); ?>">
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="startdatum">Startdatum</label>
 				<input value="<?php echo $boeking->getStartdatum(); ?>" name="startDatum" type="date" class="form-control" id="startdatum" required>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="status">Status:</label>
 				<select class="form-select" aria-label="Select status" name="statusID">
 					<?php foreach ($db->getStatussen() as $status) { ?>
@@ -62,7 +62,7 @@ switch ($view) {
 					<?php } ?>
 				</select>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<input type="hidden" name="pinCode" value="<?php echo $boeking->getPinCode(); ?>">
 				<label for="pincode">PIN code:</label>
 				<?php
@@ -73,7 +73,7 @@ switch ($view) {
 				}
 				?>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="klant">Klant:</label>
 				<select class="form-select" aria-label="Select klant">
 					<?php foreach ($db->getKlanten() as $klant) {
@@ -86,7 +86,7 @@ switch ($view) {
 					<?php } ?>
 				</select>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="tocht">Tocht:</label>
 				<select class="form-select" aria-label="Select tocht">
 					<?php foreach ($db->getTochten() as $tocht) { ?>
@@ -109,23 +109,23 @@ switch ($view) {
 		<h3>Boeking verwijderen</h3>
 		<form action="" method="post">
 			<input type="hidden" id="ID" name="id" value="<?php echo $id; ?>">
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="startdatum">Startdatum:</label>
 				<input value="<?php echo $boeking->getStartdatum(); ?>" type="date" class="form-control" id="startdatum" disabled required>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="status">Status:</label>
 				<input value="<?php echo $boeking->getStatus()->getStatus(); ?>" type="text" class="form-control" id="status" disabled>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="klant">Klant:</label>
 				<input value="<?php echo $boeking->getKlant()->getNaam(); ?>" type="text" class="form-control" id="klant" disabled>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="emailTelefoon">Email/Telefoon:</label>
 				<input value="<?php echo $boeking->getKlant()->getEmail() . " - " . $boeking->getKlant()->getTelefoon(); ?>" type="text" class="form-control" id="emailTelefoon" disabled>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="tocht">Tocht:</label>
 				<input value="<?php echo $boeking->getTocht()->getOmschrijving(); ?>" type="text" class="form-control" id="tocht" disabled>
 			</div>

@@ -50,15 +50,15 @@ switch ($view) {
 		<h3>Tocht gegevens wijzigen</h3>
 		<form action="" method="post">
 			<input type="hidden" name="id" value="<?php echo $tocht->getID(); ?>">
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="omschrijving">Omschrijving:</label>
 				<input type='text' class='form-control' id='omschrijving' name='omschrijving' value='<?php echo $tocht->getOmschrijving(); ?>'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="routeNaam">Route naam:</label>
 				<input type='text' class='form-control' id='routeNaam' name='routeNaam' value='<?php echo $tocht->getRoute(); ?>'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="aantalDagen">Aantal dagen:</label>
 				<input type='number' class='form-control' id='aantalDagen' name='aantalDagen' value='<?php echo $tocht->getAantaldagen(); ?>'>
 			</div>
@@ -74,15 +74,15 @@ switch ($view) {
 		<h3>Tocht verwijderen</h3>
 		<form action="" method="post">
 			<input type="hidden" name="id" value="<?php echo $id; ?>">
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="omschrijving">Omschrijving:</label>
 				<input type='text' class='form-control' id='omschrijving' value='<?php echo $tocht->getOmschrijving(); ?>' disabled>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="routeNaam">Route naam:</label>
 				<input type='text' class='form-control' id='routeNaam' value='<?php echo $tocht->getRoute(); ?>' disabled>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="aantalDagen">Aantal dagen:</label>
 				<input type='number' class='form-control' id='aantalDagen' value='<?php echo $tocht->getAantaldagen(); ?>' disabled>
 			</div>
@@ -96,15 +96,15 @@ switch ($view) {
 	?>
 		<h3>Nieuwe tocht</h3>
 		<form action="" method="post">
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="omschrijving">Omschrijving:</label>
 				<input type='text' class='form-control' id='omschrijving' name='omschrijving' placeholder='Omschrijving'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="routeNaam">Route naam:</label>
 				<input type='text' class='form-control' id='routeNaam' name='routeNaam' placeholder='Route naam'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="aantalDagen">Aantal dagen:</label>
 				<input type='number' class='form-control' id='aantalDagen' name='aantalDagen' placeholder='Aantal dagen'>
 			</div>

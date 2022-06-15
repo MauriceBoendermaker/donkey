@@ -53,23 +53,23 @@ function home()
 		<h3>Mijn account wijzigen</h3>
 		<form action="" method="post">
 			<input type="hidden" name="id" value="<?php echo $klant->getID(); ?>">
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="naam">Naam:</label>
 				<input type='text' class='form-control' id='naam' name='naam' value='<?php echo $klant->getNaam(); ?>'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="adres">Emailadres:</label>
 				<input type='email' class='form-control' id='email' name='email' value='<?php echo $klant->getEmail(); ?>'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="telefoon">Telefoon:</label>
 				<input type='tel' class='form-control' id='telefoon' name='telefoon' value='<?php echo $klant->getTelefoon(); ?>'>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="wachtwoord">Wachtwoord:</label>
 				<input type='password' class='form-control' id='wachtwoord' name='wachtwoord' value=''>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-2">
 				<label for="wachtwoord2">Bevestig wachtwoord:</label>
 				<input type='password' class='form-control' id='wachtwoord2' name='wachtwoord2' value=''>
 			</div>
@@ -78,7 +78,7 @@ function home()
 				<button type="submit" name="save" class="btn btn-success float-start">Bewaren</button>
 				<button type="submit" name="cancel" class="btn btn-primary float-end">Annuleren</button>
 				<br/>
-				<button type="submit" name="delete" class="btn btn-danger mt-4 mb-3">Verwijderen mijn account</button>
+				<button type="submit" name="delete" class="btn btn-danger mt-4 mb-3">Verwijder mijn account</button>
 			</div>
 		</form>
 

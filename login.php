@@ -69,19 +69,18 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 			<div class="col-md-4 offset-md-4">
 				<div class="card">
 					<div class="card-body">
-						<h3 class="card-title text-center">Login</h3>
+						<h3 class="card-title">Mijn Donkey Travel inloggen</h3>
 						<form action="login.php" method="post">
-							<div class="form-group">
-								<label for="email">Email</label>
+							<div class="form-group mt-2">
+								<label for="email">Email:</label>
 								<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
 							</div>
-							<div class="form-group">
-								<label for="password">Password</label>
-								<input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+							<div class="form-group mt-2">
+								<label for="password">Wachtwoord:</label>
+								<input type="password" class="form-control" id="password" name="password" placeholder="Wachtwoord" required>
 							</div>
 							<div class="form-group mt-3">
 								<button type="submit" class="btn btn-primary btn-block">Login</button>
-	<!--							<a href="register.php"><button type="button" class="btn btn-primary btn-block">Registreren</button></a>-->
 							</div>
 							<div class='alert alert-info mt-4' role='alert'>
 								<i class='fa fa-exclamation-circle' aria-hidden='true'></i>

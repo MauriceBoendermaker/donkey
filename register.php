@@ -26,9 +26,17 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 
 // if form is submitted
 if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['phone'])) {
-	// create a new klant object
-	$password = hash('sha256', $_POST['password']);
-	$klant = new Klant(null, $_POST['name'], $_POST['email'], $_POST['phone'], $password, 0, null);
+	if ($_POST['wachtwoord'] == $_POST['wachtwoord2']) {
+		// create a new klant object
+		$password = hash('sha256', $_POST['password']);
+		$klant = new Klant(null, $_POST['name'], $_POST['email'], $_POST['phone'], $password, 0, null);
+	} else {
+		echo "<div class='alert alert-danger' role='alert'>
+				<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>
+				<span class='sr-only'>Error:</span>
+				Wachtwoorden komen niet overeen.
+			</div>";
+	}
 	// save to database
 	$klant->save();
 	// show success message
@@ -67,20 +75,24 @@ else {
 					<div class="card-body">
 						<h3 class="card-title text-center">Donkey Travel account aanvragen</h3>
 						<form action="register.php" name="register" method="post">
-							<div class="form-group">
-								<label for="name">Naam</label>
+							<div class="form-group mt-2">
+								<label for="name">Naam:</label>
 								<input type="text" class="form-control" id="name" name="name" placeholder="Naam" required>
 							</div>
-							<div class="form-group">
-								<label for="email">Email</label>
+							<div class="form-group mt-2">
+								<label for="email">Email:</label>
 								<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
 							</div>
-							<div class="form-group">
-								<label for="password">Wachtwoord</label>
-								<input type="password" class="form-control" id="password" name="password" placeholder="Wachtwoord" required>
+							<div class="form-group mt-2">
+								<label for="wachtwoord">Wachtwoord:</label>
+								<input type='password' class='form-control' id='wachtwoord' name='wachtwoord' placeholder='Wachtwoord' value=''>
 							</div>
-							<div class="form-group">
-								<label for="phone">Telefoonnummer</label>
+							<div class="form-group mt-2">
+								<label for="wachtwoord2">Bevestig wachtwoord:</label>
+								<input type='password' class='form-control' id='wachtwoord2' name='wachtwoord2' placeholder='Bevestig wachtwoord' value=''>
+							</div>
+							<div class="form-group mt-2">
+								<label for="phone">Telefoonnummer:</label>
 								<input type="text" class="form-control" id="phone" name="phone" placeholder="Telefoonnummer" required>
 							</div>
 							<div class="form-group mt-3">
