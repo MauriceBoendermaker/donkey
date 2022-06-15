@@ -2,8 +2,8 @@
 <?php include "include/nav_welcome.php"; ?>
                 <!-- welcome screen saying name of user -->
                     <?php
-                    if (isset($_SESSION['user'])) {
-                        echo "<h3>Welcome, " . $_SESSION['user'] . "</h3>";
+                    if (isset($_SESSION['naam'])) {
+                        echo "<h3>Welcome, " . $_SESSION['naam'] . "</h3>";
                     } else
                         echo "<h3>Welcome, Guest</h3>";
                     ?>
