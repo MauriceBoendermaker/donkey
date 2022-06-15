@@ -20,4 +20,10 @@ switch(sPage) {
     case "status.php":
         document.getElementById("nav-statussen").classList.add('active');
         break;
+    case "klant/boeking.php":
+        document.getElementById("nav-klant-boeking").classList.add('active');
+        break;
+    case "klant/account.php":
+        document.getElementById("nav-klant-account").classList.add('active');
+        break;
 }
