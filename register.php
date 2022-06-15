@@ -2,6 +2,12 @@
 
 include "include/head.php";
 
+?>
+
+<body style="width: 100vw; height: 87vh;">
+
+<?php
+
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 	header('Location: index.php');
 	exit;
@@ -52,35 +58,37 @@ else {
 
 ?>
 
-<body>
+<div class="w-100 h-100 d-flex align-items-center justify-content-center">
 <!-- register register form with bootstrap use input name, email, password, password confirmation and phone number fields -->
-<div class="container">
-	<div class="row">
-		<div class="col-md-4 offset-md-4">
-			<div class="card">
-				<div class="card-body">
-					<h3 class="card-title text-center">Donkey Travel account aanvragen</h3>
-					<form action="register.php" name="register" method="post">
-						<div class="form-group">
-							<label for="name">Naam</label>
-							<input type="text" class="form-control" id="name" name="name" placeholder="Naam" required>
-						</div>
-						<div class="form-group">
-							<label for="email">Email</label>
-							<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-						</div>
-						<div class="form-group">
-							<label for="password">Wachtwoord</label>
-							<input type="password" class="form-control" id="password" name="password" placeholder="Wachtwoord" required>
-						</div>
-						<div class="form-group">
-							<label for="phone">Telefoonnummer</label>
-							<input type="text" class="form-control" id="phone" name="phone" placeholder="Telefoonnummer" required>
-						</div>
-						<div class="form-group">
-							<button type="submit" class="btn btn-primary btn-block">Aanvragen</button>
-						</div>
-					</form>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 offset-md-4">
+				<div class="card">
+					<div class="card-body">
+						<h3 class="card-title text-center">Donkey Travel account aanvragen</h3>
+						<form action="register.php" name="register" method="post">
+							<div class="form-group">
+								<label for="name">Naam</label>
+								<input type="text" class="form-control" id="name" name="name" placeholder="Naam" required>
+							</div>
+							<div class="form-group">
+								<label for="email">Email</label>
+								<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+							</div>
+							<div class="form-group">
+								<label for="password">Wachtwoord</label>
+								<input type="password" class="form-control" id="password" name="password" placeholder="Wachtwoord" required>
+							</div>
+							<div class="form-group">
+								<label for="phone">Telefoonnummer</label>
+								<input type="text" class="form-control" id="phone" name="phone" placeholder="Telefoonnummer" required>
+							</div>
+							<div class="form-group mt-3">
+								<button type="submit" class="btn btn-success btn-block">Aanvragen</button>
+								<a href="login.php"><button type="button" class="btn btn-primary btn-block">Annuleren</button></a>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
