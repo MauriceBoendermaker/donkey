@@ -236,10 +236,14 @@ class Database
 	}
 
     public function applyKlant($klant, $new = false)
-	{
-        $this->setKlant($new ? null : $klant->getID(), $klant->getNaam(), $klant->getEmail(), $klant->getTelefoon(), $klant->getWachtwoord(), $klant->getGebruikersrechten()->getID());
-	}
-
+    {
+        $this->connect();
+        echo gettype($new);
+        if (gettype($klant->getGebruikersrechten() == "integer"))
+        $this->setKlant($new ? null : $klant->getID(), $klant->getNaam(), $klant->getEmail(), $klant->getTelefoon(), $klant->getWachtwoord(), $klant->getGebruikersrechten());
+        else $this->setKlant($new ? null : $klant->getID(), $klant->getNaam(), $klant->getEmail(), $klant->getTelefoon(), $klant->getWachtwoord(), $klant->getGebruikersrechten()->getID());
+    }
+    
     public function deleteKlant($id)
     {
         $this->connect();
