@@ -25,11 +25,29 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 
 
 // if form is submitted
-if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['phone'])) {
+if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['wachtwoord']) && isset($_POST['phone'])) {
 	if ($_POST['wachtwoord'] == $_POST['wachtwoord2']) {
 		// create a new klant object
-		$password = hash('sha256', $_POST['password']);
+		$password = hash('sha256', $_POST['wachtwoord']);
 		$klant = new Klant(null, $_POST['name'], $_POST['email'], $_POST['phone'], $password, 0, null);
+		// save to database
+		$klant->save();
+		// show success message
+		echo '<div class="alert alert-success" role="alert">
+			Account aangemaakt
+			</div>';
+
+		// set session variables
+		$_SESSION['loggedin'] = true;
+		$_SESSION['id'] = $klant->getId();
+		$_SESSION['naam'] = $klant->getNaam();
+		$_SESSION['email'] = $klant->getEmail();
+		$_SESSION['telefoon'] = $klant->getTelefoon();
+		$_SESSION['rechten'] = $klant->getGebruikersrechten()->getPermissions();
+
+		// redirect to index.php
+		header('Location: index.php');
+		exit;
 	} else {
 		echo "<div class='alert alert-danger' role='alert'>
 				<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>
@@ -37,26 +55,7 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])
 				Wachtwoorden komen niet overeen.
 			</div>";
 	}
-	// save to database
-	$klant->save();
-	// show success message
-	echo '<div class="alert alert-success" role="alert">
-		  Account aangemaakt
-		</div>';
-
-	// set session variables
-	$_SESSION['loggedin'] = true;
-	$_SESSION['id'] = $klant->getId();
-	$_SESSION['naam'] = $klant->getNaam();
-	$_SESSION['email'] = $klant->getEmail();
-	$_SESSION['telefoon'] = $klant->getTelefoon();
-	$_SESSION['rechten'] = $klant->getGebruikersrechten()->getPermissions();
-
-	// redirect to index.php
-	header('Location: index.php');
-	exit;
 }
-
 // if form is not submitted
 else {
 	// show form
