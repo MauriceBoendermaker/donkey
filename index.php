@@ -3,7 +3,7 @@
                 <!-- welcome screen saying name of user -->
                     <?php
                     if (isset($_SESSION['naam'])) {
-                        echo "<h3>Welcome, " . $_SESSION['naam'] . "</h3>";
+                        echo "<h3>Welcome, " . $_SESSION['naam'] . "!</h3>";
                     } else
                         echo "<h3>Welcome, Guest</h3>";
                     ?>
