@@ -21,6 +21,10 @@ if (!endsWith($_SERVER['PHP_SELF'], 'login.php') && !endsWith($_SERVER['PHP_SELF
 		header('Location: ../login.php');
 		exit;
 	}
+	if ($_SESSION['rechten']['read'] == true) {
+		header('Location: ../boekingen.php');
+		exit;
+	}
 }
 
 ?>
