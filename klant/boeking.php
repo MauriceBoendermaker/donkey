@@ -11,6 +11,14 @@ $boekingen = $db->getBoekingenByKlantID(0); //$_SESSION['klant_id']
 // FKklantenID INT (foreign key)
 // FKstatussenID INT (foreign key)
 echo "<h3>Boeking Klant</h3>";
+if (count($boekingen) == 0) {
+	echo '
+		<div class="alert alert-info mt-2" role="alert">
+			<i class="fa fa-info-circle" aria-hidden="true"></i>
+			<span class="sr-only">Error:</span>
+			U heeft nog geen boekingen.
+		</div>';
+} else {
 echo "<table>";
 echo "<tr>";
 echo "<th>Startdatum</th>";
@@ -35,5 +43,6 @@ foreach ($boekingen as $boeking) {
 	echo "</tr>";
 }
 echo "</table>";
+}
 ?>
 <?php include "../include/footer.php"; ?>
