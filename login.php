@@ -39,17 +39,10 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 			header('Location: index.php');
 			exit;
 		} else {
-			// show error message
-			echo '<div class="alert alert-danger" role="alert">
-				  Wrong password
-				</div>';
+			$error = true;
 		}
-
 	} else {
-		// show error message
-		echo '<div class="alert alert-danger" role="alert">
-			  Wrong email
-			</div>';
+		$error = true;
 	}
 }
 
@@ -63,37 +56,47 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 ?>
 
 <body style="width: 100vw; height: 100vh;">
-<!-- Login form with bootstrap use input email and password fields -->
-<div class="w-100 h-100 d-flex align-items-center justify-content-center">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-4 offset-md-4">
-				<div class="card">
-					<div class="card-body">
-						<h3 class="card-title">Mijn Donkey Travel inloggen</h3>
-						<form action="login.php" method="post">
-							<div class="form-group mt-2">
-								<label for="email">Email:</label>
-								<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-							</div>
-							<div class="form-group mt-2">
-								<label for="password">Wachtwoord:</label>
-								<input type="password" class="form-control" id="password" name="password" placeholder="Wachtwoord" required>
-							</div>
-							<div class="form-group mt-3">
-								<button type="submit" class="btn btn-primary btn-block">Login</button>
-							</div>
-							<div class='alert alert-info mt-4' role='alert'>
-								<i class='fa fa-exclamation-circle' aria-hidden='true'></i>
-								<span class='sr-only'>Error:</span>
-								<span>Nog geen account?</span>
-								<a href="register.php"><button type="button" class="btn btn-link btn-block">Maak er hier eentje aan!</button></a>
-							</div>
-						</form>
+	<!-- Login form with bootstrap use input email and password fields -->
+	<div class="w-100 h-100 d-flex align-items-center justify-content-center">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 offset-md-4">
+					<div class="card">
+						<div class="card-body">
+							<h3 class="card-title">Mijn Donkey Travel inloggen</h3>
+							<form action="login.php" method="post">
+								<div class="form-group mt-2">
+									<label for="email">Email:</label>
+									<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+								</div>
+								<div class="form-group mt-2">
+									<label for="password">Wachtwoord:</label>
+									<input type="password" class="form-control" id="password" name="password" placeholder="Wachtwoord" required>
+								</div>
+								<div class="form-group mt-3">
+									<button type="submit" class="btn btn-primary btn-block">Login</button>
+								</div>
+								<!-- error -->
+								<?php if (isset($error)) {
+									echo '
+									<div class="alert alert-danger mt-4" role="alert">
+										<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+										<span class="sr-only">Error:</span>
+										Wrong email or password
+									</div>
+									';
+								} ?>
+								<div class='alert alert-info mt-4' role='alert'>
+									<i class='fa fa-exclamation-circle' aria-hidden='true'></i>
+									<span class='sr-only'>Error:</span>
+									<span>Nog geen account?</span>
+									<a href="register.php"><button type="button" class="btn btn-link btn-block">Maak er hier eentje aan!</button></a>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </body>

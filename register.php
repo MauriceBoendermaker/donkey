@@ -49,19 +49,11 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['wachtwoord'
 		header('Location: index.php');
 		exit;
 	} else {
-		echo "<div class='alert alert-danger' role='alert'>
-				<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>
-				<span class='sr-only'>Error:</span>
-				Wachtwoorden komen niet overeen.
-			</div>";
+		$passError = true;
 	}
 }
-// if form is not submitted
 else {
-	// show form
-	echo '<div class="alert alert-info" role="alert">
-		  Vul uw gegevens in
-		</div>';
+	$error = true;
 }
 
 ?>
@@ -95,6 +87,20 @@ else {
 								<label for="phone">Telefoonnummer:</label>
 								<input type="text" class="form-control" id="phone" name="phone" placeholder="Telefoonnummer" required>
 							</div>
+							<?php
+							if (isset($error)) {
+								echo '<div class="alert alert-info" role="alert">
+										Vul uw gegevens in
+									</div>';
+							}
+							if (isset($passError)) {
+							echo "<div class='alert alert-danger mt-4' role='alert'>
+									<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>
+									<span class='sr-only'>Error:</span>
+									Wachtwoorden komen niet overeen.
+								</div>";
+							}
+							?>
 							<div class="form-group mt-3">
 								<button type="submit" class="btn btn-success btn-block">Aanvragen</button>
 								<a href="login.php"><button type="button" class="btn btn-primary btn-block">Annuleren</button></a>
