@@ -1,4 +1,5 @@
-<?php include "include/nav_beheer.php"; ?>
+<?php include "include/nav.php"; ?>
+<?php include "include/tabs_beheer.php"; ?>
 <!-- debug print database Restaurants -->
 <?php
 $db = new database\Database("localhost", "root", "", "donkey", null);

@@ -4,10 +4,10 @@
 		<h2>Mijn Donkey Travel</h2>
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
-				<a id="nav-klant-beheer" class="nav-link" href="boeking.php">Boekingen</a>
+				<a id="nav-klant-beheer" class="nav-link <?php if (endsWith($_SERVER['REQUEST_URI'], "boeking.php")) echo "active\" aria-current=\"page"; ?>" href="boeking.php">Boekingen</a>
 			</li>
 			<li class="nav-item">
-				<a id="nav-klant-account" class="nav-link" href="account.php">Account</a>
+				<a id="nav-klant-account" class="nav-link <?php if (endsWith($_SERVER['REQUEST_URI'], "account.php")) echo "active\" aria-current=\"page"; ?>" href="account.php">Account</a>
 			</li>
 			<li class="nav-item ms-auto">
 				<a class="nav-link text-danger" href="../logout.php">Logout</a>

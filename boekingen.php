@@ -1,4 +1,4 @@
-<?php include "include/nav_boekingen.php"; ?>
+<?php include "include/nav.php"; ?>
 <!-- debug print database Boekingen -->
 <?php
 $db = new database\Database("localhost", "root", "", "donkey", null);
