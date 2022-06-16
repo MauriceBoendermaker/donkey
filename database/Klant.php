@@ -72,7 +72,7 @@ class Klant
 		return $this->gewijzigd;
 	}
 
-	public function setId($id)
+	public function setID($id)
 	{
 		$this->id = $id;
 	}
@@ -110,6 +110,6 @@ class Klant
 	public function save()
 	{
 		$db = new Database("localhost", "root", "", "donkey", null);
-		$db->applyKlant($this, true);
+		$this->setID($db->applyKlant($this, true));
 	}
 }

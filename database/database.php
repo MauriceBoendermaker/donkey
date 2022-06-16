@@ -238,8 +238,9 @@ class Database
     public function applyKlant($klant, $new = false)
     {
         $this->connect();
-        echo gettype($new);
         $this->setKlant($new ? null : $klant->getID(), $klant->getNaam(), $klant->getEmail(), $klant->getTelefoon(), $klant->getWachtwoord(), $klant->getGebruikersrechten()->getID());
+        if (!$new) return $klant->getID();
+        return $this->db->insert_id;
     }
     
     public function deleteKlant($id)
