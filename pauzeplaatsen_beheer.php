@@ -34,9 +34,9 @@ if (isset($_POST['save']) && isset($_POST['statusID'])) {
     header('Location: pauzeplaatsen_beheer.php?id=' . $id);
 }
 
-if (isset($_POST['save']) && isset($_POST['restaurants'])) {
+if (isset($_POST['save'])) {
     array_map(function ($restaurant) use ($db, $id) {
-        if (in_array($restaurant->getID(), $_POST['restaurants'], false)) {
+        if (isset($_POST['restaurants']) && in_array($restaurant->getID(), $_POST['restaurants'], false)) {
             // check if pauzeplaatsen already has an entry with this restaurant
             $pauzeplaats = $db->getPauzeplaatsenByRestaurantID($restaurant->getID(), $id);
             if (is_null($pauzeplaats) || count($pauzeplaats) == 0) {

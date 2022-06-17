@@ -34,9 +34,9 @@ if (isset($_POST['save']) && isset($_POST['statusID'])) {
     header('Location: overnachtingsplaatsen_beheer.php?id=' . $id);
 }
 
-if (isset($_POST['save']) && isset($_POST['herbergen'])) {
+if (isset($_POST['save'])) {
     array_map(function ($herberg) use ($db, $id) {
-        if (in_array($herberg->getID(), $_POST['herbergen'], false)) {
+        if (isset($_POST['herbergen']) && in_array($herberg->getID(), $_POST['herbergen'], false)) {
             // check if overnachtingsplaatsen already has an entry with this herberg
             $overnachtingen = $db->getOvernachtingenByHerbergID($herberg->getID(), $id);
             if (is_null($overnachtingen) || count($overnachtingen) == 0) {
