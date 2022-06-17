@@ -1,8 +1,8 @@
 <?php
-//using the database/Database.php class
-include_once 'database/Database.php';
-
 session_start();
+
+//using the Database class
+include_once 'database/database.php';
 
 function endsWith($string, $endString)
 {
@@ -14,7 +14,7 @@ function endsWith($string, $endString)
 }
 
 // check if user is on login page
-if (!endsWith($_SERVER['PHP_SELF'], 'login.php') && !endsWith($_SERVER['PHP_SELF'], 'register.php')) {
+if (!endsWith($_SERVER['REQUEST_URI'], 'login.php') && !endsWith($_SERVER['REQUEST_URI'], 'register.php')) {
 	// check if the user is logged in
 	if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false) {
 		// redirect to index.php
@@ -22,7 +22,7 @@ if (!endsWith($_SERVER['PHP_SELF'], 'login.php') && !endsWith($_SERVER['PHP_SELF
 		exit;
 	}
 	if ($_SESSION['rechten']['read'] == false) {
-		header('Location: klant/boeking.php');
+		header('Location: klant/boekingen.php');
 		exit;
 	}
 }

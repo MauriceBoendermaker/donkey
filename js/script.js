@@ -17,13 +17,7 @@ switch(sPage) {
     case "tochten.php":
         document.getElementById("nav-tochten").classList.add('active');
         break;
-    case "status.php":
+    case "statussen.php":
         document.getElementById("nav-statussen").classList.add('active');
-        break;
-    case "klant/boeking.php":
-        document.getElementById("nav-klant-boeking").classList.add('active');
-        break;
-    case "klant/account.php":
-        document.getElementById("nav-klant-account").classList.add('active');
         break;
 }

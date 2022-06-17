@@ -3,6 +3,7 @@
 <?php
 $db = new database\Database("localhost", "root", "", "donkey", null);
 $boekingen = $db->getBoekingenByKlantID(0); //$_SESSION['klant_id']
+
 // boeking (klant)
 // ID INT
 // StartDatum DATE

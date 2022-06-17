@@ -13,7 +13,7 @@
             <a id="nav-tochten" class="nav-link" href="tochten.php">Tochten</a>
         </li>
         <li class="nav-item">
-            <a id="nav-statussen" class="nav-link" href="status.php">Statussen</a>
+            <a id="nav-statussen" class="nav-link" href="statussen.php">Statussen</a>
         </li>
     </ul>
 </div>
