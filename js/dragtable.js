@@ -8,6 +8,15 @@ $(function () {
   $("td").disableSelection();
 });
 
+// for #table1 and #table2 check if has less than 2 children if so set .unsortable child to show
+$(function () {
+  $("#table1, #table2").each(function () {
+    if ($(this).children().length < 2) {
+      $(this).find(".unsortable").show();
+    }
+  });
+});
+
 $("#table1, #table2").on("sortupdate", function () {
   // if table is empty show .unsortable child otherwise hide it
   if ($(this).children().length > 1) {
