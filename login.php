@@ -29,7 +29,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 		if ($klant->getWachtwoord() == $password) {
 			// set session variables
 			$_SESSION['loggedin'] = true;
-			$_SESSION['id'] = $klant->getId();
+			$_SESSION['id'] = $klant->getID();
 			$_SESSION['naam'] = $klant->getNaam();
 			$_SESSION['email'] = $klant->getEmail();
 			$_SESSION['telefoon'] = $klant->getTelefoon();

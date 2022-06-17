@@ -293,7 +293,32 @@ class Database
         $this->connect();
         $result = $this->db->query("SELECT * FROM overnachtingen WHERE ID = $id");
         $row = $result->fetch_assoc();
-        return new Overnachting($row["ID"], $row["FKboekingenID"], $row["FKherbergenID"], $row["FKstatussenID"]);
+        if ($result->num_rows == 0) {
+            return null;
+        }
+        return new Overnachting($row["ID"], $this->getBoekingByID($row["FKboekingenID"]), $this->getHerbergByID($row["FKherbergenID"]), $this->getStatusByID($row["FKstatussenID"]));
+    }
+
+    public function getOvernachtingenByBoekingID($id)
+    {
+        $this->connect();
+        $result = $this->db->query("SELECT * FROM overnachtingen WHERE FKboekingenID = $id");
+        $overnachtingen = array();
+        while ($row = $result->fetch_assoc()) {
+            $overnachtingen[] = new Overnachting($row["ID"], $this->getBoekingByID($row["FKboekingenID"]), $this->getHerbergByID($row["FKherbergenID"]), $this->getStatusByID($row["FKstatussenID"]));
+        }
+        return $overnachtingen;
+    }
+
+    public function getOvernachtingenByHerbergID($id)
+    {
+        $this->connect();
+        $result = $this->db->query("SELECT * FROM overnachtingen WHERE FKherbergenID = $id");
+        $overnachtingen = array();
+        while ($row = $result->fetch_assoc()) {
+            $overnachtingen[] = new Overnachting($row["ID"], $this->getBoekingByID($row["FKboekingenID"]), $this->getHerbergByID($row["FKherbergenID"]), $this->getStatusByID($row["FKstatussenID"]));
+        }
+        return $overnachtingen;
     }
 
     public function setOvernachting($id, $fkBoekingenID, $fkHerbergenID, $fkStatussenID)
@@ -308,7 +333,7 @@ class Database
 
     public function applyOvernachting($overnachting, $new = false)
     {
-        $this->setOvernachting($new ? null : $overnachting->getID(), $overnachting->getFKboekingenID(), $overnachting->getFKherbergenID(), $overnachting->getFKstatussenID());
+        $this->setOvernachting($new ? null : $overnachting->getID(), $overnachting->getBoeking()->getID(), $overnachting->getHerberg()->getID(), $overnachting->getStatus()->getID());
     }
 
     public function deleteOvernachting($id)
@@ -342,7 +367,7 @@ class Database
         return new Pauzeplaats($row["ID"], $this->getBoekingByID($row["FKboekingenID"]), $this->getRestaurantByID($row["FKrestaurantsID"]), $this->getStatusByID($row["FKstatussenID"]));
     }
 
-    public function getPauzeplaatsByBoekingID($id)
+    public function getPauzeplaatsenByBoekingID($id)
     {
         $this->connect();
         $result = $this->db->query("SELECT * FROM pauzeplaatsen WHERE FKboekingenID = $id");

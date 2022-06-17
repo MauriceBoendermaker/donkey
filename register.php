@@ -39,7 +39,7 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['wachtwoord'
 
 		// set session variables
 		$_SESSION['loggedin'] = true;
-		$_SESSION['id'] = $klant->getId();
+		$_SESSION['id'] = $klant->getID();
 		$_SESSION['naam'] = $klant->getNaam();
 		$_SESSION['email'] = $klant->getEmail();
 		$_SESSION['telefoon'] = $klant->getTelefoon();
