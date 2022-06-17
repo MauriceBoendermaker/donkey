@@ -25,7 +25,7 @@ function home()
 $db = new database\Database($db_host, $db_user, $db_pass, $db_name, $db_port);
 
 $boekingen = $db->getBoekingByID($id);
-$pauzeplaatsen = $db->getPauzeplaatsByBoekingID($id);
+$pauzeplaatsen = $db->getPauzeplaatsenByBoekingID($id);
 $restaurants = $db->getRestaurants();
 
 if (isset($_POST['save']) && isset($_POST['statusID'])) {
@@ -35,11 +35,6 @@ if (isset($_POST['save']) && isset($_POST['statusID'])) {
 }
 
 if (isset($_POST['save']) && isset($_POST['restaurants'])) {
-    // Post data:
-    // - restaurants[]
-
-    //var_dump($_POST['restaurants']);
-    // return all ids from $restaurants using ->getID()
     array_map(function ($restaurant) use ($db, $id) {
         if (in_array($restaurant->getID(), $_POST['restaurants'], false)) {
             // check if pauzeplaatsen already has an entry with this restaurant
@@ -111,6 +106,7 @@ if (isset($edit)) {
                     <tbody id="table1" class="connectedSortable min-height">
                         <?php
                         $ids = array();
+                        if (!is_null($pauzeplaatsen)) {
                         foreach ($pauzeplaatsen as $pauzeplaats) {
                             array_push($ids, $pauzeplaats->getRestaurant()->getID());
                         ?>
@@ -127,7 +123,7 @@ if (isset($edit)) {
                                 </td>
                             </tr>
                         <?php
-                        }
+                        }}
                         ?>
                         <tr class="unsortable" style="display: none;">
                             <td colspan="5"></td>
