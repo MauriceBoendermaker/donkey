@@ -2,7 +2,7 @@
 <?php include "include/tabs_beheer.php"; ?>
 <!-- debug print database Herbergen -->
 <?php
-$db = new database\Database("localhost", "root", "", "donkey", null);
+$db = new database\Database($db_host, $db_user, $db_pass, $db_name, $db_port);
 $herbergen = $db->getHerbergen();
 
 // herbergen

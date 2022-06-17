@@ -1,7 +1,7 @@
 <?php include "include/nav_kaart.php"; ?>
 	<!-- debug print database Tochten -->
 <?php
-$db = new database\Database("localhost", "root", "", "donkey", null);
+$db = new database\Database($db_host, $db_user, $db_pass, $db_name, $db_port);
 $tochten = $db->getTochten();
 
 // tochten

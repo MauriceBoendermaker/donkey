@@ -18,7 +18,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 	$password = hash('sha256', $_POST['password']);
 
 	// connect to database
-	$db = new database\Database("localhost", "root", "", "donkey", null);
+	$db = new database\Database($db_host, $db_user, $db_pass, $db_name, $db_port);
 
 	// get klant by email
 	$klant = $db->getKlantByEmail($email);

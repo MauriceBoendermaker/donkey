@@ -1,7 +1,7 @@
 <?php include "include/nav.php"; ?>
 <!-- debug print database Boekingen -->
 <?php
-$db = new database\Database("localhost", "root", "", "donkey", null);
+$db = new database\Database($db_host, $db_user, $db_pass, $db_name, $db_port);
 $boekingen = $db->getBoekingen();
 
 // boekingen

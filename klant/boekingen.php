@@ -1,7 +1,7 @@
 <?php include "../include/nav_klant.php"; ?>
 	<!-- debug print database Boeking (klant) -->
 <?php
-$db = new database\Database("localhost", "root", "", "donkey", null);
+$db = new database\Database($db_host, $db_user, $db_pass, $db_name, $db_port);
 $boekingen = $db->getBoekingenByKlantID(0); //$_SESSION['klant_id']
 
 // boeking (klant)

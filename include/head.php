@@ -2,6 +2,7 @@
 session_start();
 
 //using the Database class
+include_once 'config.php';
 include_once 'database/database.php';
 
 function endsWith($string, $endString)
