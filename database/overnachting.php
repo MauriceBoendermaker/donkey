@@ -22,35 +22,35 @@ class Overnachting {
         $this->fkstatussenid = $fkstatussenid;
     }
 
-    public function getId() {
+    public function getID() {
         return $this->id;
     }
 
-    public function getFkboekingenid() {
+    public function getBoeking() {
         return $this->fkboekingenid;
     }
 
-    public function getFkherbergenid() {
+    public function getHerberg() {
         return $this->fkherbergenid;
     }
 
-    public function getFkstatussenid() {
+    public function getStatus() {
         return $this->fkstatussenid;
     }
 
-    public function setId($id) {
+    public function setID($id) {
         $this->id = $id;
     }
-
-    public function setFkboekingenid($fkboekingenid) {
-        $this->fkboekingenid = $fkboekingenid;
+    
+    public function setBoeking($boeking) {
+        $this->fkboekingenid = $boeking;
     }
 
-    public function setFkherbergenid($fkherbergenid) {
-        $this->fkherbergenid = $fkherbergenid;
+    public function setHerberg($herberg) {
+        $this->fkherbergenid = $herberg;
     }
 
-    public function setFkstatussenid($fkstatussenid) {
-        $this->fkstatussenid = $fkstatussenid;
+    public function setStatus($status) {
+        $this->fkstatussenid = $status;
     }
 }

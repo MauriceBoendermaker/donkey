@@ -27,7 +27,7 @@ class Status
 		$this->pintoekeennen = $pintoekeennen;
 	}
 
-	public function getId()
+	public function getID()
 	{
 		return $this->id;
 	}
@@ -52,7 +52,7 @@ class Status
 		return $this->pintoekeennen;
 	}
 
-	public function setId($id)
+	public function setID($id)
 	{
 		$this->id = $id;
 	}

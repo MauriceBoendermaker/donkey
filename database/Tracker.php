@@ -24,7 +24,7 @@ class Tracker {
         $this->time = $time;
     }
 
-    public function getId() {
+    public function getID() {
         return $this->id;
     }
 
@@ -44,7 +44,7 @@ class Tracker {
         return $this->time;
     }
 
-    public function setId($id) {
+    public function setID($id) {
         $this->id = $id;
     }
 

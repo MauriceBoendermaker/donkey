@@ -33,12 +33,12 @@ class Herberg
 		$this->gewijzigd = $gewijzigd;
 	}
 
-	public function getId()
+	public function getID()
 	{
 		return $this->id;
 	}
 
-	public function setId($id)
+	public function setID($id)
 	{
 		$this->id = $id;
 	}

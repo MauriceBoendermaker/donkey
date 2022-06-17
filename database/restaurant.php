@@ -30,7 +30,7 @@ class Restaurant {
         $this->gewijzigd = $gewijzigd;
     }
 
-    public function getId() {
+    public function getID() {
         return $this->id;
     }
 
@@ -58,7 +58,7 @@ class Restaurant {
         return $this->gewijzigd;
     }
 
-    public function setId($id) {
+    public function setID($id) {
         $this->id = $id;
     }
 

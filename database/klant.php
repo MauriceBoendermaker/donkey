@@ -32,7 +32,7 @@ class Klant
 		$this->gewijzigd = $gewijzigd;
 	}
 
-	public function getId()
+	public function getID()
 	{
 		return $this->id;
 	}

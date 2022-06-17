@@ -22,7 +22,7 @@ class Tocht {
         $this->aantaldagen = $aantaldagen;
     }
 
-    public function getId() {
+    public function getID() {
         return $this->id;
     }
 
@@ -38,7 +38,7 @@ class Tocht {
         return $this->aantaldagen;
     }
 
-    public function setId($id) {
+    public function setID($id) {
         $this->id = $id;
     }
 
