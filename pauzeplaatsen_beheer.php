@@ -28,6 +28,12 @@ $boekingen = $db->getBoekingByID($id);
 $pauzeplaatsen = $db->getPauzeplaatsByBoekingID($id);
 $restaurants = $db->getRestaurants();
 
+if (isset($_POST['save']) && isset($_POST['statusID'])) {
+    $pauzeplaats = $db->getPauzeplaatsByID($_POST['id']);
+    $db->setPauzeplaats($pauzeplaats->getID(), $pauzeplaats->getBoeking()->getID(), $pauzeplaats->getRestaurant()->getID(), $_POST['statusID']);
+    header('Location: pauzeplaatsen_beheer.php?id=' . $id);
+}
+
 if (isset($_POST['save']) && isset($_POST['restaurants'])) {
     // Post data:
     // - restaurants[]
@@ -53,16 +59,42 @@ if (isset($_POST['save']) && isset($_POST['restaurants'])) {
 }
 
 ?>
-<h3>Pauzeplaatsen</h3>
-<br />
 <?php
 if (isset($edit)) {
-    echo $edit;
+    $pauzeplaats = $db->getPauzeplaatsByID($edit);
 ?>
-
+    <h3>Pauzeplaats wijzigen</h3>
+    <br>
+    <form action="" method="post">
+        <input type="hidden" name="id" value="<?php echo $pauzeplaats->getID(); ?>">
+        <div class="form-group mt-2">
+            <label for="restaurant">restaurant:</label>
+            <input type="text" class="form-control" name="" id="restaurant" value="<?php echo $pauzeplaats->getRestaurant()->getNaam(); ?>" disabled>
+        </div>
+        <div class="form-group mt-2">
+            <label for="adres">Adres:</label>
+            <input type="text" class="form-control" name="" id="adres" value="<?php echo $pauzeplaats->getRestaurant()->getAdres(); ?>" disabled>
+        </div>
+        <div class="form-group mt-2">
+            <label for="status">Status:</label>
+            <select class="form-select" id="status" aria-label="Select status" name="statusID">
+                <?php foreach ($db->getStatussen() as $status) { ?>
+                    <option value="
+							<?php echo $status->getID(); ?>" <?php if ($status->getID() == $pauzeplaats->getStatus()->getID()) echo "selected"; ?>>
+                        <?php echo $status->getStatus(); ?>
+                    </option>
+                <?php } ?>
+            </select>
+        </div>
+        <br />
+        <button name="save" type="submit" class="btn btn-success">Bewaren</button>
+        <button name="cancel" type="submit" class="btn btn-primary">Annuleren</button>
+    </form>
 <?php
 } else {
 ?>
+    <h3>Pauzeplaatsen</h3>
+    <br />
     <form action="" method="post">
         <div class="row g-2">
             <div class="col-sm-6 h-fc">
@@ -90,7 +122,7 @@ if (isset($edit)) {
                                 <td><?php echo $pauzeplaats->getStatus()->getStatus(); ?></td>
                                 <td>
                                     <button type="button" class="float-start addbutton" style="display: none;"><i class="fa-solid fa-plus"></i></button>
-                                    <button type="submit" name="edit" value="<?php $pauzeplaats->getID() ?>" class="float-start"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button type="submit" name="edit" value="<?php echo $pauzeplaats->getID(); ?>" class="float-start editbutton"><i class="fa-solid fa-edit"></i></button>
                                     <button type="button" class="float-start removebutton"><i class="fa-solid fa-minus"></i></button>
                                 </td>
                             </tr>

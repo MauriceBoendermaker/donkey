@@ -24,12 +24,12 @@ class Pauzeplaats
 		$this->status = $status;
 	}
 
-	public function getId()
+	public function getID()
 	{
 		return $this->id;
 	}
 
-	public function setId($id)
+	public function setID($id)
 	{
 		$this->id = $id;
 	}
