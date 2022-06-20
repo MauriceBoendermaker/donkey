@@ -16,7 +16,7 @@ function endsWith($string, $endString)
 //if (!endsWith($_SERVER['REQUEST_URI'], 'login.php') && !endsWith($_SERVER['REQUEST_URI'], 'register.php')) {
 //	// check if the user is logged in
 //	if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false) {
-//		// redirect to index.php
+//		// redirect to index_page
 //		header('Location: ../login.php');
 //		exit;
 //	}

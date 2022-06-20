@@ -45,7 +45,7 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['wachtwoord'
 		$_SESSION['telefoon'] = $klant->getTelefoon();
 		$_SESSION['rechten'] = $klant->getGebruikersrechten()->getPermissions();
 
-		// redirect to index.php
+		// redirect to index_page
 		header('Location: ./');
 		exit;
 	} else {

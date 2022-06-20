@@ -35,7 +35,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 			$_SESSION['telefoon'] = $klant->getTelefoon();
 			$_SESSION['rechten'] = $klant->getGebruikersrechten()->getPermissions();
 
-			// redirect to index.php
+			// redirect to index_page
 			header('Location: ./');
 			exit;
 		} else {
@@ -46,7 +46,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 	}
 }
 
-// if user is logged in, redirect to index.php
+// if user is logged in, redirect to index_page
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 	header('Location: ./');
