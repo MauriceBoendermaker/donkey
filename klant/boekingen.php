@@ -1,4 +1,4 @@
-<?php include "../include/nav_klant.php"; ?>
+<?php include "./include/nav_klant.php"; ?>
 	<!-- debug print database Boeking (klant) -->
 <?php
 $db = new database\Database($db_host, $db_user, $db_pass, $db_name, $db_port);
@@ -46,4 +46,4 @@ foreach ($boekingen as $boeking) {
 echo "</table>";
 }
 ?>
-<?php include "../include/footer.php"; ?>
+<?php include "./include/footer.php"; ?>

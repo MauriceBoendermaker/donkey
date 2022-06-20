@@ -1,4 +1,4 @@
-<?php include "../include/nav_klant.php"; ?>
+<?php include "./include/nav_klant.php"; ?>
 <!-- debug print database Herbergen -->
 <?php
 $db = new database\Database($db_host, $db_user, $db_pass, $db_name, $db_port);
@@ -100,4 +100,4 @@ $klant = $db->getKlantByID($id);
 		</div>
 	</div>
 </div>
-<?php include "../include/footer.php"; ?>
+<?php include "./include/footer.php"; ?>

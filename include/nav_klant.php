@@ -1,4 +1,4 @@
-<?php include "../include/head_klant.php"; ?>
+<?php include "./include/head_klant.php"; ?>
 <div class="container">
 	<div class="crud-container">
 		<h2>Mijn Donkey Travel</h2>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 // In case one is using PHP 5.4's built-in server
 $filename = __DIR__ . preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']);
@@ -16,6 +17,11 @@ function base_url()
 {
 	$url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']);
 	return $url;
+}
+
+function startWith($haystack, $needle)
+{
+	return substr($haystack, 0, strlen($needle)) === $needle;
 }
 
 // Create a Router
@@ -42,6 +48,7 @@ $router->before('GET', '/(.*)', function($page) {
 		header('Location: ' . base_url() . '/login');
 		exit;
 	}
+	if (startWith($page, 'klant/') || $page == 'logout') return;
 	if ($_SESSION['rechten']['read'] == false) {
 		header('Location: klant/boekingen');
 		exit;
@@ -102,6 +109,14 @@ $router->all('/tochten', function () {
 
 $router->all('/test', function () {
 	include 'test.php';
+});
+
+$router->all('/klant/boekingen', function () {
+	include 'klant/boekingen.php';
+});
+
+$router->all('/klant/account', function () {
+	include 'klant/account.php';
 });
 
 // Thunderbirds are go!
