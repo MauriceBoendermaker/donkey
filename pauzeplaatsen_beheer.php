@@ -16,7 +16,7 @@ if (isset($_POST['edit']))
 
 function home()
 {
-    header('Location: boekingen.php');
+    header('Location: boekingen');
     exit();
 }
 ?>
@@ -31,7 +31,7 @@ $restaurants = $db->getRestaurants();
 if (isset($_POST['save']) && isset($_POST['statusID'])) {
     $pauzeplaats = $db->getPauzeplaatsByID($_POST['id']);
     $db->setPauzeplaats($pauzeplaats->getID(), $pauzeplaats->getBoeking()->getID(), $pauzeplaats->getRestaurant()->getID(), $_POST['statusID']);
-    header('Location: pauzeplaatsen_beheer.php?id=' . $id);
+    header('Location: pauzeplaatsen_beheer?id=' . $id);
 }
 
 if (isset($_POST['save'])) {
@@ -49,7 +49,7 @@ if (isset($_POST['save'])) {
             }
         }
     }, $restaurants);
-    header('Location: pauzeplaatsen_beheer.php?id=' . $id);
+    header('Location: pauzeplaatsen_beheer?id=' . $id);
     exit();
 }
 

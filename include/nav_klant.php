@@ -4,13 +4,13 @@
 		<h2>Mijn Donkey Travel</h2>
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
-				<a id="nav-klant-beheer" class="nav-link <?php if (endsWith($_SERVER['REQUEST_URI'], "boekingen.php")) echo "active\" aria-current=\"page"; ?>" href="boekingen.php">Boekingen</a>
+				<a id="nav-klant-beheer" class="nav-link <?php if (endsWith($_SERVER['REQUEST_URI'], "boekingen")) echo "active\" aria-current=\"page"; ?>" href="boekingen">Boekingen</a>
 			</li>
 			<li class="nav-item">
-				<a id="nav-klant-account" class="nav-link <?php if (endsWith($_SERVER['REQUEST_URI'], "account.php")) echo "active\" aria-current=\"page"; ?>" href="account.php">Account</a>
+				<a id="nav-klant-account" class="nav-link <?php if (endsWith($_SERVER['REQUEST_URI'], "account")) echo "active\" aria-current=\"page"; ?>" href="account">Account</a>
 			</li>
 			<li class="nav-item ms-auto">
-				<a class="nav-link text-danger" href="../logout.php">Logout</a>
+				<a class="nav-link text-danger" href="../logout">Logout</a>
 			</li>
 		</ul>
 		<div class="crud-form row mx-0">

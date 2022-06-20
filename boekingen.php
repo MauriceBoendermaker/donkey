@@ -36,7 +36,7 @@ if (isset($_POST['save'])) {
 
 function home()
 {
-	header('Location: boekingen.php');
+	header('Location: boekingen');
 	exit();
 }
 
@@ -162,8 +162,8 @@ switch ($view) {
 			echo "<td>" . $boeking->getKlant()->getEmail() . "</td>";
 			echo "<td>" . $boeking->getKlant()->getTelefoon() . "</td>";
 			echo "<td class='px-0 d-flex justify-content-center'>
-				<a class='mx-1' href='pauzeplaatsen_beheer.php?id={$boeking->getID()}'><button><i class='fa-solid fa-pause'></i></button></a>
-				<a class='mx-1' href='overnachtingsplaatsen_beheer.php?id={$boeking->getID()}'><button><i class='fa-solid fa-bed'></i></button></a>";
+				<a class='mx-1' href='pauzeplaatsen_beheer?id={$boeking->getID()}'><button><i class='fa-solid fa-pause'></i></button></a>
+				<a class='mx-1' href='overnachtingsplaatsen_beheer?id={$boeking->getID()}'><button><i class='fa-solid fa-bed'></i></button></a>";
 			if ($_SESSION['rechten']['update']) echo "<a class='mx-1' href='?id={$boeking->getID()}&view=edit'><button><i class='fa-solid fa-pen-to-square'></i></button></a>";
 			if ($_SESSION['rechten']['delete']) echo "<a class='mx-1' href='?id={$boeking->getID()}&view=delete'><button><i class='fa-solid fa-trash-can'></i></button></a>";
 			echo "</td>";

@@ -16,7 +16,7 @@ if (isset($_POST['edit']))
 
 function home()
 {
-    header('Location: boekingen.php');
+    header('Location: boekingen');
     exit();
 }
 ?>
@@ -31,7 +31,7 @@ $herbergen = $db->getHerbergen();
 if (isset($_POST['save']) && isset($_POST['statusID'])) {
     $overnachting = $db->getovernachtingByID($_POST['id']);
     $db->setovernachting($overnachting->getID(), $overnachting->getBoeking()->getID(), $overnachting->getHerberg()->getID(), $_POST['statusID']);
-    header('Location: overnachtingsplaatsen_beheer.php?id=' . $id);
+    header('Location: overnachtingsplaatsen_beheer?id=' . $id);
 }
 
 if (isset($_POST['save'])) {
@@ -49,7 +49,7 @@ if (isset($_POST['save'])) {
             }
         }
     }, $herbergen);
-    header('Location: overnachtingsplaatsen_beheer.php?id=' . $id);
+    header('Location: overnachtingsplaatsen_beheer?id=' . $id);
     exit();
 }
 

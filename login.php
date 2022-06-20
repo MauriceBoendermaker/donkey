@@ -36,7 +36,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 			$_SESSION['rechten'] = $klant->getGebruikersrechten()->getPermissions();
 
 			// redirect to index.php
-			header('Location: index.php');
+			header('Location: ./');
 			exit;
 		} else {
 			$error = true;
@@ -49,7 +49,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 // if user is logged in, redirect to index.php
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-	header('Location: index.php');
+	header('Location: ./');
 	exit;
 }
 
@@ -64,7 +64,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 					<div class="card">
 						<div class="card-body">
 							<h3 class="card-title">Mijn Donkey Travel inloggen</h3>
-							<form action="login.php" method="post">
+							<form action="login" method="post">
 								<div class="form-group mt-2">
 									<label for="email">Email:</label>
 									<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
@@ -90,7 +90,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 									<i class='fa fa-exclamation-circle' aria-hidden='true'></i>
 									<span class='sr-only'>Error:</span>
 									<span>Nog geen account?</span>
-									<a href="register.php"><button type="button" class="btn btn-link btn-block">Maak er hier eentje aan!</button></a>
+									<a href="register"><button type="button" class="btn btn-link btn-block">Maak er hier eentje aan!</button></a>
 								</div>
 							</form>
 						</div>

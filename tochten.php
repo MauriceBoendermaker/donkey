@@ -40,7 +40,7 @@ if (isset($_POST['save'])) {
 
 function home()
 {
-	header('Location: tochten.php');
+	header('Location: tochten');
 	exit();
 }
 

@@ -43,7 +43,7 @@ if (isset($_POST['save'])) {
 
 function home()
 {
-	header('Location: herbergen.php');
+	header('Location: herbergen');
 	exit();
 }
 
