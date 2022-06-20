@@ -14,19 +14,19 @@ function endsWith($string, $endString)
 	return (substr($string, -$len) === $endString);
 }
 
-// check if user is on login page
-if (!endsWith($_SERVER['REQUEST_URI'], 'login.php') && !endsWith($_SERVER['REQUEST_URI'], 'register.php')) {
-	// check if the user is logged in
-	if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false) {
-		// redirect to index.php
-		header('Location: ../login.php');
-		exit;
-	}
-	if ($_SESSION['rechten']['read'] == true) {
-		header('Location: ../boekingen.php');
-		exit;
-	}
-}
+//// check if user is on login page
+//if (!endsWith($_SERVER['REQUEST_URI'], 'login.php') && !endsWith($_SERVER['REQUEST_URI'], 'register.php')) {
+//	// check if the user is logged in
+//	if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false) {
+//		// redirect to index.php
+//		header('Location: ../login.php');
+//		exit;
+//	}
+//	if ($_SESSION['rechten']['read'] == true) {
+//		header('Location: ../boekingen.php');
+//		exit;
+//	}
+//}
 
 ?>
 <!-- crud+s main page styled by bootstrap -->
