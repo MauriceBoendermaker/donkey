@@ -9,7 +9,7 @@ include "include/head.php";
 <?php
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-	header('Location: index.php');
+	header('Location: ./');
 	exit;
 }
 
@@ -46,7 +46,7 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['wachtwoord'
 		$_SESSION['rechten'] = $klant->getGebruikersrechten()->getPermissions();
 
 		// redirect to index.php
-		header('Location: index.php');
+		header('Location: ./');
 		exit;
 	} else {
 		$passError = true;
@@ -66,7 +66,7 @@ else {
 				<div class="card">
 					<div class="card-body">
 						<h3 class="card-title text-center">Donkey Travel account aanvragen</h3>
-						<form action="register.php" name="register" method="post">
+						<form action="register" name="register" method="post">
 							<div class="form-group mt-2">
 								<label for="name">Naam:</label>
 								<input type="text" class="form-control" id="name" name="name" placeholder="Naam" required>
@@ -89,12 +89,12 @@ else {
 							</div>
 							<?php
 							if (isset($error)) {
-								echo '<div class="alert alert-info" role="alert">
+								echo '<div class="alert alert-info mt-3" role="alert">
 										Vul uw gegevens in
 									</div>';
 							}
 							if (isset($passError)) {
-							echo "<div class='alert alert-danger mt-4' role='alert'>
+							echo "<div class='alert alert-danger mt-3' role='alert'>
 									<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>
 									<span class='sr-only'>Error:</span>
 									Wachtwoorden komen niet overeen.
@@ -103,7 +103,7 @@ else {
 							?>
 							<div class="form-group mt-3">
 								<button type="submit" class="btn btn-success btn-block">Aanvragen</button>
-								<a href="login.php"><button type="button" class="btn btn-primary btn-block">Annuleren</button></a>
+								<a href="login"><button type="button" class="btn btn-primary btn-block">Annuleren</button></a>
 							</div>
 						</form>
 					</div>
