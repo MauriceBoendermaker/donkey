@@ -13,7 +13,7 @@ function endsWith($string, $endString)
 	}
 	return (substr($string, -$len) === $endString);
 }
-
+//
 //// check if user is on login page
 //if (!endsWith($_SERVER['REQUEST_URI'], 'login.php') && !endsWith($_SERVER['REQUEST_URI'], 'register.php')) {
 //	// check if the user is logged in
@@ -23,7 +23,7 @@ function endsWith($string, $endString)
 //		exit;
 //	}
 //	if ($_SESSION['rechten']['read'] == false) {
-//		header('Location: klant/boekingen.php');
+//		header('Location: klant/boekingen');
 //		exit;
 //	}
 //}

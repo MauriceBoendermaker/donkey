@@ -23,7 +23,7 @@ function endsWith($string, $endString)
 //		exit;
 //	}
 //	if ($_SESSION['rechten']['read'] == true) {
-//		header('Location: ../boekingen.php');
+//		header('Location: ../boekingen');
 //		exit;
 //	}
 //}
