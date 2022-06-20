@@ -12,6 +12,12 @@ if (php_sapi_name() === 'cli-server' && is_file($filename)) {
 
 require_once 'vendor/autoload.php';
 
+function base_url()
+{
+	$url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']);
+	return $url;
+}
+
 // Create a Router
 $router = new \Bramus\Router\Router();
 
@@ -25,6 +31,21 @@ $router->set404(function () {
 $router->set404('/test(/.*)?', function () {
 	header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
 	echo '<h1><mark>404, route not found!</mark></h1>';
+});
+
+$router->before('GET', '/(.*)', function($page) {
+	if ($page == 'login' || $page == 'register') {
+		return;
+	}
+	if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false) {
+		// redirect to index.php
+		header('Location: ' . base_url() . '/login');
+		exit;
+	}
+	if ($_SESSION['rechten']['read'] == false) {
+		header('Location: klant/boekingen');
+		exit;
+	}
 });
 
 $router->all('/boekingen', function () {
