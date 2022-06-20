@@ -46,7 +46,7 @@ if (isset($_POST['delete']) && isset($id)) {
 
 function home()
 {
-	header('Location: boekingen.php');
+	header('Location: boekingen');
 	exit();
 }
 $klant = $db->getKlantByID($id);
