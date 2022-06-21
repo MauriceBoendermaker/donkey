@@ -67,7 +67,6 @@ $router->all('/herbergen', function () {
 });
 
 $router->all('/', function () {
-	die();
 	if ($_SESSION['rechten']['read'] == false) {
 		header('Location: klant/boekingen');
 		exit;
