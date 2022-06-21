@@ -3,13 +3,18 @@
 include_once 'config.php';
 include_once 'database/database.php';
 
-function endsWith($string, $endString)
+function endsWith($string, ...$endString)
 {
-	$len = strlen($endString);
-	if ($len == 0) {
-		return true;
+	foreach ($endString as $end) {
+		$len = strlen($end);
+		if ($len == 0) {
+			return true;
+		}
+		if (substr($string, -$len) === $end) {
+			return true;
+		}
 	}
-	return (substr($string, -$len) === $endString);
+	return false;
 }
 //
 //// check if user is on login page
