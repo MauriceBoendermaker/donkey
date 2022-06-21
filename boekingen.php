@@ -40,13 +40,6 @@ function home()
 	exit();
 }
 
-function formatPhone($phone)
-{
-	$phone = preg_replace("/[^0-9]/", "", $phone);
-	$phone = preg_replace('~.*(\d{3})[^\d]{0,7}(\d{3})[^\d]{0,7}(\d{4}).*~', "$1-$2-$3", $phone);
-	return $phone;
-}
-
 switch ($view) {
 	case 'edit':
 		$boeking = $db->getBoekingByID($id);
