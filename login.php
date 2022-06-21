@@ -86,13 +86,14 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 								<div class="form-group mt-3">
 									<button type="submit" class="btn btn-primary btn-block">Login</button>
 								</div>
-								<div class='alert alert-info mt-4' role='alert'>
-									<i class='fa fa-exclamation-circle' aria-hidden='true'></i>
-									<span class='sr-only'>Error:</span>
-									<span>Nog geen account?</span>
-									<a href="register"><button type="button" class="btn btn-link btn-block">Maak er hier eentje aan!</button></a>
-								</div>
 							</form>
+							<a href="reset-password"><p class="mt-2">Wachtwoord vergeten?</p></a>
+							<div class='alert alert-info mt-2' role='alert'>
+								<i class='fa fa-exclamation-circle' aria-hidden='true'></i>
+								<span class='sr-only'>Error:</span>
+								<span>Nog geen account?</span>
+								<a href="register"><button type="button" class="btn btn-link btn-block">Maak er hier eentje aan!</button></a>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -39,8 +39,8 @@ $router->set404('/test(/.*)?', function () {
 	echo '<h1><mark>404, route not found!</mark></h1>';
 });
 
-$router->before('GET', '/(.*)', function($page) {
-	if ($page == 'login' || $page == 'register') {
+$router->before('GET|POST|PUT|DELETE', '/(.*)', function($page) {
+	if ($page == 'login' || $page == 'register' || $page == 'reset-password') {
 		return;
 	}
 	if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false) {
@@ -84,6 +84,18 @@ $router->all('/login', function () {
 
 $router->all('/logout', function () {
 	include 'logout.php';
+});
+
+$router->all('/reset-password', function () {
+	// matrix looking thingy
+	echo "<pre>";
+	for ($i = 0; $i < 63; $i++) {
+		for ($j = 0; $j < 230; $j++) {
+			echo "*";
+		}
+		echo "\n";
+	}
+	echo "</pre>";
 });
 
 $router->all('/overnachtingsplaatsen_beheer', function () {
