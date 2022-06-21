@@ -65,6 +65,16 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 						<div class="card-body">
 							<h3 class="card-title">Mijn Donkey Travel inloggen</h3>
 							<form action="login" method="post">
+								<!-- error -->
+								<?php if (isset($error)) {
+									echo '
+									<div class="alert alert-danger mt-4" role="alert">
+										<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+										<span class="sr-only">Error:</span>
+										Wrong email or password
+									</div>
+									';
+								} ?>
 								<div class="form-group mt-2">
 									<label for="email">Email:</label>
 									<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
@@ -76,16 +86,6 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 								<div class="form-group mt-3">
 									<button type="submit" class="btn btn-primary btn-block">Login</button>
 								</div>
-								<!-- error -->
-								<?php if (isset($error)) {
-									echo '
-									<div class="alert alert-danger mt-4" role="alert">
-										<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-										<span class="sr-only">Error:</span>
-										Wrong email or password
-									</div>
-									';
-								} ?>
 								<div class='alert alert-info mt-4' role='alert'>
 									<i class='fa fa-exclamation-circle' aria-hidden='true'></i>
 									<span class='sr-only'>Error:</span>
