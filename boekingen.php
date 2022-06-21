@@ -148,7 +148,7 @@ switch ($view) {
 				<th>Tocht</th>
 				<th>Email</th>
 				<th>Telefoon</th>
-				<th class="d-flex justify-content-center"><button onClick='window.location.reload();'><i class='fa-solid fa-arrow-rotate-right'></i></button></th>
+				<th class="d-flex justify-content-center"><button class="btn btn-primary min-height-0 btn-sm" onClick='window.location.reload();'><i class='fa-solid fa-arrow-rotate-right'></i></button></th>
 			</tr>
 	<?php
 		foreach ($boekingen as $boeking) {
@@ -162,10 +162,10 @@ switch ($view) {
 			echo "<td>" . $boeking->getKlant()->getEmail() . "</td>";
 			echo "<td>" . $boeking->getKlant()->getTelefoon() . "</td>";
 			echo "<td class='px-0 d-flex justify-content-center'>
-				<a class='mx-1' href='pauzeplaatsen_beheer?id={$boeking->getID()}'><button><i class='fa-solid fa-pause'></i></button></a>
-				<a class='mx-1' href='overnachtingsplaatsen_beheer?id={$boeking->getID()}'><button><i class='fa-solid fa-bed'></i></button></a>";
-			if ($_SESSION['rechten']['update']) echo "<a class='mx-1' href='?id={$boeking->getID()}&view=edit'><button><i class='fa-solid fa-pen-to-square'></i></button></a>";
-			if ($_SESSION['rechten']['delete']) echo "<a class='mx-1' href='?id={$boeking->getID()}&view=delete'><button><i class='fa-solid fa-trash-can'></i></button></a>";
+				<a class='mx-1' href='pauzeplaatsen_beheer?id={$boeking->getID()}'><button class='btn btn-primary min-height-0 btn-sm'><i class='fa-solid fa-pause'></i></button></a>
+				<a class='mx-1' href='overnachtingsplaatsen_beheer?id={$boeking->getID()}'><button class='btn btn-primary min-height-0 btn-sm'><i class='fa-solid fa-bed'></i></button></a>";
+			if ($_SESSION['rechten']['update']) echo "<a class='mx-1' href='?id={$boeking->getID()}&view=edit'><button class='btn btn-primary min-height-0 btn-sm'><i class='fa-solid fa-pen-to-square'></i></button></a>";
+			if ($_SESSION['rechten']['delete']) echo "<a class='mx-1' href='?id={$boeking->getID()}&view=delete'><button class='btn btn-danger min-height-0 btn-sm'><i class='fa-solid fa-trash-can'></i></button></a>";
 			echo "</td>";
 			echo "</tr>";
 		}

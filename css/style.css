@@ -73,4 +73,8 @@ tr:hover {
   min-height: 100px;
 }
 
+.min-height-0 {
+  min-height: 0px;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -107,23 +107,24 @@ if (isset($edit)) {
                         <?php
                         $ids = array();
                         if (!is_null($pauzeplaatsen)) {
-                        foreach ($pauzeplaatsen as $pauzeplaats) {
-                            array_push($ids, $pauzeplaats->getRestaurant()->getID());
+                            foreach ($pauzeplaatsen as $pauzeplaats) {
+                                array_push($ids, $pauzeplaats->getRestaurant()->getID());
                         ?>
-                            <tr>
-                                <input type="hidden" name="restaurants[]" value="<?php echo $pauzeplaats->getRestaurant()->getID(); ?>">
-                                <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                                <td><?php echo $pauzeplaats->getRestaurant()->getNaam(); ?></td>
-                                <td class="w-fc"><?php echo $pauzeplaats->getRestaurant()->getAdres(); ?></td>
-                                <td><?php echo $pauzeplaats->getStatus()->getStatus(); ?></td>
-                                <td>
-                                    <button type="button" class="float-start addbutton" style="display: none;"><i class="fa-solid fa-plus"></i></button>
-                                    <button type="submit" name="edit" value="<?php echo $pauzeplaats->getID(); ?>" class="float-start editbutton"><i class="fa-solid fa-edit"></i></button>
-                                    <button type="button" class="float-start removebutton"><i class="fa-solid fa-minus"></i></button>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <input type="hidden" name="restaurants[]" value="<?php echo $pauzeplaats->getRestaurant()->getID(); ?>">
+                                    <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
+                                    <td><?php echo $pauzeplaats->getRestaurant()->getNaam(); ?></td>
+                                    <td class="w-fc"><?php echo $pauzeplaats->getRestaurant()->getAdres(); ?></td>
+                                    <td><?php echo $pauzeplaats->getStatus()->getStatus(); ?></td>
+                                    <td>
+                                        <button type="button" class="float-start addbutton btn btn-primary min-height-0 btn-sm" style="display: none;"><i class="fa-solid fa-plus"></i></button>
+                                        <button type="submit" class="float-start btn btn-primary min-height-0 btn-sm" name="edit" value="<?php echo $pauzeplaats->getID(); ?>" class="float-start editbutton"><i class="fa-solid fa-edit"></i></button>
+                                        <button type="button" class="float-start removebutton btn btn-danger min-height-0 btn-sm"><i class="fa-solid fa-minus"></i></button>
+                                    </td>
+                                </tr>
                         <?php
-                        }}
+                            }
+                        }
                         ?>
                         <tr class="unsortable" style="display: none;">
                             <td colspan="5"></td>
@@ -153,9 +154,9 @@ if (isset($edit)) {
                                 <td><?php echo $restaurant->getAdres(); ?></td>
                                 <td style="display: none;"></td>
                                 <td>
-                                    <button type="button" class="float-start addbutton" onclick=""><i class="fa-solid fa-plus"></i></button>
-                                    <button type="button" class="float-start" style="display: none;"><i class=" fa-solid fa-pen-to-square"></i></button>
-                                    <button type="button" class="float-start removebutton" style="display: none;"><i class="fa-solid fa-minus"></i></button>
+                                    <button type="button" class="float-start addbutton btn btn-primary min-height-0 btn-sm" onclick=""><i class="fa-solid fa-plus"></i></button>
+                                    <button type="button" class="float-start btn btn-primary min-height-0 btn-sm" class="float-start" style="display: none;"><i class=" fa-solid fa-pen-to-square"></i></button>
+                                    <button type="button" class="float-start removebutton btn btn-danger min-height-0 btn-sm" style="display: none;"><i class="fa-solid fa-minus"></i></button>
                                 </td>
                             </tr>
                         <?php

@@ -153,7 +153,7 @@ switch ($view) {
 		<th>Status</th>
 		<th>Verwijderbaar</th>
 		<th>PIN toekennen</th>
-		<th class="d-flex justify-content-center"><a class='mx-1' href='?view=add'><button><i class="fa-solid fa-plus"></i></button></a></th>
+		<th class="d-flex justify-content-center"><a class='mx-1' href='?view=add'><button class='btn btn-primary min-height-0 btn-sm'><i class="fa-solid fa-plus"></i></button></a></th>
 	</tr>
 <?php
 	foreach ($statussen as $status) {
@@ -163,8 +163,8 @@ switch ($view) {
 		echo "<td>" . ($status->getVerwijderbaar() ? "true" : "false") . "</td>";
 		echo "<td>" . ($status->getPintoekennen() ? "true" : "false") . "</td>";
 		echo "<td class='px-0 d-flex justify-content-center'>
-			<a class='mx-1' href='?id={$status->getID()}&view=edit'><button><i class='fa-solid fa-pen-to-square'></i></button></a>
-			<a class='mx-1' href='?id={$status->getID()}&view=delete'><button><i class='fa-solid fa-trash-can'></i></button></a>
+			<a class='mx-1' href='?id={$status->getID()}&view=edit'><button class='btn btn-primary min-height-0 btn-sm'><i class='fa-solid fa-pen-to-square'></i></button></a>
+			<a class='mx-1' href='?id={$status->getID()}&view=delete'><button class='btn btn-danger min-height-0 btn-sm'><i class='fa-solid fa-trash-can'></i></button></a>
 		</td>";
 		echo "</tr>";
 	}

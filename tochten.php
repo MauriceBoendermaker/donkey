@@ -123,7 +123,7 @@ switch ($view) {
 				<th>Omschrijving</th>
 				<th>Route naam</th>
 				<th>Aantal dagen</th>
-				<th class="d-flex justify-content-center"><a class='mx-1' href='?view=add'><button><i class="fa-solid fa-plus"></i></button></a></th>
+				<th class="d-flex justify-content-center"><a class='mx-1' href='?view=add'><button class='btn btn-primary min-height-0 btn-sm'><i class="fa-solid fa-plus"></i></button></a></th>
 			</tr>
 	<?php
 		foreach ($tochten as $tocht) {
@@ -132,8 +132,8 @@ switch ($view) {
 			echo "<td>" . $tocht->getRoute() . "</td>";
 			echo "<td>" . $tocht->getAantalDagen() . "</td>";
 			echo "<td class='px-0 d-flex justify-content-center'>
-				<a class='mx-1' href='?id={$tocht->getID()}&view=edit'><button><i class='fa-solid fa-pen-to-square'></i></button></a>
-				<a class='mx-1' href='?id={$tocht->getID()}&view=delete'><button><i class='fa-solid fa-trash-can'></i></button></a>
+				<a class='mx-1' href='?id={$tocht->getID()}&view=edit'><button class='btn btn-primary min-height-0 btn-sm'><i class='fa-solid fa-pen-to-square'></i></button></a>
+				<a class='mx-1' href='?id={$tocht->getID()}&view=delete'><button class='btn btn-danger min-height-0 btn-sm'><i class='fa-solid fa-trash-can'></i></button></a>
 			</td>";
 			echo "</tr>";
 		}

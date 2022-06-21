@@ -152,7 +152,7 @@ switch ($view) {
 				<th>Email</th>
 				<th>Telefoon</th>
 				<th>Coördinaten</th>
-				<th class="d-flex justify-content-center"><a class='mx-1' href='?view=add'><button><i class="fa-solid fa-plus"></i></button></a></th>
+				<th class="d-flex justify-content-center"><a class='mx-1' href='?view=add'><button class='btn btn-primary min-height-0 btn-sm'><i class="fa-solid fa-plus"></i></button></a></th>
 			</tr>
 	<?php
 		foreach ($restaurants as $restaurant) {
@@ -183,8 +183,8 @@ switch ($view) {
 			echo "<td>" . $restaurant->getTelefoon() . "</td>";
 			echo "<td><a target='_blank' href='" . $output . "'>" . $restaurant->getCoordinaten() . "</td>";
 			echo "<td class='px-0 d-flex justify-content-center'>
-				<a class='mx-1' href='?id={$restaurant->getID()}&view=edit'><button><i class='fa-solid fa-pen-to-square'></i></button></a>
-				<a class='mx-1' href='?id={$restaurant->getID()}&view=delete'><button><i class='fa-solid fa-trash-can'></i></button></a>
+				<a class='mx-1' href='?id={$restaurant->getID()}&view=edit'><button class='btn btn-primary min-height-0 btn-sm'><i class='fa-solid fa-pen-to-square'></i></button></a>
+				<a class='mx-1' href='?id={$restaurant->getID()}&view=delete'><button class='btn btn-danger min-height-0 btn-sm'><i class='fa-solid fa-trash-can'></i></button></a>
 			</td>";
 			echo "</tr>";
 		}
