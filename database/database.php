@@ -30,6 +30,7 @@ class Database
         $this->password = $password;
         $this->database = $database;
         $this->port = $port;
+        $this->connect();
     }
 
     public function __destruct()
