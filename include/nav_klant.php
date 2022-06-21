@@ -19,10 +19,10 @@
 		</div>
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
-				<a id="nav-klant-beheer" class="nav-link <?php if (endsWith($_SERVER['REQUEST_URI'], "boekingen")) echo "active\" aria-current=\"page"; ?>" href="boekingen">Boekingen</a>
+				<a id="nav-klant-beheer" class="nav-link <?php if (endsWith(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "boekingen", "reserveren")) echo "active\" aria-current=\"page"; ?>" href="boekingen">Boekingen</a>
 			</li>
 			<li class="nav-item">
-				<a id="nav-klant-account" class="nav-link <?php if (endsWith($_SERVER['REQUEST_URI'], "account")) echo "active\" aria-current=\"page"; ?>" href="account">Account</a>
+				<a id="nav-klant-account" class="nav-link <?php if (endsWith(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "account")) echo "active\" aria-current=\"page"; ?>" href="account">Account</a>
 			</li>
 			<li class="nav-item ms-auto">
 				<a class="nav-link text-danger" href="../logout">Logout</a>

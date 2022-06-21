@@ -88,7 +88,7 @@ class Database
         $result = $this->db->query("SELECT * FROM boekingen WHERE FKklantenID = $id");
         $boekingen = array();
         while ($row = $result->fetch_assoc()) {
-            $boekingen[] = new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $row["FKtochtenID"]->getID(), $row["FKklantenID"]->getID(), $row["FKstatussenID"]->getID());
+            $boekingen[] = new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $this->getTochtByID($row["FKtochtenID"]), $this->getKlantByID($row["FKklantenID"]), $this->getStatusByID($row["FKstatussenID"]));
         }
         return $boekingen;
     }
@@ -108,7 +108,10 @@ class Database
     {
         $this->connect();
         if (is_null($id)) {
-            $result = $this->db->query("INSERT INTO boekingen (StartDatum, PINCode, FKtochtenID, FKklantenID, FKstatussenID) VALUES ('$startDatum', '$pinCode', '$fkTochtenID', '$fkKlantenID', '$fkStatussenID')");
+            if (is_null($pinCode))
+                $result = $this->db->query("INSERT INTO boekingen (StartDatum, FKtochtenID, FKklantenID, FKstatussenID) VALUES ('$startDatum', '$fkTochtenID', '$fkKlantenID', '$fkStatussenID')");
+            else
+                $result = $this->db->query("INSERT INTO boekingen (StartDatum, PINCode, FKtochtenID, FKklantenID, FKstatussenID) VALUES ('$startDatum', '$pinCode', '$fkTochtenID', '$fkKlantenID', '$fkStatussenID')");
         } else {
             $result = $this->db->query("UPDATE boekingen SET StartDatum = '$startDatum', PINCode = '$pinCode', FKtochtenID = '$fkTochtenID', FKklantenID = '$fkKlantenID', FKstatussenID = '$fkStatussenID' WHERE ID = $id");
         }
@@ -116,7 +119,21 @@ class Database
 
     public function applyBoeking($boeking, $new = false)
     {
-        $this->setBoeking($new ? null : $boeking->getID(), $boeking->getStartDatum(), $boeking->getPINCode(), $boeking->getTocht()->getID(), $boeking->getKlant()->getID(), $boeking->getStatus()->getID());
+        $tocht = $boeking->getTocht();
+        if ($tocht instanceof Tocht) $tocht = $tocht->getID();
+
+        $klant = $boeking->getKlant();
+        if ($klant instanceof Klant) $klant = $klant->getID();
+
+        $status = $boeking->getStatus();
+        if ($status instanceof Status) $status = $status->getID();
+
+        $klant = $boeking->getKlant();
+        if (!is_numeric($klant)) $klant = $klant->getID();
+
+        $this->setBoeking($new ? null : $boeking->getID(), $boeking->getStartDatum(), $boeking->getPINCode(), $tocht, $klant, $status);
+
+        return;
     }
 
     public function deleteBoeking($id)

@@ -122,6 +122,10 @@ $router->all('/klant/account', function () {
 	include 'klant/account.php';
 });
 
+$router->all('/klant/reserveren', function () {
+	include 'klant/reserveren.php';
+});
+
 // Thunderbirds are go!
 $router->run();
 

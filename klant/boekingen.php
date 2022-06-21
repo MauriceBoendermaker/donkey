@@ -1,7 +1,7 @@
 <?php include "./include/nav_klant.php"; ?>
 <?php
 $db = new database\Database($db_host, $db_user, $db_pass, $db_name, $db_port);
-$boekingen = $db->getBoekingenByKlantID(0); //$_SESSION['klant_id']
+$boekingen = $db->getBoekingenByKlantID($_SESSION['id']); //$_SESSION['klant_id']
 
 // boeking (klant)
 // ID INT
@@ -19,30 +19,25 @@ if (count($boekingen) == 0) {
 			U heeft nog geen boekingen.
 		</div>';
 } else {
-echo "<table>";
-echo "<tr>";
-echo "<th>Startdatum</th>";
-//echo "<th>Einddatum</th>";
-echo "<th>Status</th>";
-echo "<th>Pincode</th>";
-echo "<th>Klantnaam</th>";
-echo "<th>Tocht</th>";
-echo "<th>Email</th>";
-echo "<th>Telefoon</th>";
-echo "</tr>";
-foreach ($boekingen as $boeking) {
+	echo "<table>";
 	echo "<tr>";
-	echo "<td>" . $boeking->getStartdatum() . "</td>";
-//	echo "<td>" . $boeking->getEinddatum() . "</td>";
-	echo "<td>" . $boeking->getStatus()->getStatus() . "</td>";
-	echo "<td>" . $boeking->getPINCode() . "</td>";
-	echo "<td>" . $boeking->getKlant()->getNaam() . "</td>";
-	echo "<td>" . $boeking->getTocht()->getOmschrijving() . "</td>";
-	echo "<td>" . $boeking->getKlant()->getEmail() . "</td>";
-	echo "<td>" . $boeking->getKlant()->getTelefoon() . "</td>";
+	echo "<th>Startdatum</th>";
+	echo "<th>Einddatum</th>";
+	echo "<th>Status</th>";
+	echo "<th>Pincode</th>";
+	echo "<th>Tocht</th>";
 	echo "</tr>";
-}
-echo "</table>";
+	foreach ($boekingen as $boeking) {
+		echo "<tr>";
+		echo "<td>" . $boeking->getStartdatum() . "</td>";
+		echo "<td>" . date('Y-m-d', strtotime($boeking->getStartdatum() . ' + ' . $boeking->getTocht()->getAantalDagen() . ' days')) . "</td>";
+		echo "<td>" . $boeking->getStatus()->getStatus() . "</td>";
+		echo "<td>" . $boeking->getPINCode() . "</td>";
+		echo "<td>" . $boeking->getTocht()->getOmschrijving() . "</td>";
+		echo "</tr>";
+	}
+	echo "</table>";
 }
 ?>
+<a href="reserveren" class="w-100 mt-3"><button class="w-100 btn btn-primary">Boeking toevoegen</button></a>
 <?php include "./include/footer.php"; ?>

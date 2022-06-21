@@ -19,9 +19,9 @@
 			</div>
 		</div>
 		<?php
-		$welcome = endsWith($_SERVER['REQUEST_URI'], "/");
+		$welcome = endsWith(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "/");
 
-		$boekingen = endsWith($_SERVER['REQUEST_URI'], "boekingen");
+		$boekingen = endsWith(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "boekingen");
 
 		?>
 		<ul class="nav nav-tabs">
