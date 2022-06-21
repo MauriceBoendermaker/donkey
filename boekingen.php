@@ -40,6 +40,13 @@ function home()
 	exit();
 }
 
+function formatPhone($phone)
+{
+	$phone = preg_replace("/[^0-9]/", "", $phone);
+	$phone = preg_replace('~.*(\d{3})[^\d]{0,7}(\d{3})[^\d]{0,7}(\d{4}).*~', "$1-$2-$3", $phone);
+	return $phone;
+}
+
 switch ($view) {
 	case 'edit':
 		$boeking = $db->getBoekingByID($id);
@@ -160,7 +167,7 @@ switch ($view) {
 			echo "<td>" . $boeking->getKlant()->getNaam() . "</td>";
 			echo "<td>" . $boeking->getTocht()->getOmschrijving() . "</td>";
 			echo "<td>" . $boeking->getKlant()->getEmail() . "</td>";
-			echo "<td>" . $boeking->getKlant()->getTelefoon() . "</td>";
+			echo "<td>+ " . formatPhone($boeking->getKlant()->getTelefoon()) . "</td>";
 			echo "<td class='px-0 d-flex justify-content-center'>
 				<a class='mx-1' href='pauzeplaatsen_beheer?id={$boeking->getID()}'><button class='btn btn-primary min-height-0 btn-sm'><i class='fa-solid fa-pause'></i></button></a>
 				<a class='mx-1' href='overnachtingsplaatsen_beheer?id={$boeking->getID()}'><button class='btn btn-primary min-height-0 btn-sm'><i class='fa-solid fa-bed'></i></button></a>";

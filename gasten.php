@@ -5,6 +5,13 @@
 $db = new database\Database($db_host, $db_user, $db_pass, $db_name, $db_port);
 $gasten = $db->getKlanten();
 
+function formatPhone($phone)
+{
+    $phone = preg_replace("/[^0-9]/", "", $phone);
+    $phone = preg_replace('~.*(\d{3})[^\d]{0,7}(\d{3})[^\d]{0,7}(\d{4}).*~', "$1-$2-$3", $phone);
+    return $phone;
+}
+
 // klanten
 // ID INT
 // Naam VARCHAR(50)
@@ -23,7 +30,7 @@ foreach ($gasten as $gast) {
     echo "<tr>";
     echo "<td>" . $gast->getNaam() . "</td>";
     echo "<td>" . $gast->getEmail() . "</td>";
-    echo "<td>" . $gast->getTelefoon() . "</td>";
+    echo "<td>+ " . formatPhone($gast->getTelefoon()) . "</td>";
     echo "</tr>";
 }
 echo "</table>";
