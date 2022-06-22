@@ -160,8 +160,8 @@ switch ($view) {
 		echo "<tr>";
 		echo "<td>" . $status->getStatusCode() . "</td>";
 		echo "<td>" . $status->getStatus() . "</td>";
-		echo "<td>" . ($status->getVerwijderbaar() ? "true" : "false") . "</td>";
-		echo "<td>" . ($status->getPintoekennen() ? "true" : "false") . "</td>";
+		echo "<td>" . ($status->getVerwijderbaar() ? "Ja" : "Nee") . "</td>";
+		echo "<td>" . ($status->getPintoekennen() ? "Ja" : "Nee") . "</td>";
 		echo "<td class='px-0 d-flex justify-content-center'>
 			<a class='mx-1' href='?id={$status->getID()}&view=edit'><button class='btn btn-primary min-height-0 btn-sm'><i class='fa-solid fa-pen-to-square'></i></button></a>
 			<a class='mx-1' href='?id={$status->getID()}&view=delete'><button class='btn btn-danger min-height-0 btn-sm'><i class='fa-solid fa-trash-can'></i></button></a>
