@@ -23,7 +23,7 @@ foreach ($gasten as $gast) {
     echo "<tr>";
     echo "<td>" . $gast->getNaam() . "</td>";
     echo "<td>" . $gast->getEmail() . "</td>";
-    echo "<td>+ " . formatPhone($gast->getTelefoon()) . "</td>";
+    echo "<td>" . $gast->getTelefoon() . "</td>";
     echo "</tr>";
 }
 echo "</table>";
