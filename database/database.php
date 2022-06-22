@@ -113,7 +113,10 @@ class Database
             else
                 $result = $this->db->query("INSERT INTO boekingen (StartDatum, PINCode, FKtochtenID, FKklantenID, FKstatussenID) VALUES ('$startDatum', '$pinCode', '$fkTochtenID', '$fkKlantenID', '$fkStatussenID')");
         } else {
-            $result = $this->db->query("UPDATE boekingen SET StartDatum = '$startDatum', PINCode = '$pinCode', FKtochtenID = '$fkTochtenID', FKklantenID = '$fkKlantenID', FKstatussenID = '$fkStatussenID' WHERE ID = $id");
+            if (is_null($pinCode))
+                $result = $this->db->query("UPDATE boekingen SET StartDatum = '$startDatum', FKtochtenID = '$fkTochtenID', FKklantenID = '$fkKlantenID', FKstatussenID = '$fkStatussenID' WHERE ID = $id");
+            else
+                $result = $this->db->query("UPDATE boekingen SET StartDatum = '$startDatum', PINCode = '$pinCode', FKtochtenID = '$fkTochtenID', FKklantenID = '$fkKlantenID', FKstatussenID = '$fkStatussenID' WHERE ID = $id");
         }
     }
 
