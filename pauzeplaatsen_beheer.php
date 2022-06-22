@@ -33,8 +33,7 @@ if (isset($_POST['save']) && isset($_POST['statusID'])) {
     $db->setPauzeplaats($pauzeplaats->getID(), $pauzeplaats->getBoeking()->getID(), $pauzeplaats->getRestaurant()->getID(), $_POST['statusID']);
     header('Location: pauzeplaatsen_beheer?id=' . $id);
 }
-
-if (isset($_POST['save'])) {
+else if (isset($_POST['save'])) {
     array_map(function ($restaurant) use ($db, $id) {
         if (isset($_POST['restaurants']) && in_array($restaurant->getID(), $_POST['restaurants'], false)) {
             // check if pauzeplaatsen already has an entry with this restaurant
