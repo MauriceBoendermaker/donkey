@@ -41,7 +41,7 @@ if (isset($_POST['save'])) {
 
 function home()
 {
-	header('Location: status');
+	header('Location: statussen');
 	exit();
 }
 
