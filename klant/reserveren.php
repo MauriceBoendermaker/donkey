@@ -20,11 +20,11 @@ if (isset($_POST['submit'])) {
 <h3>Boeking Reserveren</h3>
 <form action="reserveren" method="post">
     <div class="form-group mt-2">
-        <label for="startdatum">Startdatum</label>
+        <label for="startdatum">Startdatum:</label>
         <input type="date" class="form-control" id="startdatum" name="startdatum" placeholder="Startdatum">
     </div>
     <div class="form-group mt-2">
-        <label for="tocht">tocht:</label>
+        <label for="tocht">Tocht:</label>
         <select class="form-select" aria-label="Select tocht" name="tochtID">
             <?php foreach ($db->getTochten() as $tocht) { ?>
                 <option value="
