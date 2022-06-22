@@ -48,10 +48,10 @@ $router->before('GET|POST|PUT|DELETE', '/(.*)', function($page) {
 		exit;
 	}
 	if (startWith($page, 'klant/') || $page == 'logout' ) return;
-//	if ($_SESSION['rechten']['read'] == false) {
-//		header('Location: klant/boekingen');
-//		exit;
-//	}
+	if ($_SESSION['rechten']['read'] == false) {
+		header('Location: klant/boekingen');
+		exit;
+	}
 });
 
 $router->all('/boekingen', function () {
@@ -66,13 +66,13 @@ $router->all('/herbergen', function () {
 	include 'herbergen.php';
 });
 
-//$router->all('/', function () {
-//	if ($_SESSION['rechten']['read'] == false) {
-//		header('Location: klant/boekingen');
-//		exit;
-//	}
-//	include 'index.php';
-//});
+$router->all('/', function () {
+	if ($_SESSION['rechten']['read'] == false) {
+		header('Location: klant/boekingen');
+		exit;
+	}
+	include 'index.php';
+});
 
 $router->all('/kaart', function () {
 	include 'kaart.php';
