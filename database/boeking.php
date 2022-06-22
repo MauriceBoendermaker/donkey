@@ -35,6 +35,11 @@ class Boeking
 		return $this->startDatum;
 	}
 
+	public function getEindDatum($boeking)
+	{
+		return date('Y-m-d', strtotime($boeking->getStartdatum() . ' + ' . $boeking->getTocht()->getAantalDagen() . ' days'));
+	}
+
 	public function getPincode()
 	{
 		return $this->pincode;
