@@ -40,7 +40,7 @@ $router->set404('/test(/.*)?', function () {
 });
 
 $router->before('GET|POST|PUT|DELETE', '/(.*)', function($page) {
-	if ($page == 'login' || $page == 'register' || $page == 'reset-password') {
+	if ($page == 'login' || $page == 'register' || $page == 'reset-password' || startWith($page, 'api/')) {
 		return;
 	}
 	if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false) {
@@ -49,7 +49,7 @@ $router->before('GET|POST|PUT|DELETE', '/(.*)', function($page) {
 	}
 	if (startWith($page, 'klant/') || $page == 'logout' ) return;
 	if ($_SESSION['rechten']['read'] == false) {
-		header('Location: klant/boekingen');
+		header('Location: klant/welkom');
 		exit;
 	}
 });
@@ -68,7 +68,7 @@ $router->all('/herbergen', function () {
 
 $router->all('/', function () {
 	if ($_SESSION['rechten']['read'] == false) {
-		header('Location: klant/boekingen');
+		header('Location: klant/welkom');
 		exit;
 	}
 	include 'index.php';
@@ -140,6 +140,10 @@ $router->all('/klant/reserveren', function () {
 
 $router->all('/klant/welkom', function () {
 	include 'klant/welkom.php';
+});
+
+$router->get('api/markers.json', function () {
+	include 'api/markers.php';
 });
 
 // Thunderbirds are go!
