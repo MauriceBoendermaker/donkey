@@ -45,7 +45,7 @@ switch ($view) {
 		$boeking = $db->getBoekingByID($id);
 ?>
 		<h3>Boeking wijzigen</h3>
-		<form>
+		<form action="" method="post">
 			<input type="hidden" name="id" value="<?php echo $boeking->getID(); ?>">
 			<div class="form-group mt-2">
 				<label for="startdatum">Startdatum</label>
@@ -75,7 +75,7 @@ switch ($view) {
 			</div>
 			<div class="form-group mt-2">
 				<label for="klant">Klant:</label>
-				<select class="form-select" aria-label="Select klant">
+				<select name="klantID" class="form-select" aria-label="Select klant">
 					<?php foreach ($db->getKlanten() as $klant) {
 						if ($klant->getNaam() == "admin") continue;
 					?>
@@ -88,7 +88,7 @@ switch ($view) {
 			</div>
 			<div class="form-group mt-2">
 				<label for="tocht">Tocht:</label>
-				<select class="form-select" aria-label="Select tocht">
+				<select name="tochtID" class="form-select" aria-label="Select tocht">
 					<?php foreach ($db->getTochten() as $tocht) { ?>
 						<option value="
 								<?php echo $tocht->getID(); ?>" <?php if ($tocht->getID() == $boeking->getTocht()->getID()) echo "selected"; ?>>
@@ -98,7 +98,7 @@ switch ($view) {
 				</select>
 			</div>
 			<br />
-			<button name="" type="submit" class="btn btn-success">Bewaren</button>
+			<button name="save" type="submit" class="btn btn-success">Bewaren</button>
 			<button name="cancel" type="submit" class="btn btn-primary">Annuleren</button>
 		</form>
 	<?php
