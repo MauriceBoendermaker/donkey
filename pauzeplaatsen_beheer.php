@@ -86,9 +86,43 @@ if (isset($edit)) {
     </form>
 <?php
 } else {
+	$boeking = $db->getBoekingByID($id);
 ?>
     <h3>Pauzeplaatsen</h3>
-    <br />
+	<div class="container mb-3">
+		<div class="row">
+			<div class="col-sm border pb-3">
+				<div class="form-group mt-2">
+					<label for="startdatum">Startdatum:</label>
+					<input value="<?php echo $boeking->getStartdatum(); ?>" name="startDatum" type="date" class="form-control" id="startdatum" disabled>
+				</div>
+				<div class="form-group mt-2">
+					<label for="eindDatum">Einddatum:</label>
+					<input value="<?php echo $boeking->getEinddatum($boeking); ?>" name="eindDatum" type="date" class="form-control" id="eindDatum" disabled>
+				</div>
+			</div>
+			<div class="col-sm border pb-3">
+				<div class="form-group mt-2">
+					<label for="klant">Klant:</label>
+						<input name="klantID" class="form-control" aria-label="Select klant" value="<?php echo $boeking->getKlant()->getNaam(); ?>" disabled>
+				</div>
+				<div class="form-group mt-2">
+					<label for="klant">Email / Telefoon:</label>
+					<input name="klantID" class="form-control" aria-label="Select klant" value="<?php echo $boeking->getKlant()->getEmail() . " / " . $boeking->getKlant()->getTelefoon(); ?>" disabled>
+				</div>
+			</div>
+			<div class="col-sm border pb-3">
+				<div class="form-group mt-2">
+					<label for="status">Boekingstatus:</label>
+					<input class="form-control" aria-label="Select status" name="statusID" value="<?php echo $boeking->getStatus()->getStatus(); ?>" disabled>
+				</div>
+				<div class="form-group mt-2">
+					<label for="tocht">Route:</label>
+					<input name="tochtID" class="form-control" aria-label="Select tocht" value="<?php echo $boeking->getTocht()->getOmschrijving(); ?>" disabled>
+				</div>
+			</div>
+		</div>
+	</div>
     <form action="" method="post">
         <div class="row g-2">
             <div class="col-sm-6 h-fc">
