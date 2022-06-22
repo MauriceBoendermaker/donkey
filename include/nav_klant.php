@@ -19,6 +19,9 @@
 		</div>
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
+				<a id="nav-klant-welkom" class="nav-link <?php if (endsWith(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "welkom")) echo "active\" aria-current=\"page"; ?>" href="welkom">Welkom</a>
+			</li>
+			<li class="nav-item">
 				<a id="nav-klant-beheer" class="nav-link <?php if (endsWith(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "boekingen", "reserveren")) echo "active\" aria-current=\"page"; ?>" href="boekingen">Boekingen</a>
 			</li>
 			<li class="nav-item">
