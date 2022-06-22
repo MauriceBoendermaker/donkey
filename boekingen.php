@@ -48,7 +48,7 @@ switch ($view) {
 		<form action="" method="post">
 			<input type="hidden" name="id" value="<?php echo $boeking->getID(); ?>">
 			<div class="form-group mt-2">
-				<label for="startdatum">Startdatum</label>
+				<label for="startdatum">Startdatum:</label>
 				<input value="<?php echo $boeking->getStartdatum(); ?>" name="startDatum" type="date" class="form-control" id="startdatum" required>
 			</div>
 			<div class="form-group mt-2">
