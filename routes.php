@@ -122,8 +122,8 @@ $router->all('/tochten', function () {
 	include 'tochten.php';
 });
 
-$router->all('/test', function () {
-	include 'test.php';
+$router->all('/view', function () {
+	include 'view.php';
 });
 
 $router->all('/klant/boekingen', function () {
