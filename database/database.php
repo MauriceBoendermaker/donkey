@@ -600,6 +600,15 @@ class Database
         return new Tracker($row["ID"], $row["PINCode"], $row["Lat"], $row["Lon"], $row["Time"]);
     }
 
+    public function getTrackerByPincode($pin)
+    {
+        $this->connect();
+        $result = $this->db->query("SELECT * FROM trackers WHERE PINCode = $pin");
+        $row = $result->fetch_assoc();
+        if (is_null($row)) return null;
+        return new Tracker($row["ID"], $row["PINCode"], $row["Lat"], $row["Lon"], $row["Time"]);
+    }
+
     public function setTracker($id, $pin, $lat, $lon, $time)
     {
         $this->connect();
