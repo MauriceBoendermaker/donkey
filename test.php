@@ -1,3 +1,19 @@
+<?php
+$view = "";
+if (isset($_GET['RouteName']))
+    $view = $_GET['RouteName'];
+
+$pin = -1;
+if (isset($_GET['PinCode']))
+    $pin = strval($_GET['PinCode']);
+
+$vgt = isset($_GET['VGT']);
+
+/*if (empty($view) && $pin < 0 && !$vgt) { // If there's nothing to show
+    echo "<h1>Nothing to show</h1>";
+    exit;
+}*/
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,21 +35,6 @@
         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>'
         }).addTo(map);
-
-        /*
-        var myIcon = L.icon({
-            iconUrl: 'ezel met huifkar.png',
-            iconSize: [75, 75],
-            iconAnchor: [22, 94],
-            popupAnchor: [-3, -76],
-            shadowSize: [68, 95],
-            shadowAnchor: [22, 94]
-        });
-
-        var marker = L.marker([51.5, -0.09], {
-            icon: myIcon
-        }).addTo(map);
-        */
 
         /* -----------= Custom Icons =----------- */
         let herbergIcon = L.icon({
@@ -58,28 +59,48 @@
         })
         /* -------------------------------------- */
 
-        var gpx = './test.gpx'; // URL to your GPX file or the GPX itself
-        new L.GPX(gpx, {
-            async: true,
-            marker_options: {
-                startIconUrl: 'https://raw.githubusercontent.com/mpetazzoni/leaflet-gpx/main/pin-icon-start.png',
-                endIconUrl: 'https://raw.githubusercontent.com/mpetazzoni/leaflet-gpx/main/pin-icon-end.png',
-                shadowUrl: 'https://raw.githubusercontent.com/mpetazzoni/leaflet-gpx/main/pin-shadow.png',
-                wptIcons: {
-                    '': donkeyIcon //'ezel met huifkar.png'
+        <?php if ($pin >= 0) { ?>
+            $.getJSON("./api/markers.json?pin=<?php echo $pin ?>", function(data) {
+                if (!data.coordinates) return;
+                var marker = L.marker(data.coordinates, {
+                    icon: donkeyIcon
+                }).addTo(map).bindPopup('Ezel locatie');
+            });
+        <?php } ?>
+
+        <?php if (!empty($view)) { ?>
+            var gpx = './gpx/<?php echo $view ?>.gpx'; // URL to your GPX file or the GPX itself
+            $.ajax({
+                url: gpx,
+                type: 'HEAD',
+                error: function() {
+                    map.fitWorld();
+                },
+                success: function() {
+                    new L.GPX(gpx, {
+                        async: true,
+                        marker_options: {
+                            startIconUrl: 'https://raw.githubusercontent.com/mpetazzoni/leaflet-gpx/main/pin-icon-start.png',
+                            endIconUrl: 'https://raw.githubusercontent.com/mpetazzoni/leaflet-gpx/main/pin-icon-end.png',
+                            shadowUrl: 'https://raw.githubusercontent.com/mpetazzoni/leaflet-gpx/main/pin-shadow.png',
+                            wptIcons: {
+                                '': donkeyIcon //'ezel met huifkar.png'
+                            }
+                        },
+                        polyline_options: {
+                            color: 'blue',
+                            opacity: 0.75,
+                            weight: 2,
+                            lineCap: 'round',
+                            lineJoin: 'arcs',
+                            dashArray: '4'
+                        }
+                    }).on('loaded', function(e) {
+                        map.fitBounds(e.target.getBounds());
+                    }).addTo(map);
                 }
-            },
-            polyline_options: {
-                color: 'blue',
-                opacity: 0.75,
-                weight: 2,
-                lineCap: 'round',
-                lineJoin: 'arcs',
-                dashArray: '4'
-            }
-        }).on('loaded', function(e) {
-            map.fitBounds(e.target.getBounds());
-        }).addTo(map);
+            });
+        <?php } ?>
 
         function createCustomIcon(feature, latlng) {
             if (feature.properties && feature.properties.marker_symbol) {
