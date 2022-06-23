@@ -35,8 +35,8 @@ foreach ($restaurants as $restaurant) {
     if (count($coords) != 2) continue;
 
     $feature['properties']['name'] = $restaurant->getNaam();
-    $feature['properties']['marker-symbol'] = "restaurant";
-    $feature['properties']['marker-color'] = "#ff0000";
+    $feature['properties']['marker_symbol'] = "restaurant";
+    $feature['properties']['marker_color'] = "#ff0000";
     $feature['properties']['popupContent'] = "Restaurant";
 
     $feature['geometry']['type'] = "Point";
@@ -56,8 +56,8 @@ foreach ($herbergen as $herberg) {
     if (count($coords) != 2) continue;
 
     $feature['properties']['name'] = $herberg->getNaam();
-    $feature['properties']['marker-symbol'] = "building";
-    $feature['properties']['marker-color'] = "#00ff00";
+    $feature['properties']['marker_symbol'] = "hostel";
+    $feature['properties']['marker_color'] = "#00ff00";
     $feature['properties']['popupContent'] = "Herberg";
 
     $feature['geometry']['type'] = "Point";
