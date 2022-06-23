@@ -75,10 +75,8 @@ class Database
         $this->connect();
         $result = $this->db->query("SELECT * FROM boekingen WHERE ID = $id");
         // check if result is empty
-        if ($result->num_rows == 0) {
-            return null;
-        }
         $row = $result->fetch_assoc();
+        if (is_null($row)) return null;
         return new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $this->getTochtByID($row["FKtochtenID"]), $this->getKlantByID($row["FKklantenID"]), $this->getStatusByID($row["FKstatussenID"]));
     }
 
@@ -169,6 +167,7 @@ class Database
         $this->connect();
         $result = $this->db->query("SELECT * FROM herbergen WHERE ID = $id");
         $row = $result->fetch_assoc();
+        if (is_null($row)) return null;
         return new Herberg($row["ID"], $row["Naam"], $row["Adres"], $row["Email"], $row["Telefoon"], $row["Coordinaten"], $row["Gewijzigd"]);
     }
 
@@ -221,6 +220,7 @@ class Database
         $this->connect();
         $result = $this->db->query("SELECT * FROM klanten WHERE ID = $id");
         $row = $result->fetch_assoc();
+        if (is_null($row)) return null;
         return new Klant($row["ID"], $row["Naam"], $row["Email"], $row["Telefoon"], $row["Wachtwoord"], $this->getGebruikersrechtByID($row["FKgebruikersrechtenID"]), $row["Gewijzigd"]);
     }
 
@@ -290,6 +290,7 @@ class Database
         $this->connect();
         $result = $this->db->query("SELECT * FROM gebruikersrechten WHERE ID = $id");
         $row = $result->fetch_assoc();
+        if (is_null($row)) return null;
         return new Gebruikersrechten($row["ID"], $row["Recht"], $row["Rechten"]);
     }
 
@@ -314,9 +315,7 @@ class Database
         $this->connect();
         $result = $this->db->query("SELECT * FROM overnachtingen WHERE ID = $id");
         $row = $result->fetch_assoc();
-        if ($result->num_rows == 0) {
-            return null;
-        }
+        if (is_null($row)) return null;
         return new Overnachting($row["ID"], $this->getBoekingByID($row["FKboekingenID"]), $this->getHerbergByID($row["FKherbergenID"]), $this->getStatusByID($row["FKstatussenID"]));
     }
 
@@ -385,6 +384,7 @@ class Database
         $this->connect();
         $result = $this->db->query("SELECT * FROM pauzeplaatsen WHERE ID = $id");
         $row = $result->fetch_assoc();
+        if (is_null($row)) return null;
         return new Pauzeplaats($row["ID"], $this->getBoekingByID($row["FKboekingenID"]), $this->getRestaurantByID($row["FKrestaurantsID"]), $this->getStatusByID($row["FKstatussenID"]));
     }
 
@@ -455,6 +455,7 @@ class Database
         $this->connect();
         $result = $this->db->query("SELECT * FROM restaurants WHERE ID = $id");
         $row = $result->fetch_assoc();
+        if (is_null($row)) return null;
         return new Restaurant($row["ID"], $row["Naam"], $row["Adres"], $row["Email"], $row["Telefoon"], $row["Coordinaten"], $row["Gewijzigd"]);
     }
 
@@ -502,6 +503,7 @@ class Database
         $this->connect();
         $result = $this->db->query("SELECT * FROM statussen WHERE ID = $id");
         $row = $result->fetch_assoc();
+        if (is_null($row)) return null;
         return new Status($row["ID"], $row["StatusCode"], $row["Status"], boolval($row["Verwijderbaar"]), boolval($row["PINtoekennen"]));
     }
 
@@ -547,6 +549,7 @@ class Database
         $this->connect();
         $result = $this->db->query("SELECT * FROM tochten WHERE ID = $id");
         $row = $result->fetch_assoc();
+        if (is_null($row)) return null;
         return new Tocht($row["ID"], $row["Omschrijving"], $row["Route"], $row["AantalDagen"]);
     }
 
@@ -593,6 +596,7 @@ class Database
         $this->connect();
         $result = $this->db->query("SELECT * FROM trackers WHERE ID = $id");
         $row = $result->fetch_assoc();
+        if (is_null($row)) return null;
         return new Tracker($row["ID"], $row["PINCode"], $row["Lat"], $row["Lon"], $row["Time"]);
     }
 
