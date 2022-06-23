@@ -31,6 +31,9 @@ $vgt = isset($_GET['VGT']);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        // Disable accidental text selection
+        document.onselectstart = function () {return false};
+
         var map = L.map('map');
         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>'
