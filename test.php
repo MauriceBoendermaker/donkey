@@ -35,6 +35,29 @@
         }).addTo(map);
         */
 
+        /* -----------= Custom Icons =----------- */
+        let herbergIcon = L.icon({
+            iconUrl: 'https://www.svgrepo.com/show/39715/bed.svg',
+            iconSize: [30, 30], // width and height of the image in pixels
+            iconAnchor: [15, 15], // point of the icon which will correspond to marker's location
+            popupAnchor: [0, -15] // point from which the popup should open relative to the iconAnchor
+        })
+
+        let restaurantIcon = L.icon({
+            iconUrl: 'https://www.svgrepo.com/show/52135/room-service.svg',
+            iconSize: [30, 30], // width and height of the image in pixels
+            iconAnchor: [15, 15], // point of the icon which will correspond to marker's location
+            popupAnchor: [0, -15] // point from which the popup should open relative to the iconAnchor
+        })
+
+        let donkeyIcon = L.icon({
+            iconUrl: 'ezel met huifkar.png',
+            iconSize: [50, 50], // width and height of the image in pixels
+            iconAnchor: [20, 40], // point of the icon which will correspond to marker's location
+            popupAnchor: [0, -30] // point from which the popup should open relative to the iconAnchor
+        })
+        /* -------------------------------------- */
+
         var gpx = './test.gpx'; // URL to your GPX file or the GPX itself
         new L.GPX(gpx, {
             async: true,
@@ -42,29 +65,21 @@
                 startIconUrl: 'https://raw.githubusercontent.com/mpetazzoni/leaflet-gpx/main/pin-icon-start.png',
                 endIconUrl: 'https://raw.githubusercontent.com/mpetazzoni/leaflet-gpx/main/pin-icon-end.png',
                 shadowUrl: 'https://raw.githubusercontent.com/mpetazzoni/leaflet-gpx/main/pin-shadow.png',
-                wptIconUrls: {
-                    '': 'ezel met huifkar.png'
+                wptIcons: {
+                    '': donkeyIcon //'ezel met huifkar.png'
                 }
+            },
+            polyline_options: {
+                color: 'blue',
+                opacity: 0.75,
+                weight: 2,
+                lineCap: 'round',
+                lineJoin: 'arcs',
+                dashArray: '4'
             }
         }).on('loaded', function(e) {
             map.fitBounds(e.target.getBounds());
         }).addTo(map);
-
-        /* -----------= Custom Icons =----------- */
-        let herbergIcon = L.icon({
-            iconUrl: 'https://www.svgrepo.com/show/39715/bed.svg',
-            iconSize: [25, 25], // width and height of the image in pixels
-            iconAnchor: [12, 12], // point of the icon which will correspond to marker's location
-            popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
-        })
-
-        let restaurantIcon = L.icon({
-            iconUrl: 'https://www.svgrepo.com/show/52135/room-service.svg',
-            iconSize: [25, 25], // width and height of the image in pixels
-            iconAnchor: [12, 12], // point of the icon which will correspond to marker's location
-            popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
-        })
-        /* -------------------------------------- */
 
         function createCustomIcon(feature, latlng) {
             if (feature.properties && feature.properties.marker_symbol) {
