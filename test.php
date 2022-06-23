@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
 </head>
 
-<body>
+<body style="margin: 0;">
     <div id="map" style="height: 100vh;"></div>
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
@@ -50,25 +50,56 @@
             map.fitBounds(e.target.getBounds());
         }).addTo(map);
 
+        /* -----------= Custom Icons =----------- */
+        let herbergIcon = L.icon({
+            iconUrl: 'https://www.svgrepo.com/show/39715/bed.svg',
+            iconSize: [25, 25], // width and height of the image in pixels
+            iconAnchor: [12, 12], // point of the icon which will correspond to marker's location
+            popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
+        })
+
+        let restaurantIcon = L.icon({
+            iconUrl: 'https://www.svgrepo.com/show/52135/room-service.svg',
+            iconSize: [25, 25], // width and height of the image in pixels
+            iconAnchor: [12, 12], // point of the icon which will correspond to marker's location
+            popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
+        })
+        /* -------------------------------------- */
+
         function createCustomIcon(feature, latlng) {
-            let myIcon = L.icon({
-                iconUrl: 'https://www.shareicon.net/data/256x256/2016/10/07/840704_hotel_512x512.png',
-                iconSize: [25, 25], // width and height of the image in pixels
-                iconAnchor: [12, 12], // point of the icon which will correspond to marker's location
-                popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
-            })
-            return L.marker(latlng, {
-                icon: myIcon
-            })
+            if (feature.properties && feature.properties.marker_symbol) {
+                switch (feature.properties.marker_symbol) {
+                    case "restaurant":
+                        return L.marker(latlng, {
+                            icon: restaurantIcon
+                        });
+                    case "hostel":
+                        return L.marker(latlng, {
+                            icon: herbergIcon
+                        });
+                }
+            }
+            return L.marker(latlng);
         }
 
-        // create an options object that specifies which function will called on each feature
-        let myLayerOptions = {
-            pointToLayer: createCustomIcon
+        function onEachFeature(feature, layer) {
+            if (feature.properties) {
+                var popupContent = '';
+                if (feature.properties.name)
+                    popupContent += '<p><b>' + feature.properties.name + '</b></p>';
+
+                if (feature.properties.popupContent)
+                    popupContent += '<p>' + feature.properties.popupContent + '</p>';
+
+                layer.bindPopup(popupContent);
+            }
         }
 
         $.getJSON("./api/markers.json", function(data) {
-            L.geoJSON(data, myLayerOptions).addTo(map);
+            L.geoJSON(data, {
+                onEachFeature: onEachFeature,
+                pointToLayer: createCustomIcon
+            }).addTo(map);
         });
     </script>
 </body>
