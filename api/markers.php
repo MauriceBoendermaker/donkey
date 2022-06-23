@@ -37,6 +37,7 @@ foreach ($restaurants as $restaurant) {
     $feature['properties']['name'] = $restaurant->getNaam();
     $feature['properties']['marker-symbol'] = "restaurant";
     $feature['properties']['marker-color'] = "#ff0000";
+    $feature['properties']['popupContent'] = "Restaurant";
 
     $feature['geometry']['type'] = "Point";
     $feature['geometry']['coordinates'] = array(floatval($coords[0]), floatval($coords[1]));
@@ -57,6 +58,7 @@ foreach ($herbergen as $herberg) {
     $feature['properties']['name'] = $herberg->getNaam();
     $feature['properties']['marker-symbol'] = "building";
     $feature['properties']['marker-color'] = "#00ff00";
+    $feature['properties']['popupContent'] = "Herberg";
 
     $feature['geometry']['type'] = "Point";
     $feature['geometry']['coordinates'] = array(floatval($coords[0]), floatval($coords[1]));
