@@ -8,6 +8,7 @@ if (isset($_GET['PinCode']))
     $pin = strval($_GET['PinCode']);
 
 $vgt = isset($_GET['VGT']);
+$filter = isset($_GET['f']);
 
 /*if (empty($view) && $pin < 0 && !$vgt) { // If there's nothing to show
     echo "<h1>Nothing to show</h1>";
@@ -32,7 +33,9 @@ $vgt = isset($_GET['VGT']);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         // Disable accidental text selection
-        document.onselectstart = function () {return false};
+        document.onselectstart = function() {
+            return false
+        };
 
         var map = L.map('map');
         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -135,10 +138,20 @@ $vgt = isset($_GET['VGT']);
         }
 
         $.getJSON("./api/markers.json", function(data) {
-            L.geoJSON(data, {
+            <?php if ($filter) echo "var filter ="?>L.geoJSON(data, {
                 onEachFeature: onEachFeature,
-                pointToLayer: createCustomIcon
+                pointToLayer: createCustomIcon,
+                <?php if ($filter) {
+                    $filter = $_GET['f'];
+                    $filter = explode(",", $filter);
+                    if (count($filter) != 2) return;
+                ?>
+                    filter: function(feature, layer) {
+                        return (feature.properties.id == <?php echo intval($filter[1]) ?> && feature.properties.type == "<?php echo $filter[0] ?>");
+                    }
+                <?php } ?>
             }).addTo(map);
+            <?php if ($filter) echo "map.fitBounds(filter.getBounds()); map.setZoom(10);"?>
         });
     </script>
 </body>

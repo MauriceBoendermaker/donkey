@@ -40,6 +40,8 @@ if (!isset($_GET['pin'])) {
         if (count($coords) != 2) continue;
 
         $feature['properties']['name'] = $restaurant->getNaam();
+        $feature['properties']['id'] = $restaurant->getID();
+        $feature['properties']['type'] = "res";
         $feature['properties']['marker_symbol'] = "restaurant";
         $feature['properties']['marker_color'] = "#ff0000";
         $feature['properties']['popupContent'] = "Restaurant";
@@ -61,6 +63,8 @@ if (!isset($_GET['pin'])) {
         if (count($coords) != 2) continue;
 
         $feature['properties']['name'] = $herberg->getNaam();
+        $feature['properties']['id'] = $herberg->getID();
+        $feature['properties']['type'] = "her";
         $feature['properties']['marker_symbol'] = "hostel";
         $feature['properties']['marker_color'] = "#00ff00";
         $feature['properties']['popupContent'] = "Herberg";
