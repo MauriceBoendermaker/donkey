@@ -47,7 +47,7 @@ if (!isset($_GET['pin'])) {
         $feature['properties']['popupContent'] = "Restaurant";
 
         $feature['geometry']['type'] = "Point";
-        $feature['geometry']['coordinates'] = array(floatval($coords[0]), floatval($coords[1]));
+        $feature['geometry']['coordinates'] = array(floatval($coords[1]), floatval($coords[0]));
         
         array_push($json['features'], $feature);
     }
@@ -70,7 +70,7 @@ if (!isset($_GET['pin'])) {
         $feature['properties']['popupContent'] = "Herberg";
 
         $feature['geometry']['type'] = "Point";
-        $feature['geometry']['coordinates'] = array(floatval($coords[0]), floatval($coords[1]));
+        $feature['geometry']['coordinates'] = array(floatval($coords[1]), floatval($coords[0]));
 
         array_push($json['features'], $feature);
     }
