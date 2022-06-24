@@ -1,6 +1,6 @@
 <body>
 <?php include "include/nav_klant.php"; ?>
-                <!-- welcome screen saying name of user -->
+	                <!-- Welcome screen saying name of user -->
                     <?php
                     if (isset($_SESSION['naam'])) {
                         echo "<h3>Welkom, " . $_SESSION['naam'] . "!</h3>";
