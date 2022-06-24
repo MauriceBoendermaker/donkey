@@ -1,3 +1,5 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/MauriceBoendermaker/donkey?style=flat-square)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/y/MauriceBoendermaker/donkey?color=success&style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/MauriceBoendermaker/donkey?color=critical&style=flat-square)
 # donkey
 Donkey Travel
