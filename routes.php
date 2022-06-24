@@ -142,6 +142,15 @@ $router->all('/klant/welkom', function () {
 	include 'klant/welkom.php';
 });
 
+$router->all('/klant/about', function () {
+	include 'klant/about.php';
+});
+
+$router->all('/klant/contact', function () {
+	include 'klant/contact.php';
+});
+
+
 $router->get('api/markers.json', function () {
 	include 'api/markers.php';
 });
