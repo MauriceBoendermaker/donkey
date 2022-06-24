@@ -18,7 +18,7 @@
 		?>
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
-				<a class="nav-link <?php if ($welcome) echo "active\" aria-current=\"page"; ?>" aria-current="page" href="./">Welcome</a>
+				<a class="nav-link <?php if ($welcome) echo "active\" aria-current=\"page"; ?>" href="./">Welkom</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link <?php if ($boekingen) echo "active\" aria-current=\"page"; ?>" href="boekingen">Boekingen</a>
