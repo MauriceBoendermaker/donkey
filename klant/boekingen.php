@@ -19,13 +19,15 @@ if (isset($_POST['cancel']))
 $boeking = $db->getBoekingByID($id);
 if (isset($_POST['save']) || isset($_POST['delete'])) {
 	if ($boeking->getKlant()->getID() != $_SESSION['id']) home();
-
-	if (isset($_POST['save'])) {
-		$db->setBoeking($boeking->getID(), $_POST['startDatum'], $boeking->getPincode(), $_POST['tochtID'], $boeking->getKlant()->getID(), $boeking->getStatus()->getID());
-	} else {
-		$db->deleteBoeking($boeking->getID());
+	{
+		if (isset($_POST['save'])) {
+			if ($_POST['startDatum'] < date("Y-m-d")) $error = true;
+				$db->setBoeking($boeking->getID(), $_POST['startDatum'], $boeking->getPincode(), $_POST['tochtID'], $boeking->getKlant()->getID(), $boeking->getStatus()->getID());
+		} else {
+			$db->deleteBoeking($boeking->getID());
+		}
+		home();
 	}
-	home();
 }
 
 function home()
@@ -40,6 +42,15 @@ switch ($view) {
 ?>
 		<h3>Boeking wijzigen</h3>
 		<form action="" method="post">
+			<?php if (isset($error)) {
+				echo '
+					<div class="alert alert-danger mt-4" role="alert">
+						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+						<span class="sr-only">Error:</span>
+						Datum moet nieuwer zijn dan '. date("d-m-Y") .
+					'</div>
+				';
+			} ?>
 			<div class="form-group mt-2">
 				<label for="startdatum">Startdatum</label>
 				<input value="<?php echo $boeking->getStartdatum(); ?>" name="startDatum" type="date" class="form-control" id="startdatum" required>
