@@ -17,17 +17,21 @@ if (isset($_POST['cancel']))
 	home();
 
 $boeking = $db->getBoekingByID($id);
-if (isset($_POST['save']) || isset($_POST['delete'])) {
-	if ($boeking->getKlant()->getID() != $_SESSION['id']) home();
-	{
-		if (isset($_POST['save'])) {
-			if ($_POST['startDatum'] < date("Y-m-d")) $error = true;
-				$db->setBoeking($boeking->getID(), $_POST['startDatum'], $boeking->getPincode(), $_POST['tochtID'], $boeking->getKlant()->getID(), $boeking->getStatus()->getID());
-		} else {
-			$db->deleteBoeking($boeking->getID());
+if (isset($_POST['save']) || isset($_POST['delete']) || isset($_POST['setPin'])) {
+	if (isset($boeking) && $boeking->getKlant()->getID() != $_SESSION['id']) home();
+	if (isset($boeking)) {
+	if (isset($_POST['save'])) {
+		if ($_POST['startDatum'] < date("Y-m-d")) $error = true;
+		$db->setBoeking($boeking->getID(), $_POST['startDatum'], $boeking->getPincode(), $_POST['tochtID'], $boeking->getKlant()->getID(), $boeking->getStatus()->getID());
+	} else
+		$db->deleteBoeking($boeking->getID());
+	} else if (isset($_POST['id'])) {
+		$boeking = $db->getBoekingByID($_POST['id']);
+		if (!is_null($boeking) && $boeking->getKlant()->getID() == $_SESSION['id'] && $boeking->getStatus()->getStatusCode() == 20 && is_null($boeking->getPINCode())) {
+			$db->setBoeking($boeking->getID(), $boeking->getStartDatum(), intval($_POST['pin']), $boeking->getTocht()->getID(), $boeking->getKlant()->getID(), $boeking->getStatus()->getID());
 		}
-		home();
 	}
+	home();
 }
 
 function home()
@@ -47,7 +51,7 @@ switch ($view) {
 					<div class="alert alert-danger mt-4" role="alert">
 						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
 						<span class="sr-only">Error:</span>
-						Datum moet nieuwer zijn dan '. date("d-m-Y") .
+						Datum moet nieuwer zijn dan ' . date("d-m-Y") .
 					'</div>
 				';
 			} ?>
@@ -131,7 +135,14 @@ switch ($view) {
 				echo "<tr>";
 				echo "<td>" . $boeking->getStartdatum() . "</td>";
 				echo "<td>" . date('Y-m-d', strtotime($boeking->getStartdatum() . ' + ' . $boeking->getTocht()->getAantalDagen() . ' days')) . "</td>";
-				echo "<td>" . $boeking->getPINCode() . "</td>";
+				if ($boeking->getStatus()->getStatusCode() == 20) {
+					if (!is_null($boeking->getPINCode())) {
+						echo "<td><a class='btn btn-primary min-height-0 btn-sm' href='../view?RouteName=" . $boeking->getTocht()->getRoute() . "&PinCode=" .  $boeking->getPINCode() . "' target='_blank'>" . str_pad($boeking->getPINCode(), 4, '0', STR_PAD_LEFT) . "</a>" .
+							"<a class='btn btn-danger min-height-0 btn-sm' href=''><i class='fa-solid fa-trash-can fa-lg'></i></a></td>";
+					} else {
+						echo "<td>" . "<a class='btn btn-primary min-height-0 btn-sm' href='?setPin=" . $boeking->getID() . "'>PIN Code aanvragen</a>" . "</td>";
+					}
+				} else echo "<td><i>Geen Pincode<i></td>";
 				echo "<td>" . $boeking->getTocht()->getOmschrijving() . "</td>";
 				echo "<td>" . $boeking->getStatus()->getStatus() . "</td>";
 				echo "<td class='px-0 d-flex justify-content-center'>
@@ -144,8 +155,47 @@ switch ($view) {
 		}
 			?>
 			<a href="reserveren" class="w-100 mt-3"><button class="w-100 btn btn-primary">Boeking toevoegen</button></a>
-	<?php
+		<?php
 		break;
 }
-	?>
+if (isset($_GET['setPin'])) {
+	$id = $_GET['setPin'];
+	$boeking = $db->getBoekingByID($id);
+	if (!is_null($boeking) && $boeking->getKlant()->getID() == $_SESSION['id'] && is_null($boeking->getPincode())) {
+		?>
+			<!-- Modal -->
+			<div class="modal fade" id="pinModal" tabindex="-1" role="dialog" aria-labelledby="pinModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Zet PIN Code</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<form action="" method="POST">
+							<div class="modal-body">
+								<input type="hidden" id="ID" name="id" value="<?php echo $boeking->getID(); ?>">
+								<div class="form-group mt-2">
+									<label for="pin">PIN:</label>
+									<input class="w-100" type="text" pattern="[0-9]*" id="pin" name="pin" value="" placeholder="0000">
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+								<button type="submit" name="setPin" class="btn btn-primary">Save changes</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				$(window).on('load', function() {
+					$('#pinModal').modal('show');
+				});
+				$("#pin").on('input', function(e) {
+					var str = $("#pin").val();
+					$("#pin").val(str.match("[0-9]*"));
+				});
+			</script>
+	<?php }
+} ?>
 	<?php include "./include/footer.php"; ?>
