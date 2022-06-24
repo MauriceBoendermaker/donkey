@@ -1,12 +1,5 @@
 <body>
 <?php include "include/nav_klant.php"; ?>
-					<!-- Welcome screen saying name of user -->
-					<?php
-					if (isset($_SESSION['naam'])) {
-						echo "<h3>Welkom, " . $_SESSION['naam'] . "!</h3>";
-					} else
-						echo "<h3>Welkom, Gast</h3>";
-					?>
 					<div class="alert alert-info" role="alert">
 						<div class="container">
 							<div class="row">
