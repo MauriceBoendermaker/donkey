@@ -40,7 +40,7 @@ $router->set404('/test(/.*)?', function () {
 });
 
 $router->before('GET|POST|PUT|DELETE', '/(.*)', function($page) {
-	if ($page == 'login' || $page == 'register' || $page == 'reset-password' || startWith($page, 'api/')) {
+	if ($page == 'login' || $page == 'register' || $page == 'reset-password' || $page == 'view' || startWith($page, 'api/')) {
 		return;
 	}
 	if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false) {
