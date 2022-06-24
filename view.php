@@ -10,10 +10,6 @@ if (isset($_GET['PinCode']))
 $vgt = isset($_GET['VGT']);
 $filter = isset($_GET['f']);
 
-/*if (empty($view) && $pin < 0 && !$vgt) { // If there's nothing to show
-    echo "<h1>Nothing to show</h1>";
-    exit;
-}*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +61,9 @@ $filter = isset($_GET['f']);
         })
         /* -------------------------------------- */
 
-        <?php if ($pin >= 0) { ?>
+        <?php
+        $splitPin = explode(",", strval($_GET['PinCode']));
+        if (count($splitPin) == 2 && intval($splitPin[1]) >= 0) { ?>
             $.getJSON("./api/markers.json?pin=<?php echo $pin ?>", function(data) {
                 if (!data.coordinates) return;
                 var marker = L.marker(data.coordinates, {
@@ -138,7 +136,7 @@ $filter = isset($_GET['f']);
         }
 
         $.getJSON("./api/markers.json", function(data) {
-            <?php if ($filter) echo "var filter ="?>L.geoJSON(data, {
+            <?php if ($filter) echo "var filter =" ?>L.geoJSON(data, {
                 onEachFeature: onEachFeature,
                 pointToLayer: createCustomIcon,
                 <?php if ($filter) {
@@ -151,7 +149,7 @@ $filter = isset($_GET['f']);
                     }
                 <?php } ?>
             }).addTo(map);
-            <?php if ($filter) echo "map.fitBounds(filter.getBounds()); map.setZoom(10);"?>
+            <?php if ($filter) echo "map.fitBounds(filter.getBounds()); map.setZoom(10);" ?>
         });
     </script>
 </body>

@@ -8,17 +8,29 @@ if (isset($_POST['submit'])) {
     $tocht = $_POST['tochtID'];
 
     $startdatum = date("Y-m-d", strtotime($startdatum));
-    $tocht = intval($tocht);
+    if ($startdatum < date("Y-m-d")) $error = true;
+    else {
+        $tocht = intval($tocht);
 
-    $boeking = new database\Boeking(null, $startdatum, null, $tocht, $_SESSION['id'], 1);
-    $db->applyBoeking($boeking);
+        $boeking = new database\Boeking(null, $startdatum, null, $tocht, $_SESSION['id'], 1, null);
+        $db->applyBoeking($boeking);
 
-    header("Location: boekingen");
-    exit;
+        header("Location: boekingen");
+        exit;
+    }
 }
 ?>
 <h3>Boeking Reserveren</h3>
 <form action="reserveren" method="post">
+    <?php if (isset($error)) {
+        echo '
+					<div class="alert alert-danger mt-4" role="alert">
+						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+						<span class="sr-only">Error:</span>
+						Datum moet nieuwer zijn dan ' . date("d-m-Y") .
+            '</div>
+				';
+    } ?>
     <div class="form-group mt-2">
         <label for="startdatum">Startdatum:</label>
         <input type="date" class="form-control" id="startdatum" name="startdatum" placeholder="Startdatum">

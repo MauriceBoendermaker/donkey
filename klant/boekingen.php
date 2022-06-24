@@ -17,18 +17,26 @@ if (isset($_POST['cancel']))
 	home();
 
 $boeking = $db->getBoekingByID($id);
-if (isset($_POST['save']) || isset($_POST['delete']) || isset($_POST['setPin'])) {
+if (isset($_POST['save']) || isset($_POST['delete']) || isset($_POST['reset']) || isset($_POST['setPin'])) {
 	if (isset($boeking) && $boeking->getKlant()->getID() != $_SESSION['id']) home();
 	if (isset($boeking)) {
-	if (isset($_POST['save'])) {
-		if ($_POST['startDatum'] < date("Y-m-d")) $error = true;
-		$db->setBoeking($boeking->getID(), $_POST['startDatum'], $boeking->getPincode(), $_POST['tochtID'], $boeking->getKlant()->getID(), $boeking->getStatus()->getID());
-	} else
-		$db->deleteBoeking($boeking->getID());
+		if (isset($_POST['save'])) {
+			if ($_POST['startDatum'] < date("Y-m-d")) $error = true;
+			$db->setBoeking($boeking->getID(), $_POST['startDatum'], $boeking->getPincode(), $_POST['tochtID'], $boeking->getKlant()->getID(), $boeking->getStatus()->getID(), null);
+		} else if (isset($_POST['delete'])) {
+			$tracker = $boeking->getTracker();
+			if (!is_null($tracker))
+				$db->deleteTracker($tracker->getID());
+			$db->deleteBoeking($boeking->getID());
+		} else {
+			if (!is_null($boeking->getTracker()))
+				$db->deleteTracker($boeking->getTracker()->getID());
+		}
 	} else if (isset($_POST['id'])) {
 		$boeking = $db->getBoekingByID($_POST['id']);
 		if (!is_null($boeking) && $boeking->getKlant()->getID() == $_SESSION['id'] && $boeking->getStatus()->getStatusCode() == 20 && is_null($boeking->getPINCode())) {
-			$db->setBoeking($boeking->getID(), $boeking->getStartDatum(), intval($_POST['pin']), $boeking->getTocht()->getID(), $boeking->getKlant()->getID(), $boeking->getStatus()->getID());
+			$trackerID = $db->setTracker(null, intval($_POST['pin']), 0, 0, 0);
+			$db->setBoeking($boeking->getID(), $boeking->getStartDatum(), intval($_POST['pin']), $boeking->getTocht()->getID(), $boeking->getKlant()->getID(), $boeking->getStatus()->getID(), $trackerID);
 		}
 	}
 	home();
@@ -137,8 +145,8 @@ switch ($view) {
 				echo "<td>" . date('Y-m-d', strtotime($boeking->getStartdatum() . ' + ' . $boeking->getTocht()->getAantalDagen() . ' days')) . "</td>";
 				if ($boeking->getStatus()->getStatusCode() == 20) {
 					if (!is_null($boeking->getPINCode())) {
-						echo "<td><a class='btn btn-primary min-height-0 btn-sm' href='../view?RouteName=" . $boeking->getTocht()->getRoute() . "&PinCode=" .  $boeking->getPINCode() . "' target='_blank'>" . str_pad($boeking->getPINCode(), 4, '0', STR_PAD_LEFT) . "</a>" .
-							"<a class='btn btn-danger min-height-0 btn-sm' href=''><i class='fa-solid fa-trash-can fa-lg'></i></a></td>";
+						echo "<td><a class='btn btn-primary min-height-0 btn-sm' href='../view?RouteName=". $boeking->getTocht()->getRoute() . "&PinCode=" . $boeking->getTracker()->getID() . "," .  $boeking->getPINCode() . "' target='_blank'>" . str_pad($boeking->getPINCode(), 4, '0', STR_PAD_LEFT) . "</a>" .
+							"<a class='btn btn-danger min-height-0 btn-sm' href='?reset=".$boeking->getID()."'><i class='fa-solid fa-trash-can fa-lg'></i></a></td>";
 					} else {
 						echo "<td>" . "<a class='btn btn-primary min-height-0 btn-sm' href='?setPin=" . $boeking->getID() . "'>PIN Code aanvragen</a>" . "</td>";
 					}

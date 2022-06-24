@@ -78,11 +78,14 @@ if (!isset($_GET['pin'])) {
 else
 {
     // Pincode specified so show tracker if correct;
-    $tracker = $db->getTrackerByPincode($_GET['pin']);
-    if (!is_null($tracker))
-    {
-        $json['coordinates'] = array(floatval($tracker->getLat()), floatval($tracker->getLon()));
-        $json['time'] = $tracker->getTime();
+    $splitPin = explode(",", strval($_GET['pin']));
+    if (count($splitPin) == 2 && intval($splitPin[1]) >= 0) {
+        $tracker = $db->getTrackerByID($splitPin[0]);
+        if (!is_null($tracker) && $tracker->getPincode() == intval($splitPin[1]))
+        {
+            $json['coordinates'] = array(floatval($tracker->getLat()), floatval($tracker->getLon()));
+            $json['time'] = $tracker->getTime();
+        }
     }
 }
 

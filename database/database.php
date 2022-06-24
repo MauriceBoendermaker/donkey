@@ -65,7 +65,7 @@ class Database
         $result = $this->db->query("SELECT * FROM boekingen");
         $boekingen = array();
         while ($row = $result->fetch_assoc()) {
-            $boekingen[] = new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $this->getTochtByID($row["FKtochtenID"]), $this->getKlantByID($row["FKklantenID"]), $this->getStatusByID($row["FKstatussenID"]));
+            $boekingen[] = new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $this->getTochtByID($row["FKtochtenID"]), $this->getKlantByID($row["FKklantenID"]), $this->getStatusByID($row["FKstatussenID"]), !isset($row["FKtrackerID"]) ? null : $this->getTrackerByID($row["FKtrackerID"]));
         }
         return $boekingen;
     }
@@ -77,7 +77,7 @@ class Database
         // check if result is empty
         $row = $result->fetch_assoc();
         if (is_null($row)) return null;
-        return new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $this->getTochtByID($row["FKtochtenID"]), $this->getKlantByID($row["FKklantenID"]), $this->getStatusByID($row["FKstatussenID"]));
+        return new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $this->getTochtByID($row["FKtochtenID"]), $this->getKlantByID($row["FKklantenID"]), $this->getStatusByID($row["FKstatussenID"]), !isset($row["FKtrackerID"]) ? null : $this->getTrackerByID($row["FKtrackerID"]));
     }
 
     public function getBoekingenByKlantID($id)
@@ -86,7 +86,7 @@ class Database
         $result = $this->db->query("SELECT * FROM boekingen WHERE FKklantenID = $id");
         $boekingen = array();
         while ($row = $result->fetch_assoc()) {
-            $boekingen[] = new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $this->getTochtByID($row["FKtochtenID"]), $this->getKlantByID($row["FKklantenID"]), $this->getStatusByID($row["FKstatussenID"]));
+            $boekingen[] = new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $this->getTochtByID($row["FKtochtenID"]), $this->getKlantByID($row["FKklantenID"]), $this->getStatusByID($row["FKstatussenID"]), !isset($row["FKtrackerID"]) ? null : $this->getTrackerByID($row["FKtrackerID"]));
         }
         return $boekingen;
     }
@@ -97,24 +97,40 @@ class Database
         $result = $this->db->query("SELECT * FROM boekingen WHERE FKstatussenID = $id");
         $boekingen = array();
         while ($row = $result->fetch_assoc()) {
-            $boekingen[] = new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $row["FKtochtenID"], $row["FKklantenID"], $row["FKstatussenID"]);
+            $boekingen[] = new Boeking($row["ID"], $row["StartDatum"], $row["PINCode"], $this->getTochtByID($row["FKtochtenID"]), $this->getKlantByID($row["FKklantenID"]), $this->getStatusByID($row["FKstatussenID"]), !isset($row["FKtrackerID"]) ? null : $this->getTrackerByID($row["FKtrackerID"]));
         }
         return $boekingen;
     }
 
-    public function setBoeking($id, $startDatum, $pinCode, $fkTochtenID, $fkKlantenID, $fkStatussenID)
+    public function setBoeking($id, $startDatum, $pinCode, $fkTochtenID, $fkKlantenID, $fkStatussenID, $fkTrackersID)
     {
         $this->connect();
+
         if (is_null($id)) {
-            if (is_null($pinCode))
-                $result = $this->db->query("INSERT INTO boekingen (StartDatum, FKtochtenID, FKklantenID, FKstatussenID) VALUES ('$startDatum', '$fkTochtenID', '$fkKlantenID', '$fkStatussenID')");
-            else
-                $result = $this->db->query("INSERT INTO boekingen (StartDatum, PINCode, FKtochtenID, FKklantenID, FKstatussenID) VALUES ('$startDatum', '$pinCode', '$fkTochtenID', '$fkKlantenID', '$fkStatussenID')");
+            $query = "INSERT INTO boekingen (StartDatum, FKtochtenID, FKklantenID, FKstatussenID";
+            if (!is_null($pinCode))
+                $query .= ", PINCode";
+            if (!is_null($fkTrackersID))
+                $query .= ", FKtrackerID";
+            $query .= ") VALUES ('$startDatum', '$fkTochtenID', '$fkKlantenID', '$fkStatussenID'";
+
+            if (!is_null($pinCode))
+                $query .= ", '$pinCode'";
+            if (!is_null($fkTrackersID))
+                $query .= ", '$fkTrackersID'";
+
+            $query .= ")";
+            
+            $result = $this->db->query($query);
         } else {
-            if (is_null($pinCode))
-                $result = $this->db->query("UPDATE boekingen SET StartDatum = '$startDatum', FKtochtenID = '$fkTochtenID', FKklantenID = '$fkKlantenID', FKstatussenID = '$fkStatussenID' WHERE ID = $id");
-            else
-                $result = $this->db->query("UPDATE boekingen SET StartDatum = '$startDatum', PINCode = '$pinCode', FKtochtenID = '$fkTochtenID', FKklantenID = '$fkKlantenID', FKstatussenID = '$fkStatussenID' WHERE ID = $id");
+            $query = "UPDATE boekingen SET StartDatum = '$startDatum', FKtochtenID = '$fkTochtenID', FKklantenID = '$fkKlantenID', FKstatussenID = '$fkStatussenID'";
+            if (!is_null($pinCode))
+                $query .= ", PINCode = '$pinCode'";
+            if (!is_null($fkTrackersID))
+                $query .= ", FKtrackerID = '$fkTrackersID'";
+            $query .= " WHERE ID = $id";
+
+            $result = $this->db->query($query);
         }
     }
 
@@ -129,10 +145,13 @@ class Database
         $status = $boeking->getStatus();
         if ($status instanceof Status) $status = $status->getID();
 
+        $tracker = $boeking->getTracker();
+        if ($tracker instanceof Tracker) $tracker = $tracker->getID();
+
         $klant = $boeking->getKlant();
         if (!is_numeric($klant)) $klant = $klant->getID();
 
-        $this->setBoeking($new ? null : $boeking->getID(), $boeking->getStartDatum(), $boeking->getPINCode(), $tocht, $klant, $status);
+        $this->setBoeking($new ? null : $boeking->getID(), $boeking->getStartDatum(), $boeking->getPINCode(), $tocht, $klant, $status, $tracker);
 
         return;
     }
@@ -140,6 +159,9 @@ class Database
     public function deleteBoeking($id)
     {
         $this->connect();
+        $boeking = $this->getBoekingByID($id);
+        if ($boeking != null && $boeking->getTracker() != null)
+            $result = $this->db->query("DELETE FROM trackers WHERE ID = ".$boeking->getTracker()->getID());
         $result = $this->db->query("DELETE FROM boekingen WHERE ID = $id");
     }
 
@@ -617,6 +639,7 @@ class Database
         } else {
             $result = $this->db->query("UPDATE trackers SET PINCode = $pin, Lat = $lat, Lon = $lon, Time = $time WHERE ID = $id");
         }
+        return $this->db->insert_id;
     }
 
     public function applyTracker($tracker, $new = false)
