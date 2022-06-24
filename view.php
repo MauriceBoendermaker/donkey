@@ -62,15 +62,17 @@ $filter = isset($_GET['f']);
         /* -------------------------------------- */
 
         <?php
-        $splitPin = explode(",", strval($_GET['PinCode']));
-        if (count($splitPin) == 2 && intval($splitPin[1]) >= 0) { ?>
-            $.getJSON("./api/markers.json?pin=<?php echo $pin ?>", function(data) {
-                if (!data.coordinates) return;
-                var marker = L.marker(data.coordinates, {
-                    icon: donkeyIcon
-                }).addTo(map).bindPopup('Ezel locatie');
-            });
-        <?php } ?>
+        if ($pin != -1) {
+            $splitPin = explode(",", strval($pin));
+            if (count($splitPin) == 2 && intval($splitPin[1]) >= 0) { ?>
+                $.getJSON("./api/markers.json?pin=<?php echo $pin ?>", function(data) {
+                    if (!data.coordinates) return;
+                    var marker = L.marker(data.coordinates, {
+                        icon: donkeyIcon
+                    }).addTo(map).bindPopup('Ezel locatie');
+                });
+        
+        <?php }} ?>
 
         <?php if (!empty($view)) { ?>
             var gpx = './gpx/<?php echo $view ?>.gpx'; // URL to your GPX file or the GPX itself
