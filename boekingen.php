@@ -30,7 +30,7 @@ if (isset($_POST['delete']) && isset($_POST['id'])) {
 }
 
 if (isset($_POST['save'])) {
-	$db->setBoeking($_POST['id'], $_POST['startDatum'], $_POST['pinCode'], $_POST['tochtID'], $_POST['klantID'], $_POST['statusID']);
+	$db->setBoeking($_POST['id'], $_POST['startDatum'], null, $_POST['tochtID'], $_POST['klantID'], $_POST['statusID']);
 	home();
 }
 
