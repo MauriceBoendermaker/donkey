@@ -21,6 +21,12 @@
 				<a id="nav-klant-account" class="nav-link <?php if (endsWith(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "account")) echo "active\" aria-current=\"page"; ?>" href="account">Account</a>
 			</li>
 			<li class="nav-item ms-auto">
+				<a id="nav-klant-about" class="nav-link <?php if (endsWith(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "about")) echo "active\" aria-current=\"page"; ?>" href="about">About</a>
+			</li>
+			<li class="nav-item">
+				<a id="nav-klant-contact" class="nav-link <?php if (endsWith(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "contact")) echo "active\" aria-current=\"page"; ?>" href="contact">Contact</a>
+			</li>
+			<li class="nav-item">
 				<a class="nav-link text-danger" href="../logout">Logout</a>
 			</li>
 		</ul>
