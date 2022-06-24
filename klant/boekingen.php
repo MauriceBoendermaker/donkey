@@ -121,9 +121,9 @@ switch ($view) {
 				<tr>
 					<th>Startdatum</th>
 					<th>Einddatum</th>
-					<th>Status</th>
 					<th>Pincode</th>
 					<th>Tocht</th>
+					<th>Status</th>
 					<th>Bijwerken</th>
 				</tr>
 			<?php
@@ -131,9 +131,9 @@ switch ($view) {
 				echo "<tr>";
 				echo "<td>" . $boeking->getStartdatum() . "</td>";
 				echo "<td>" . date('Y-m-d', strtotime($boeking->getStartdatum() . ' + ' . $boeking->getTocht()->getAantalDagen() . ' days')) . "</td>";
-				echo "<td>" . $boeking->getStatus()->getStatus() . "</td>";
 				echo "<td>" . $boeking->getPINCode() . "</td>";
 				echo "<td>" . $boeking->getTocht()->getOmschrijving() . "</td>";
+				echo "<td>" . $boeking->getStatus()->getStatus() . "</td>";
 				echo "<td class='px-0 d-flex justify-content-center'>
 					<a class='mx-1' href='?id={$boeking->getID()}&view=edit'><button class='btn btn-primary min-height-0 btn-sm'><i class='fa-solid fa-pen-to-square'></i></button></a>
 					<a class='mx-1' href='?id={$boeking->getID()}&view=delete'><button class='btn btn-danger min-height-0 btn-sm'><i class='fa-solid fa-trash-can'></i></button></a>
